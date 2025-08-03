@@ -1,3 +1,82 @@
+document.getElementById('contactForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  // Clear previous error messages
+  clearMessages();
+
+  // Validate inputs
+  var isValid = validateForm();
+
+  if (isValid) {
+    sendEmail();
+  }
+});
+
+function clearMessages() {
+  document.getElementById('nameError').textContent = '';
+  document.getElementById('emailError').textContent = '';
+  document.getElementById('subjectError').textContent = '';
+  document.getElementById('messageError').textContent = '';
+  document.getElementById('successMessage').style.display = 'none';
+  document.getElementById('errorMessage').style.display = 'none';
+}
+
+function validateForm() {
+  let isValid = true;
+
+  let name = document.getElementById('name').value.trim();
+  let email = document.getElementById('email').value.trim();
+  let subject = document.getElementById('subject').value.trim();
+  let message = document.getElementById('message').value.trim();
+
+  if (name === '') {
+    document.getElementById('nameError').textContent = 'Please enter your name';
+    isValid = false;
+  }
+
+  if (email === '') {
+    document.getElementById('emailError').textContent = 'Please enter your email';
+    isValid = false;
+  } else if (!validateEmail(email)) {
+    document.getElementById('emailError').textContent = 'Please enter a valid email address';
+    isValid = false;
+  }
+
+  if (subject === '') {
+    document.getElementById('subjectError').textContent = 'Please enter a subject';
+    isValid = false;
+  }
+
+  if (message === '') {
+    document.getElementById('messageError').textContent = 'Please enter a message';
+    isValid = false;
+  }
+
+  return isValid;
+}
+
+function validateEmail(email) {
+  var re = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  return re.test(String(email).toLowerCase());
+}
+
+function sendEmail() {
+  var submitBtn = document.getElementById('submitBtn');
+  submitBtn.disabled = true;
+  document.querySelector('.btn-text').style.display = 'none';
+  document.querySelector('.btn-loader').style.display = 'inline-block';
+
+  // Simulate email sending
+  setTimeout(function () {
+    submitBtn.disabled = false;
+    document.querySelector('.btn-text').style.display = 'inline';
+    document.querySelector('.btn-loader').style.display = 'none';
+
+    // Simulate success
+    document.getElementById('successMessage').style.display = 'block';
+  }, 2000);
+}
+
 /* ========================= Typing Animation ========================= */
 let typed = new Typed(".typing", {
   strings: [
@@ -10,6 +89,31 @@ let typed = new Typed(".typing", {
   typeSpeed: 100,
   BackSpeed: 60,
   loop: true,
+});
+
+/* ========================= Portfolio Filter ========================= */
+document.addEventListener('DOMContentLoaded', function () {
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+  filterButtons.forEach(button => {
+    button.addEventListener('click', function () {
+      const filter = this.getAttribute('data-filter');
+
+      portfolioItems.forEach(item => {
+        if (filter === 'all' || item.classList.contains(filter)) {
+          item.style.display = 'block';
+          item.classList.add('animate');
+        } else {
+          item.style.display = 'none';
+          item.classList.remove('animate');
+        }
+      });
+
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
 });
 
 /* ========================= Aside ========================= */
@@ -69,14 +173,40 @@ function updateNav(element) {
   }
 }
 
-document.querySelector(".hire-me").addEventListener("click", function () {
-  const sectionIndex = this.getAttribute("data-section-index");
-  //console.log(sectionIndex)
-  showSection(this);
-  updateNav(this);
-  removeBackSection();
-  addBackSection(sectionIndex);
+// Handle all CTA buttons with data-section-index
+document.addEventListener('DOMContentLoaded', function() {
+  const ctaButtons = document.querySelectorAll('[data-section-index]');
+  ctaButtons.forEach(button => {
+    button.addEventListener("click", function () {
+      const sectionIndex = this.getAttribute("data-section-index");
+      showSection(this);
+      updateNav(this);
+      removeBackSection();
+      addBackSection(sectionIndex);
+    });
+  });
+
+  // Add animations when page loads
+  animateHeroSection();
 });
+
+// Hero section animations
+function animateHeroSection() {
+  const greeting = document.querySelector('.animated-greeting');
+  const profession = document.querySelector('.my-profession');
+  const description = document.querySelector('.hero-description');
+  const buttons = document.querySelector('.hero-buttons');
+  const socialLinks = document.querySelector('.social-links');
+  const profileImg = document.querySelector('.home-img img');
+
+  // Add animation classes
+  if (greeting) greeting.style.animation = 'fadeInUp 1s ease 0.2s both';
+  if (profession) profession.style.animation = 'fadeInUp 1s ease 0.4s both';
+  if (description) description.style.animation = 'fadeInUp 1s ease 0.6s both';
+  if (buttons) buttons.style.animation = 'fadeInUp 1s ease 0.8s both';
+  if (socialLinks) socialLinks.style.animation = 'fadeInUp 1s ease 1s both';
+  if (profileImg) profileImg.style.animation = 'fadeInRight 1s ease 0.5s both';
+}
 
 const navTogglerBtn = document.querySelector(".nav-toggler"),
   aside = document.querySelector(".aside");
