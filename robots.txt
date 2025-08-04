@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://alex-muhscience.github.io/My-profile/sitemap.xml
+
