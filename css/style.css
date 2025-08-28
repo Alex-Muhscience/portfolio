@@ -369,10 +369,22 @@ ul {
   padding: 0;
 }
 
+.home .container {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0 20px;
+}
+
+.home .row {
+  margin: 0;
+  width: 100%;
+}
+
 .home .home-info {
   flex: 0 0 60%;
   max-width: 60%;
-  padding-right: 20px;
+  padding-right: 30px;
   padding-left: 0;
   margin-left: 0;
   z-index: 10;
@@ -380,34 +392,39 @@ ul {
   word-wrap: break-word;
 }
 
-/* Improved responsive home layout */
-@media (max-width: 1199px) {
-  .home .home-info {
-    padding-left: 0;
-    padding-right: 15px;
-  }
-  
-  .section {
-    padding: 0 15px;
-  }
-  
-  .section .container {
-    max-width: 100%;
-    padding: 0;
-  }
-  
+/* Ensure home section content is properly contained */
+@media (min-width: 1200px) {
   .home .container {
-    padding: 0 10px;
-  }
-}
-
-@media (min-width: 1400px) {
-  .section .container {
-    max-width: calc(100vw - 350px);
+    padding: 0 30px;
+    max-width: calc(100vw - 300px);
   }
   
   .home .home-info {
     padding-right: 40px;
+  }
+}
+
+/* Improved responsive home layout */
+@media (max-width: 1199px) {
+  .home .container {
+    padding: 0 15px;
+    max-width: 100%;
+  }
+  
+  .home .home-info {
+    padding-left: 0;
+    padding-right: 15px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .home .container {
+    max-width: calc(100vw - 320px);
+    padding: 0 40px;
+  }
+  
+  .home .home-info {
+    padding-right: 50px;
   }
 }
 
