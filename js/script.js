@@ -82,12 +82,14 @@ let typed = new Typed(".typing", {
   strings: [
     "",
     "Software Engineer",
-    " Full-Stack Web Developer",
+    "Full-Stack Web Developer",
     "Freelancer",
     "Cyber Security Enthusiast",
+    "AI Developer",
+    "Cloud Solutions Architect"
   ],
   typeSpeed: 100,
-  BackSpeed: 60,
+  backSpeed: 60,
   loop: true,
 });
 
@@ -101,12 +103,17 @@ document.addEventListener('DOMContentLoaded', function () {
       const filter = this.getAttribute('data-filter');
 
       portfolioItems.forEach(item => {
-        if (filter === 'all' || item.classList.contains(filter)) {
+        const category = item.getAttribute('data-category');
+        if (filter === 'all' || category === filter) {
           item.style.display = 'block';
           item.classList.add('animate');
+          item.classList.remove('hide');
+          item.classList.add('show');
         } else {
           item.style.display = 'none';
           item.classList.remove('animate');
+          item.classList.add('hide');
+          item.classList.remove('show');
         }
       });
 
