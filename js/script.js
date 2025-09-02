@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
   animateHeroSection();
 });
 
-// Hero section animations
+// Enhanced hero section animations with modern loading
 function animateHeroSection() {
   const greeting = document.querySelector('.animated-greeting');
   const profession = document.querySelector('.my-profession');
@@ -206,13 +206,60 @@ function animateHeroSection() {
   const socialLinks = document.querySelector('.social-links');
   const profileImg = document.querySelector('.home-img img');
 
-  // Add animation classes
-  if (greeting) greeting.style.animation = 'fadeInUp 1s ease 0.2s both';
-  if (profession) profession.style.animation = 'fadeInUp 1s ease 0.4s both';
-  if (description) description.style.animation = 'fadeInUp 1s ease 0.6s both';
-  if (buttons) buttons.style.animation = 'fadeInUp 1s ease 0.8s both';
-  if (socialLinks) socialLinks.style.animation = 'fadeInUp 1s ease 1s both';
-  if (profileImg) profileImg.style.animation = 'fadeInRight 1s ease 0.5s both';
+  // Create loading timeline with staggered animations
+  const elements = [
+    { el: greeting, delay: 0.2, animation: 'fadeInUp' },
+    { el: profession, delay: 0.4, animation: 'fadeInUp' },
+    { el: description, delay: 0.6, animation: 'fadeInUp' },
+    { el: buttons, delay: 0.8, animation: 'fadeInUp' },
+    { el: socialLinks, delay: 1.0, animation: 'fadeInUp' },
+    { el: profileImg, delay: 0.5, animation: 'fadeInRight' }
+  ];
+
+  elements.forEach(({ el, delay, animation }) => {
+    if (el) {
+      el.style.animation = `${animation} 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) ${delay}s both`;
+      // Add a subtle glow effect on load
+      el.style.filter = 'drop-shadow(0 0 20px rgba(236, 24, 57, 0.1))';
+    }
+  });
+
+  // Animate skill badges individually
+  const skillBadges = document.querySelectorAll('.skill-badge');
+  skillBadges.forEach((badge, index) => {
+    if (badge) {
+      badge.style.animation = `fadeInUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) ${0.1 * index}s both`;
+    }
+  });
+
+  // Add page load progress indicator
+  createLoadingProgress();
+}
+
+// Modern loading progress indicator
+function createLoadingProgress() {
+  const progressBar = document.createElement('div');
+  progressBar.className = 'page-loading-progress';
+  progressBar.innerHTML = '<div class="progress-fill"></div>';
+  document.body.appendChild(progressBar);
+
+  // Animate progress
+  const fill = progressBar.querySelector('.progress-fill');
+  let progress = 0;
+  const interval = setInterval(() => {
+    progress += Math.random() * 15;
+    if (progress >= 100) {
+      progress = 100;
+      clearInterval(interval);
+      setTimeout(() => {
+        progressBar.style.opacity = '0';
+        setTimeout(() => {
+          document.body.removeChild(progressBar);
+        }, 300);
+      }, 200);
+    }
+    fill.style.width = progress + '%';
+  }, 50);
 }
 
 const navTogglerBtn = document.querySelector(".nav-toggler"),
