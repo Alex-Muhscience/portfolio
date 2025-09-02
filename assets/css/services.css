@@ -197,8 +197,10 @@ body.dark {
   overflow: hidden;
   border: 1px solid var(--svc-border);
   height: 100%;
-  display: flex;
+  display: flex !important;
   flex-direction: column;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .svc-card::before {
@@ -409,15 +411,9 @@ body.dark {
    ANIMATIONS & REVEALS
    =============================== */
 .reveal {
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 1 !important;
+  transform: translateY(0) !important;
   transition: all 0.8s var(--svc-ease);
-}
-
-/* Only hide cards if JavaScript is working */
-.js-enabled .reveal {
-  opacity: 0;
-  transform: translateY(30px);
 }
 
 .reveal.is-visible {
