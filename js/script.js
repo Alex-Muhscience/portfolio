@@ -86,7 +86,7 @@ let typed = new Typed(".typing", {
     "Freelancer",
     "Cyber Security Enthusiast",
     "AI Developer",
-    "Cloud Solutions Architect"
+    
   ],
   typeSpeed: 100,
   backSpeed: 60,
@@ -156,7 +156,18 @@ function removeBackSection() {
 }
 
 function addBackSection(num) {
-  allSection[num].classList.add("back-section");
+  if (allSection[num]) {
+    allSection[num].classList.add("back-section");
+    
+    // Ensure back section styling is applied after page load
+    if (document.body.classList.contains('loaded')) {
+      setTimeout(() => {
+        allSection[num].style.transform = '';
+        allSection[num].style.opacity = '';
+        allSection[num].style.filter = '';
+      }, 50);
+    }
+  }
 }
 
 function showSection(element) {
@@ -164,7 +175,20 @@ function showSection(element) {
     allSection[i].classList.remove("active");
   }
   const target = element.getAttribute("href").split("#")[1];
-  document.querySelector("#" + target).classList.add("active");
+  const targetSection = document.querySelector("#" + target);
+  if (targetSection) {
+    targetSection.classList.add("active");
+    
+    // Force proper positioning after page is loaded
+    if (document.body.classList.contains('loaded')) {
+      setTimeout(() => {
+        // Clear any conflicting inline styles
+        targetSection.style.transform = '';
+        targetSection.style.opacity = '';
+        targetSection.style.filter = '';
+      }, 50);
+    }
+  }
 }
 
 function updateNav(element) {
@@ -195,6 +219,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Add animations when page loads
   animateHeroSection();
+  
+  // Initialize page load handling
+  initPageLoadHandling();
+  
+  // Handle URL hash on page load
+  handleInitialHash();
 });
 
 // Enhanced hero section animations with modern loading
@@ -274,4 +304,119 @@ function asideSectionTogglerBtn() {
   for (let i = 0; i < totalSection; i++) {
     allSection[i].classList.toggle("open");
   }
+}
+
+// Page load handling to prevent blurred/mispositioned content
+function initPageLoadHandling() {
+  // Add preload class to prevent animations during load
+  document.body.classList.add('preload');
+  
+  // Remove preload class after a short delay to enable animations
+  window.addEventListener('load', function() {
+    setTimeout(() => {
+      document.body.classList.remove('preload');
+      document.body.classList.add('loaded');
+      
+      // Ensure all sections are properly positioned
+      resetSectionPositions();
+      
+      // Re-enable navigation functionality
+      enableNavigation();
+      
+      // Handle hash after everything is loaded
+      handleInitialHash();
+    }, 100);
+  });
+  
+  // Fallback for slower connections
+  setTimeout(() => {
+    if (document.body.classList.contains('preload')) {
+      document.body.classList.remove('preload');
+      document.body.classList.add('loaded');
+      resetSectionPositions();
+      enableNavigation();
+      handleInitialHash();
+    }
+  }, 1000);
+}
+
+// Enable navigation after page load
+function enableNavigation() {
+  // Force refresh of current active section
+  const activeSection = document.querySelector('.section.active');
+  if (activeSection) {
+    activeSection.style.transform = '';
+    activeSection.style.opacity = '';
+    activeSection.style.filter = '';
+  }
+  
+  // Ensure inactive sections are properly positioned
+  const inactiveSections = document.querySelectorAll('.section:not(.active)');
+  inactiveSections.forEach(section => {
+    if (!section.classList.contains('back-section')) {
+      section.style.transform = '';
+      section.style.opacity = '';
+      section.style.filter = '';
+    }
+  });
+}
+
+// Handle initial URL hash on page load
+function handleInitialHash() {
+  const hash = window.location.hash;
+  if (hash && hash.length > 1) {
+    const sectionId = hash.substring(1);
+    const targetSection = document.querySelector(`#${sectionId}`);
+    const navLink = document.querySelector(`a[href="${hash}"]`);
+    
+    if (targetSection && navLink) {
+      // Wait for page to be loaded before switching sections
+      setTimeout(() => {
+        // Remove active class from all sections
+        document.querySelectorAll('.section').forEach(section => {
+          section.classList.remove('active');
+        });
+        
+        // Remove active class from all nav links
+        document.querySelectorAll('.nav a').forEach(link => {
+          link.classList.remove('active');
+        });
+        
+        // Activate the target section and nav link
+        targetSection.classList.add('active');
+        navLink.classList.add('active');
+        
+        // Clear any conflicting styles
+        targetSection.style.transform = '';
+        targetSection.style.opacity = '';
+        targetSection.style.filter = '';
+      }, 200);
+    }
+  }
+}
+
+// Handle hash changes during navigation
+window.addEventListener('hashchange', function() {
+  handleInitialHash();
+});
+
+// Reset section positions to prevent misalignment
+function resetSectionPositions() {
+  const sections = document.querySelectorAll('.section');
+  const activeSection = document.querySelector('.section.active');
+  
+  sections.forEach(section => {
+    if (section !== activeSection) {
+      // Clear inline styles to let CSS classes take control
+      section.style.transform = '';
+      section.style.opacity = '';
+      section.style.filter = '';
+      section.classList.remove('back-section');
+    } else {
+      // Clear inline styles for active section too
+      section.style.transform = '';
+      section.style.opacity = '';
+      section.style.filter = '';
+    }
+  });
 }

@@ -1,3 +1,6 @@
 :root {
   --skin-color: #f021b2;
+  --skin-color-light: rgba(240, 33, 178, 0.1);
+  --skin-color-dark: #d91c9f;
+  --gradient-primary: linear-gradient(135deg, var(--skin-color) 0%, var(--skin-color-dark) 100%);
 }
