@@ -66,6 +66,9 @@
    */
   function setupServices() {
     try {
+      // Add class to enable JavaScript-dependent features
+      document.documentElement.classList.add('js-enabled');
+      
       setupFilters();
       setupRevealAnimations();
       setupAccessibility();
