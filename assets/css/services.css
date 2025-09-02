@@ -1,0 +1,559 @@
+/*
+ * SERVICES SECTION CSS
+ * 
+ * This stylesheet provides a complete services showcase section with:
+ * - Modern design tokens aligned with site theme
+ * - Interactive filtering and search
+ * - Responsive grid layout (1-4 columns)
+ * - Smooth animations and hover effects
+ * - Full accessibility support
+ * - Technology chips with icons
+ * 
+ * CLASSES REFERENCE:
+ * - .services: Main section container
+ * - .services-header: Section header with title and description  
+ * - .svc-filters: Filter button container
+ * - .svc-filter: Individual filter button
+ * - .svc-grid: Responsive services grid
+ * - .svc-card: Individual service card
+ * - .svc-chip: Technology chips with icons
+ * - .badge-popular/.badge-new/.badge-premium: Service badges
+ * - .reveal/.reveal.is-visible: Scroll reveal animations
+ * 
+ * DATA ATTRIBUTES:
+ * - data-category: Service category for filtering (web, mobile, ai-ml, etc.)
+ * - data-filter: Filter button target category
+ * - aria-pressed: Filter button state for accessibility
+ */
+
+/* ===============================
+   DESIGN TOKENS & CSS VARIABLES
+   =============================== */
+:root {
+  /* Colors aligned with site theme */
+  --svc-bg: var(--bg-black-900);
+  --svc-card: var(--bg-black-100);
+  --svc-text: var(--text-black-900);
+  --svc-muted: var(--text-black-700);
+  --svc-accent: var(--skin-color);
+  --svc-accent-2: #ff6b9d;
+  --svc-border: var(--bg-black-50);
+  --svc-success: #10b981;
+  --svc-warning: #f59e0b;
+  --svc-premium: #8b5cf6;
+
+  /* Spacing and layout */
+  --svc-radius: 16px;
+  --svc-gap: 30px;
+  --svc-shadow: 0 10px 30px rgba(48, 46, 77, 0.1);
+  --svc-shadow-hover: 0 20px 40px rgba(48, 46, 77, 0.15);
+  
+  /* Transitions */
+  --svc-ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --svc-speed: 0.3s;
+}
+
+/* Dark theme adjustments */
+body.dark {
+  --svc-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  --svc-shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* ===============================
+   SERVICES SECTION CONTAINER
+   =============================== */
+.services {
+  background: var(--svc-bg);
+  position: relative;
+  overflow: hidden;
+}
+
+.services-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.services-subtitle {
+  font-size: 18px;
+  color: var(--svc-muted);
+  margin-top: 15px;
+  font-weight: 300;
+}
+
+/* ===============================
+   FILTER BAR
+   =============================== */
+.svc-filters {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
+  padding: 0 15px;
+}
+
+.svc-filter {
+  background: var(--svc-card);
+  color: var(--svc-text);
+  border: 2px solid var(--svc-border);
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--svc-speed) var(--svc-ease);
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.svc-filter::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left var(--svc-speed) var(--svc-ease);
+}
+
+.svc-filter:hover {
+  transform: translateY(-2px);
+  border-color: var(--svc-accent);
+  box-shadow: var(--svc-shadow);
+}
+
+.svc-filter:hover::before {
+  left: 100%;
+}
+
+.svc-filter.is-active {
+  background: var(--svc-accent);
+  color: white;
+  border-color: var(--svc-accent);
+  box-shadow: var(--svc-shadow);
+}
+
+.svc-filter:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(236, 24, 57, 0.25);
+}
+
+/* Mobile filter scrolling */
+@media (max-width: 768px) {
+  .svc-filters {
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding: 0 15px 15px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .svc-filters::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ===============================
+   RESPONSIVE GRID
+   =============================== */
+.svc-grid {
+  display: grid;
+  gap: var(--svc-gap);
+  grid-template-columns: 1fr;
+  margin-bottom: 40px;
+}
+
+/* Responsive breakpoints */
+@media (min-width: 768px) {
+  .svc-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .svc-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1400px) {
+  .svc-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ===============================
+   SERVICE CARDS
+   =============================== */
+.svc-card {
+  background: var(--svc-card);
+  border-radius: var(--svc-radius);
+  padding: 30px;
+  box-shadow: var(--svc-shadow);
+  transition: all var(--svc-speed) var(--svc-ease);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--svc-border);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.svc-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--svc-accent), var(--svc-accent-2));
+  opacity: 0;
+  transition: opacity var(--svc-speed) var(--svc-ease);
+}
+
+.svc-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--svc-shadow-hover);
+}
+
+.svc-card:hover::before {
+  opacity: 1;
+}
+
+/* Card header */
+.svc-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.svc-card__icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--svc-accent), var(--svc-accent-2));
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  transition: transform var(--svc-speed) var(--svc-ease);
+  flex-shrink: 0;
+}
+
+.svc-card:hover .svc-card__icon {
+  transform: rotate(5deg) scale(1.1);
+}
+
+.svc-card__badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Badge variations */
+.badge-popular {
+  background: var(--svc-success);
+  color: white;
+}
+
+.badge-new {
+  background: var(--svc-warning);
+  color: white;
+}
+
+.badge-premium {
+  background: var(--svc-premium);
+  color: white;
+}
+
+/* Card content */
+.svc-card__title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--svc-text);
+  margin-bottom: 15px;
+  line-height: 1.3;
+}
+
+.svc-card__desc {
+  color: var(--svc-muted);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+.svc-card__features {
+  margin-bottom: 25px;
+}
+
+.svc-card__features ul {
+  list-style: none;
+  padding: 0;
+}
+
+.svc-card__features li {
+  color: var(--svc-muted);
+  padding: 5px 0;
+  position: relative;
+  padding-left: 20px;
+}
+
+.svc-card__features li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--svc-success);
+  font-weight: bold;
+}
+
+/* Technology chips */
+.svc-card__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 25px;
+}
+
+.svc-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--svc-border);
+  color: var(--svc-text);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all var(--svc-speed) var(--svc-ease);
+}
+
+.svc-chip iconify-icon {
+  font-size: 14px;
+}
+
+.svc-chip:hover {
+  background: var(--svc-accent);
+  color: white;
+  transform: translateY(-1px);
+}
+
+/* Card footer */
+.svc-card__footer {
+  border-top: 1px solid var(--svc-border);
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: auto;
+}
+
+.svc-price {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--svc-text);
+}
+
+.svc-price .amount {
+  color: var(--svc-accent);
+}
+
+.svc-cta {
+  display: flex;
+  gap: 10px;
+}
+
+.svc-btn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all var(--svc-speed) var(--svc-ease);
+  border: none;
+  cursor: pointer;
+}
+
+.svc-btn--primary {
+  background: var(--svc-accent);
+  color: white;
+}
+
+.svc-btn--primary:hover {
+  background: var(--svc-accent-2);
+  transform: translateY(-1px);
+}
+
+.svc-btn--secondary {
+  background: transparent;
+  color: var(--svc-accent);
+  border: 1px solid var(--svc-accent);
+}
+
+.svc-btn--secondary:hover {
+  background: var(--svc-accent);
+  color: white;
+}
+
+/* ===============================
+   ANIMATIONS & REVEALS
+   =============================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s var(--svc-ease);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered animation delays */
+.reveal:nth-child(1) { transition-delay: 0.1s; }
+.reveal:nth-child(2) { transition-delay: 0.2s; }
+.reveal:nth-child(3) { transition-delay: 0.3s; }
+.reveal:nth-child(4) { transition-delay: 0.4s; }
+.reveal:nth-child(5) { transition-delay: 0.5s; }
+.reveal:nth-child(6) { transition-delay: 0.6s; }
+.reveal:nth-child(7) { transition-delay: 0.7s; }
+.reveal:nth-child(8) { transition-delay: 0.8s; }
+
+/* ===============================
+   NO RESULTS PLACEHOLDER
+   =============================== */
+.svc-no-results {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--svc-muted);
+  display: none;
+}
+
+.svc-no-results iconify-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+.svc-no-results h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: var(--svc-text);
+}
+
+/* ===============================
+   ACCESSIBILITY
+   =============================== */
+.svc-filter:focus-visible,
+.svc-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(236, 24, 57, 0.25);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .svc-card {
+    border-width: 2px;
+  }
+  
+  .svc-chip {
+    border: 1px solid var(--svc-text);
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .svc-card,
+  .svc-filter,
+  .svc-chip,
+  .svc-btn,
+  .svc-card__icon {
+    transition: none !important;
+    animation: none !important;
+  }
+  
+  .svc-card:hover {
+    transform: none !important;
+  }
+  
+  .svc-card:hover .svc-card__icon {
+    transform: none !important;
+  }
+}
+
+/* ===============================
+   SPECIAL CARD VARIANTS
+   =============================== */
+.svc-card--featured {
+  border: 2px solid var(--svc-accent);
+  position: relative;
+}
+
+.svc-card--featured::after {
+  content: 'FEATURED';
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  background: var(--svc-accent);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.svc-card--premium {
+  background: linear-gradient(135deg, var(--svc-card) 0%, rgba(139, 92, 246, 0.05) 100%);
+  border: 1px solid var(--svc-premium);
+}
+
+/* ===============================
+   RESPONSIVE ADJUSTMENTS
+   =============================== */
+@media (max-width: 768px) {
+  .services-header {
+    margin-bottom: 40px;
+  }
+  
+  .svc-card {
+    padding: 20px;
+  }
+  
+  .svc-card__footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .svc-cta {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 480px) {
+  .svc-grid {
+    gap: 20px;
+  }
+  
+  .svc-card__title {
+    font-size: 20px;
+  }
+  
+  .svc-card__icon {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+}

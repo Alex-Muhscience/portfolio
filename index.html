@@ -51,6 +51,7 @@
     <!-- ==== CSS Files ==== -->
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="./css/skins/color-1.css" />
+    <link rel="stylesheet" href="./assets/css/services.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -97,6 +98,9 @@
       disabled
     />
     <link rel="stylesheet" href="./css/style-switcher.css" />
+    
+    <!-- Iconify Icons -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -714,130 +718,634 @@
           </div>
         </section>
         <!-- ==== About Section End ==== -->
-        <!-- ==== Services Section Start ==== -->
-        <section class="service section" id="services">
+        <!-- ==== SERVICES: start ==== -->
+        <section class="services section" id="services">
           <div class="container">
-            <div class="row">
+            <!-- Services Header -->
+            <div class="services-header">
               <div class="section-title padd-15">
                 <h2>Services</h2>
-                <p class="services-subtitle">Transforming Ideas into Digital Reality</p>
+                <p class="services-subtitle">Transforming Ideas into Digital Reality with Modern Technology Solutions</p>
               </div>
             </div>
-            <div class="services-grid">
-              <!-- ==== Core Development Services ==== -->
-              <div class="service-item padd-15">
-                <div class="service-item-inner featured">
-                  <div class="service-badge">Most Popular</div>
-                  <div class="icon">
-                    <em class="fa fa-globe"></em>
+
+            <!-- Category Filters -->
+            <div class="svc-filters">
+              <button class="svc-filter is-active" data-filter="all" aria-pressed="true">
+                <iconify-icon icon="tabler:apps" aria-hidden="true"></iconify-icon>
+                All
+              </button>
+              <button class="svc-filter" data-filter="web" aria-pressed="false">
+                <iconify-icon icon="tabler:code" aria-hidden="true"></iconify-icon>
+                Web
+              </button>
+              <button class="svc-filter" data-filter="mobile" aria-pressed="false">
+                <iconify-icon icon="tabler:device-mobile" aria-hidden="true"></iconify-icon>
+                Mobile
+              </button>
+              <button class="svc-filter" data-filter="ai-ml" aria-pressed="false">
+                <iconify-icon icon="tabler:brain" aria-hidden="true"></iconify-icon>
+                AI & ML
+              </button>
+              <button class="svc-filter" data-filter="cloud" aria-pressed="false">
+                <iconify-icon icon="tabler:cloud" aria-hidden="true"></iconify-icon>
+                Cloud
+              </button>
+              <button class="svc-filter" data-filter="ecommerce" aria-pressed="false">
+                <iconify-icon icon="tabler:shopping-cart" aria-hidden="true"></iconify-icon>
+                E-commerce
+              </button>
+              <button class="svc-filter" data-filter="seo" aria-pressed="false">
+                <iconify-icon icon="tabler:chart-bar" aria-hidden="true"></iconify-icon>
+                SEO
+              </button>
+              <button class="svc-filter" data-filter="database" aria-pressed="false">
+                <iconify-icon icon="tabler:database" aria-hidden="true"></iconify-icon>
+                Database
+              </button>
+              <button class="svc-filter" data-filter="api" aria-pressed="false">
+                <iconify-icon icon="tabler:api" aria-hidden="true"></iconify-icon>
+                API
+              </button>
+              <button class="svc-filter" data-filter="security" aria-pressed="false">
+                <iconify-icon icon="tabler:shield-lock" aria-hidden="true"></iconify-icon>
+                Security
+              </button>
+              <button class="svc-filter" data-filter="ui-ux" aria-pressed="false">
+                <iconify-icon icon="tabler:palette" aria-hidden="true"></iconify-icon>
+                UI/UX
+              </button>
+              <button class="svc-filter" data-filter="maintenance" aria-pressed="false">
+                <iconify-icon icon="tabler:lifebuoy" aria-hidden="true"></iconify-icon>
+                Maintenance
+              </button>
+              <button class="svc-filter" data-filter="consulting" aria-pressed="false">
+                <iconify-icon icon="tabler:confetti" aria-hidden="true"></iconify-icon>
+                Consulting
+              </button>
+            </div>
+
+            <!-- Services Grid -->
+            <div class="svc-grid">
+              <!-- Web Development Service -->
+              <div class="svc-card reveal svc-card--featured" data-category="web">
+                <div class="svc-card__badge badge-popular">Popular</div>
+                <div class="svc-card__header">
+                  <div class="svc-card__icon">
+                    <iconify-icon icon="tabler:code" aria-hidden="true"></iconify-icon>
                   </div>
-                  <h4>Full-Stack Web Development</h4>
-                  <p>
-                    End-to-end web application development using React, Node.js, Python Flask/Django, and MongoDB. From concept to production deployment with modern UI/UX design.
-                  </p>
-                  <div class="service-features">
-                    <span class="feature">React & Node.js</span>
-                    <span class="feature">Python Backend</span>
-                    <span class="feature">Database Design</span>
-                    <span class="feature">API Development</span>
+                </div>
+                <h3 class="svc-card__title">Web Development</h3>
+                <p class="svc-card__desc">Full-stack web applications with modern frameworks and scalable architecture. From single-page applications to complex enterprise platforms, delivered with performance optimization and accessibility compliance.</p>
+                <div class="svc-card__features">
+                  <ul>
+                    <li>Single-page and server-side rendered applications</li>
+                    <li>Performance optimization and Core Web Vitals</li>
+                    <li>Accessibility compliance (WCAG 2.1)</li>
+                    <li>Content Management System integration</li>
+                    <li>Progressive Web App (PWA) development</li>
+                  </ul>
+                </div>
+                <div class="svc-card__chips">
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:react" aria-hidden="true"></iconify-icon>
+                    React
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:vue-dot-js" aria-hidden="true"></iconify-icon>
+                    Vue.js
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:nextdotjs" aria-hidden="true"></iconify-icon>
+                    Next.js
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:node-dot-js" aria-hidden="true"></iconify-icon>
+                    Node.js
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:django" aria-hidden="true"></iconify-icon>
+                    Django
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:laravel" aria-hidden="true"></iconify-icon>
+                    Laravel
+                  </span>
+                </div>
+                <div class="svc-card__footer">
+                  <div class="svc-price">
+                    Starting at <span class="amount">$2,499</span>
+                  </div>
+                  <div class="svc-cta">
+                    <a href="#contact" class="svc-btn svc-btn--primary">Get Quote</a>
+                    <a href="#portfolio" class="svc-btn svc-btn--secondary">View Work</a>
                   </div>
                 </div>
               </div>
 
-              <div class="service-item padd-15">
-                <div class="service-item-inner premium">
-                  <div class="service-badge">AI-Powered</div>
-                  <div class="icon">
-                    <em class="fa fa-robot"></em>
+              <!-- Mobile App Development Service -->
+              <div class="svc-card reveal" data-category="mobile">
+                <div class="svc-card__badge badge-popular">Popular</div>
+                <div class="svc-card__header">
+                  <div class="svc-card__icon">
+                    <iconify-icon icon="tabler:device-mobile" aria-hidden="true"></iconify-icon>
                   </div>
-                  <h4>AI-Enhanced Development</h4>
-                  <p>
-                    Leveraging cutting-edge AI agentic tools like Windsurf, Cursor, and GitHub Copilot to accelerate development and deliver intelligent solutions with enhanced code quality.
-                  </p>
-                  <div class="service-features">
-                    <span class="feature">AI Code Generation</span>
-                    <span class="feature">Smart Debugging</span>
-                    <span class="feature">Automated Testing</span>
-                    <span class="feature">Code Optimization</span>
+                </div>
+                <h3 class="svc-card__title">Mobile App Development</h3>
+                <p class="svc-card__desc">Native iOS and Android applications with cross-platform compatibility using Flutter and React Native. App store compliance, analytics integration, and crash reporting included.</p>
+                <div class="svc-card__features">
+                  <ul>
+                    <li>Native iOS (Swift) and Android (Kotlin) development</li>
+                    <li>Cross-platform Flutter and React Native apps</li>
+                    <li>App Store and Google Play compliance</li>
+                    <li>Analytics integration and crash reporting</li>
+                    <li>Push notifications and offline functionality</li>
+                  </ul>
+                </div>
+                <div class="svc-card__chips">
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:swift" aria-hidden="true"></iconify-icon>
+                    Swift
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:kotlin" aria-hidden="true"></iconify-icon>
+                    Kotlin
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:flutter" aria-hidden="true"></iconify-icon>
+                    Flutter
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:react" aria-hidden="true"></iconify-icon>
+                    React Native
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:firebase" aria-hidden="true"></iconify-icon>
+                    Firebase
+                  </span>
+                </div>
+                <div class="svc-card__footer">
+                  <div class="svc-price">
+                    Starting at <span class="amount">$4,999</span>
+                  </div>
+                  <div class="svc-cta">
+                    <a href="#contact" class="svc-btn svc-btn--primary">Get Quote</a>
+                    <a href="#portfolio" class="svc-btn svc-btn--secondary">View Work</a>
                   </div>
                 </div>
               </div>
 
-              <div class="service-item padd-15">
-                <div class="service-item-inner">
-                  <div class="icon">
-                    <em class="fa fa-shield-alt"></em>
+              <!-- AI and Machine Learning Service -->
+              <div class="svc-card reveal" data-category="ai-ml">
+                <div class="svc-card__badge badge-new">New</div>
+                <div class="svc-card__header">
+                  <div class="svc-card__icon">
+                    <iconify-icon icon="tabler:brain" aria-hidden="true"></iconify-icon>
                   </div>
-                  <h4>Cybersecurity Solutions</h4>
-                  <p>
-                    Comprehensive security services including vulnerability assessments, secure application development, and phishing detection systems with proven 97% accuracy.
-                  </p>
-                  <div class="service-features">
-                    <span class="feature">Security Audits</span>
-                    <span class="feature">Threat Detection</span>
-                    <span class="feature">Secure Coding</span>
-                    <span class="feature">Data Protection</span>
+                </div>
+                <h3 class="svc-card__title">AI & Machine Learning</h3>
+                <p class="svc-card__desc">Custom AI solutions including ChatGPT integrations, machine learning model training, and MLOps deployment. Natural language processing and computer vision pipelines for business automation.</p>
+                <div class="svc-card__features">
+                  <ul>
+                    <li>ChatGPT and OpenAI API integrations</li>
+                    <li>Custom machine learning model training</li>
+                    <li>Natural language processing (NLP) solutions</li>
+                    <li>Computer vision and image recognition</li>
+                    <li>MLOps deployment and model monitoring</li>
+                  </ul>
+                </div>
+                <div class="svc-card__chips">
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:python" aria-hidden="true"></iconify-icon>
+                    Python
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:tensorflow" aria-hidden="true"></iconify-icon>
+                    TensorFlow
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:pytorch" aria-hidden="true"></iconify-icon>
+                    PyTorch
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:openai" aria-hidden="true"></iconify-icon>
+                    OpenAI
+                  </span>
+                </div>
+                <div class="svc-card__footer">
+                  <div class="svc-price">
+                    Contact for Quote
+                  </div>
+                  <div class="svc-cta">
+                    <a href="#contact" class="svc-btn svc-btn--primary">Get Quote</a>
+                    <a href="#contact" class="svc-btn svc-btn--secondary">Learn More</a>
                   </div>
                 </div>
               </div>
 
-              <div class="service-item padd-15">
-                <div class="service-item-inner">
-                  <div class="icon">
-                    <em class="fa fa-mobile-alt"></em>
+              <!-- Cloud and DevOps Service -->
+              <div class="svc-card reveal" data-category="cloud">
+                <div class="svc-card__badge badge-popular">Popular</div>
+                <div class="svc-card__header">
+                  <div class="svc-card__icon">
+                    <iconify-icon icon="tabler:cloud" aria-hidden="true"></iconify-icon>
                   </div>
-                  <h4>Mobile App Development</h4>
-                  <p>
-                    Cross-platform mobile applications using Flutter and Dart, delivering native performance and beautiful user interfaces for both iOS and Android platforms.
-                  </p>
-                  <div class="service-features">
-                    <span class="feature">Flutter Development</span>
-                    <span class="feature">Cross-Platform</span>
-                    <span class="feature">Native Performance</span>
-                    <span class="feature">App Store Ready</span>
+                </div>
+                <h3 class="svc-card__title">Cloud & DevOps</h3>
+                <p class="svc-card__desc">Scalable cloud infrastructure on AWS, Azure, and Google Cloud. Infrastructure as code, CI/CD pipelines, container orchestration, and comprehensive monitoring solutions.</p>
+                <div class="svc-card__features">
+                  <ul>
+                    <li>Infrastructure as Code (Terraform, CloudFormation)</li>
+                    <li>CI/CD pipeline setup and automation</li>
+                    <li>Docker containerization and Kubernetes orchestration</li>
+                    <li>Cloud monitoring, logging, and alerting</li>
+                    <li>Cost optimization and auto-scaling</li>
+                  </ul>
+                </div>
+                <div class="svc-card__chips">
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:amazonaws" aria-hidden="true"></iconify-icon>
+                    AWS
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:microsoftazure" aria-hidden="true"></iconify-icon>
+                    Azure
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:googlecloud" aria-hidden="true"></iconify-icon>
+                    GCP
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:docker" aria-hidden="true"></iconify-icon>
+                    Docker
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:kubernetes" aria-hidden="true"></iconify-icon>
+                    Kubernetes
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:terraform" aria-hidden="true"></iconify-icon>
+                    Terraform
+                  </span>
+                </div>
+                <div class="svc-card__footer">
+                  <div class="svc-price">
+                    Starting at <span class="amount">$1,999</span>
+                  </div>
+                  <div class="svc-cta">
+                    <a href="#contact" class="svc-btn svc-btn--primary">Get Quote</a>
+                    <a href="#contact" class="svc-btn svc-btn--secondary">Learn More</a>
                   </div>
                 </div>
               </div>
 
-              <div class="service-item padd-15">
-                <div class="service-item-inner">
-                  <div class="icon">
-                    <em class="fa fa-cloud"></em>
+              <!-- E-commerce Solutions Service -->
+              <div class="svc-card reveal" data-category="ecommerce">
+                <div class="svc-card__badge badge-popular">Popular</div>
+                <div class="svc-card__header">
+                  <div class="svc-card__icon">
+                    <iconify-icon icon="tabler:shopping-cart" aria-hidden="true"></iconify-icon>
                   </div>
-                  <h4>Cloud Solutions & DevOps</h4>
-                  <p>
-                    Scalable cloud infrastructure on AWS and Google Cloud, Docker containerization, CI/CD pipelines, and cost-optimized deployment strategies.
-                  </p>
-                  <div class="service-features">
-                    <span class="feature">AWS & GCP</span>
-                    <span class="feature">Docker & CI/CD</span>
-                    <span class="feature">Cost Optimization</span>
-                    <span class="feature">Auto Scaling</span>
+                </div>
+                <h3 class="svc-card__title">E-commerce Solutions</h3>
+                <p class="svc-card__desc">Complete e-commerce platforms using Shopify, WooCommerce, or custom solutions. Payment gateway integration, inventory management, and conversion optimization included.</p>
+                <div class="svc-card__features">
+                  <ul>
+                    <li>Shopify and WooCommerce store setup</li>
+                    <li>Custom e-commerce platform development</li>
+                    <li>Payment gateway integration (Stripe, PayPal)</li>
+                    <li>Inventory management and order processing</li>
+                    <li>SEO optimization and conversion rate optimization</li>
+                  </ul>
+                </div>
+                <div class="svc-card__chips">
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:shopify" aria-hidden="true"></iconify-icon>
+                    Shopify
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:woocommerce" aria-hidden="true"></iconify-icon>
+                    WooCommerce
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:stripe" aria-hidden="true"></iconify-icon>
+                    Stripe
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:paypal" aria-hidden="true"></iconify-icon>
+                    PayPal
+                  </span>
+                </div>
+                <div class="svc-card__footer">
+                  <div class="svc-price">
+                    Starting at <span class="amount">$3,499</span>
+                  </div>
+                  <div class="svc-cta">
+                    <a href="#contact" class="svc-btn svc-btn--primary">Get Quote</a>
+                    <a href="#portfolio" class="svc-btn svc-btn--secondary">View Work</a>
                   </div>
                 </div>
               </div>
 
-              <div class="service-item padd-15">
-                <div class="service-item-inner">
-                  <div class="icon">
-                    <em class="fa fa-cogs"></em>
+              <!-- SEO and Digital Marketing Service -->
+              <div class="svc-card reveal" data-category="seo">
+                <div class="svc-card__badge badge-new">New</div>
+                <div class="svc-card__header">
+                  <div class="svc-card__icon">
+                    <iconify-icon icon="tabler:chart-bar" aria-hidden="true"></iconify-icon>
                   </div>
-                  <h4>API Development & Integration</h4>
-                  <p>
-                    RESTful API development, third-party service integration, microservices architecture, and seamless system connectivity for modern applications.
-                  </p>
-                  <div class="service-features">
-                    <span class="feature">REST APIs</span>
-                    <span class="feature">Microservices</span>
-                    <span class="feature">Third-party Integration</span>
-                    <span class="feature">Documentation</span>
+                </div>
+                <h3 class="svc-card__title">SEO & Digital Marketing</h3>
+                <p class="svc-card__desc">Technical SEO optimization, Core Web Vitals improvement, and comprehensive digital marketing strategies. Analytics implementation and performance tracking included.</p>
+                <div class="svc-card__features">
+                  <ul>
+                    <li>Technical SEO audits and optimization</li>
+                    <li>Core Web Vitals and page speed optimization</li>
+                    <li>Google Analytics and Search Console setup</li>
+                    <li>Content strategy and metadata optimization</li>
+                    <li>Local SEO and schema markup implementation</li>
+                  </ul>
+                </div>
+                <div class="svc-card__chips">
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:googleanalytics" aria-hidden="true"></iconify-icon>
+                    Analytics
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:googlesearchconsole" aria-hidden="true"></iconify-icon>
+                    Search Console
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:googlelighthouse" aria-hidden="true"></iconify-icon>
+                    Lighthouse
+                  </span>
+                </div>
+                <div class="svc-card__footer">
+                  <div class="svc-price">
+                    Starting at <span class="amount">$1,299</span>
+                  </div>
+                  <div class="svc-cta">
+                    <a href="#contact" class="svc-btn svc-btn--primary">Get Quote</a>
+                    <a href="#contact" class="svc-btn svc-btn--secondary">Learn More</a>
                   </div>
                 </div>
               </div>
+
+              <!-- Database Services -->
+              <div class="svc-card reveal" data-category="database">
+                <div class="svc-card__header">
+                  <div class="svc-card__icon">
+                    <iconify-icon icon="tabler:database" aria-hidden="true"></iconify-icon>
+                  </div>
+                </div>
+                <h3 class="svc-card__title">Database Services</h3>
+                <p class="svc-card__desc">Database design, optimization, and migration services. Performance tuning, backup strategies, and high availability configurations for mission-critical applications.</p>
+                <div class="svc-card__features">
+                  <ul>
+                    <li>Database design and data modeling</li>
+                    <li>Performance tuning and query optimization</li>
+                    <li>Database migration and data transfer</li>
+                    <li>Backup strategies and disaster recovery</li>
+                    <li>High availability and replication setup</li>
+                  </ul>
+                </div>
+                <div class="svc-card__chips">
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:postgresql" aria-hidden="true"></iconify-icon>
+                    PostgreSQL
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:mysql" aria-hidden="true"></iconify-icon>
+                    MySQL
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:mongodb" aria-hidden="true"></iconify-icon>
+                    MongoDB
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:redis" aria-hidden="true"></iconify-icon>
+                    Redis
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:elasticsearch" aria-hidden="true"></iconify-icon>
+                    Elasticsearch
+                  </span>
+                </div>
+                <div class="svc-card__footer">
+                  <div class="svc-price">
+                    Starting at <span class="amount">$1,799</span>
+                  </div>
+                  <div class="svc-cta">
+                    <a href="#contact" class="svc-btn svc-btn--primary">Get Quote</a>
+                    <a href="#contact" class="svc-btn svc-btn--secondary">Learn More</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- API Development Service -->
+              <div class="svc-card reveal" data-category="api">
+                <div class="svc-card__header">
+                  <div class="svc-card__icon">
+                    <iconify-icon icon="tabler:api" aria-hidden="true"></iconify-icon>
+                  </div>
+                </div>
+                <h3 class="svc-card__title">API Development & Integration</h3>
+                <p class="svc-card__desc">RESTful and GraphQL API development with comprehensive documentation. Third-party integrations, microservices architecture, and API security implementation.</p>
+                <div class="svc-card__features">
+                  <ul>
+                    <li>RESTful and GraphQL API development</li>
+                    <li>API authentication and rate limiting</li>
+                    <li>Comprehensive API documentation</li>
+                    <li>Third-party service integrations</li>
+                    <li>Microservices architecture and SDK development</li>
+                  </ul>
+                </div>
+                <div class="svc-card__chips">
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:graphql" aria-hidden="true"></iconify-icon>
+                    GraphQL
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:swagger" aria-hidden="true"></iconify-icon>
+                    Swagger
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:express" aria-hidden="true"></iconify-icon>
+                    Express
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:fastapi" aria-hidden="true"></iconify-icon>
+                    FastAPI
+                  </span>
+                </div>
+                <div class="svc-card__footer">
+                  <div class="svc-price">
+                    Starting at <span class="amount">$2,199</span>
+                  </div>
+                  <div class="svc-cta">
+                    <a href="#contact" class="svc-btn svc-btn--primary">Get Quote</a>
+                    <a href="#contact" class="svc-btn svc-btn--secondary">Learn More</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Cybersecurity Services -->
+              <div class="svc-card reveal svc-card--premium" data-category="security">
+                <div class="svc-card__badge badge-premium">Premium</div>
+                <div class="svc-card__header">
+                  <div class="svc-card__icon">
+                    <iconify-icon icon="tabler:shield-lock" aria-hidden="true"></iconify-icon>
+                  </div>
+                </div>
+                <h3 class="svc-card__title">Cybersecurity Services</h3>
+                <p class="svc-card__desc">Comprehensive security assessments, penetration testing, and secure application development. OWASP compliance and vulnerability management with proven 97% threat detection accuracy.</p>
+                <div class="svc-card__features">
+                  <ul>
+                    <li>Security assessments and penetration testing</li>
+                    <li>Application security hardening and OWASP compliance</li>
+                    <li>SAST and DAST security testing</li>
+                    <li>Vulnerability management and threat detection</li>
+                    <li>Security compliance consulting (SOC 2, GDPR)</li>
+                  </ul>
+                </div>
+                <div class="svc-card__chips">
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:owasp" aria-hidden="true"></iconify-icon>
+                    OWASP
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:snyk" aria-hidden="true"></iconify-icon>
+                    Snyk
+                  </span>
+                </div>
+                <div class="svc-card__footer">
+                  <div class="svc-price">
+                    Contact for Quote
+                  </div>
+                  <div class="svc-cta">
+                    <a href="#contact" class="svc-btn svc-btn--primary">Get Quote</a>
+                    <a href="#portfolio" class="svc-btn svc-btn--secondary">View Work</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- UI/UX Design Service -->
+              <div class="svc-card reveal" data-category="ui-ux">
+                <div class="svc-card__header">
+                  <div class="svc-card__icon">
+                    <iconify-icon icon="tabler:palette" aria-hidden="true"></iconify-icon>
+                  </div>
+                </div>
+                <h3 class="svc-card__title">UI/UX Design</h3>
+                <p class="svc-card__desc">User research, wireframing, and interactive prototype development. Design system creation and developer-ready specifications for seamless handoff.</p>
+                <div class="svc-card__features">
+                  <ul>
+                    <li>User research and persona development</li>
+                    <li>Wireframing and information architecture</li>
+                    <li>Interactive prototypes and user testing</li>
+                    <li>Design system and component library creation</li>
+                    <li>Developer-ready specifications and assets</li>
+                  </ul>
+                </div>
+                <div class="svc-card__chips">
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:figma" aria-hidden="true"></iconify-icon>
+                    Figma
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:adobexd" aria-hidden="true"></iconify-icon>
+                    Adobe XD
+                  </span>
+                </div>
+                <div class="svc-card__footer">
+                  <div class="svc-price">
+                    Starting at <span class="amount">$1,599</span>
+                  </div>
+                  <div class="svc-cta">
+                    <a href="#contact" class="svc-btn svc-btn--primary">Get Quote</a>
+                    <a href="#contact" class="svc-btn svc-btn--secondary">Learn More</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Maintenance and Support Service -->
+              <div class="svc-card reveal" data-category="maintenance">
+                <div class="svc-card__header">
+                  <div class="svc-card__icon">
+                    <iconify-icon icon="tabler:lifebuoy" aria-hidden="true"></iconify-icon>
+                  </div>
+                </div>
+                <h3 class="svc-card__title">Maintenance & Support</h3>
+                <p class="svc-card__desc">Ongoing maintenance with SLA guarantees, proactive monitoring, and 24/7 support. Regular updates, security patches, and performance optimization included.</p>
+                <div class="svc-card__features">
+                  <ul>
+                    <li>24/7 monitoring and on-call support</li>
+                    <li>Regular security updates and patches</li>
+                    <li>Performance monitoring and optimization</li>
+                    <li>Backup management and disaster recovery</li>
+                    <li>SLA guarantees with uptime monitoring</li>
+                  </ul>
+                </div>
+                <div class="svc-card__chips">
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:sentry" aria-hidden="true"></iconify-icon>
+                    Sentry
+                  </span>
+                  <span class="svc-chip">
+                    <iconify-icon icon="simple-icons:datadog" aria-hidden="true"></iconify-icon>
+                    Datadog
+                  </span>
+                </div>
+                <div class="svc-card__footer">
+                  <div class="svc-price">
+                    Starting at <span class="amount">$599</span>/month
+                  </div>
+                  <div class="svc-cta">
+                    <a href="#contact" class="svc-btn svc-btn--primary">Get Quote</a>
+                    <a href="#contact" class="svc-btn svc-btn--secondary">Learn More</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Consulting Services -->
+              <div class="svc-card reveal" data-category="consulting">
+                <div class="svc-card__header">
+                  <div class="svc-card__icon">
+                    <iconify-icon icon="tabler:confetti" aria-hidden="true"></iconify-icon>
+                  </div>
+                </div>
+                <h3 class="svc-card__title">Consulting Services</h3>
+                <p class="svc-card__desc">Strategic technology consulting, architecture reviews, and team enablement. MVP scoping, technical roadmaps, and digital transformation guidance for growing businesses.</p>
+                <div class="svc-card__features">
+                  <ul>
+                    <li>Architecture reviews and technical audits</li>
+                    <li>Technology roadmap and strategy development</li>
+                    <li>Team enablement and developer training</li>
+                    <li>MVP scoping and product development planning</li>
+                    <li>Digital transformation and modernization consulting</li>
+                  </ul>
+                </div>
+                <div class="svc-card__footer">
+                  <div class="svc-price">
+                    Starting at <span class="amount">$199</span>/hour
+                  </div>
+                  <div class="svc-cta">
+                    <a href="#contact" class="svc-btn svc-btn--primary">Get Quote</a>
+                    <a href="#contact" class="svc-btn svc-btn--secondary">Learn More</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- No Results Placeholder -->
+            <div class="svc-no-results" id="noResults">
+              <iconify-icon icon="tabler:search" aria-hidden="true"></iconify-icon>
+              <h3>No services found</h3>
+              <p>Try selecting a different category or view all services.</p>
             </div>
           </div>
         </section>
-        <!-- ==== Services Section End ==== -->
+        <!-- ==== SERVICES: end ==== -->
         <!-- ==== Portfolio Section Start ==== -->
         <section class="portfolio section" id="portfolio">
           <div class="container">
@@ -1107,5 +1615,6 @@
     ></script>
     <script src="./js/script.js"></script>
     <script src="./js/style-switcher.js"></script>
+    <script src="./assets/js/services.js"></script>
   </body>
 </html>
