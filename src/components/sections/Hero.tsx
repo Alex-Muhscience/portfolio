@@ -169,7 +169,7 @@ export function Hero() {
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-navy-900 via-blue-900 to-navy-900" />
         <motion.div className="absolute top-1/4 -left-32 w-96 h-96 bg-blue-600/30 rounded-full blur-3xl" animate={{ x: [0, 50, 0], y: [0, 30, 0], scale: [1, 1.2, 1] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }} />
-        <motion.div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl" animate={{ x: [0, -50, 0], y: [0, -30, 0], scale: [1, 1.1, 1] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }} />
+        <motion.div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-white/20 rounded-full blur-3xl" animate={{ x: [0, -50, 0], y: [0, -30, 0], scale: [1, 1.1, 1] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }} />
         <motion.div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-3xl" animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.5, 0.3] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }} />
         <ParticleBackground />
         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`, backgroundSize: '60px 60px' }} />
@@ -188,7 +188,7 @@ export function Hero() {
             <motion.h1 variants={itemVariants} className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
               <span className="text-white">Hello, I'm</span>
               <br />
-              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent font-extrabold">Alex M. Kamau</span>
+              <span className="bg-gradient-to-r from-blue-400 via-white to-pink-400 bg-clip-text text-transparent font-extrabold">Alex M. Kamau</span>
             </motion.h1>
 
             <motion.div variants={itemVariants} className="mb-8">
@@ -196,17 +196,17 @@ export function Hero() {
                 <Code2 className="w-6 h-6 text-blue-400" />
                 <span>Computer Scientist</span>
                 <span className="text-slate-500">|</span>
-                <Cpu className="w-6 h-6 text-purple-400" />
+                <Cpu className="w-6 h-6 text-white" />
                 <span>Systems Architect</span>
               </h2>
             </motion.div>
 
             <motion.p variants={itemVariants} className="text-lg md:text-xl mb-8 max-w-2xl mx-auto md:mx-0 leading-relaxed text-slate-300">
-              Building <span className="text-blue-400 font-semibold">scalable systems</span> with <span className="text-purple-400 font-semibold">security by design</span>. Driving digital transformation across Kenya and East Africa through innovative systems engineering.
+              Building <span className="text-blue-400 font-semibold">scalable systems</span> with <span className="text-white font-semibold">security by design</span>. Driving digital transformation across Kenya and East Africa through innovative systems engineering.
             </motion.p>
 
             <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start mb-10">
-              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-6 text-lg rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border-0" onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
+              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-white hover:from-blue-700 hover:to-gray-200 text-white px-8 py-6 text-lg rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border-0" onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
                 <Globe className="w-5 h-5 mr-2" />
                 View Projects
               </Button>
@@ -228,7 +228,7 @@ export function Hero() {
           <motion.div variants={itemVariants} className="flex justify-center md:justify-end order-1 md:order-2" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ perspective: 1000 }}>
             <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}>
               <motion.div style={{ rotateX, rotateY }} className="relative">
-                <div className="absolute -inset-4 bg-gradient-to-r from-blue-600/30 to-purple-600/30 rounded-full blur-2xl" />
+                <div className="absolute -inset-4 bg-gradient-to-r from-blue-600/30 to-white/30 rounded-full blur-2xl" />
                 <motion.div whileHover={{ scale: 1.02 }} transition={{ duration: 0.3 }} className="relative w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-white/20 shadow-2xl">
                   <Image src="/images/profile.jpg" alt="Alex M. Kamau" fill className="object-cover" priority />
                   <motion.div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent" animate={{ x: ["-100%", "100%"] }} transition={{ duration: 3, repeat: Infinity, repeatDelay: 5 }} />
@@ -236,7 +236,7 @@ export function Hero() {
                 <motion.div className="absolute -top-2 -right-2 w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center shadow-lg" animate={{ rotate: [0, 360] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }}>
                   <Code2 className="w-5 h-5 text-white" />
                 </motion.div>
-                <motion.div className="absolute -bottom-2 -left-2 w-10 h-10 bg-purple-500 rounded-xl flex items-center justify-center shadow-lg" animate={{ rotate: [360, 0] }} transition={{ duration: 15, repeat: Infinity, ease: "linear" }}>
+                <motion.div className="absolute -bottom-2 -left-2 w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg" animate={{ rotate: [360, 0] }} transition={{ duration: 15, repeat: Infinity, ease: "linear" }}>
                   <Cpu className="w-5 h-5 text-white" />
                 </motion.div>
               </motion.div>
