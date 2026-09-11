@@ -4,8 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion"
 import type { ExperienceTimelineProps } from "@/types/experience"
 import TimelineItem from "./TimelineItem"
 import { useScrollProgress } from "@/hooks/useScrollProgress"
-import { TrendingUp, Award, Target, Sparkles, Rocket, Code2, Database, Shield } from "lucide-react"
-import { experiences } from "@/data/experience"
+import { TrendingUp, Award, Target, Sparkles, Rocket } from "lucide-react"
 
 export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
   const { containerRef } = useScrollProgress()
@@ -16,33 +15,6 @@ export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
 
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"])
   const titleOpacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [1, 1, 0.8, 0.6])
-
-  const stats = [
-    {
-      icon: Code2,
-      value: "4+",
-      label: "Years Experience",
-      color: "from-blue-500 to-cyan-500"
-    },
-    {
-      icon: Database,
-      value: "10+",
-      label: "Systems Built",
-      color: "from-purple-500 to-pink-500"
-    },
-    {
-      icon: Shield,
-      value: "99.9%",
-      label: "System Reliability",
-      color: "from-green-500 to-emerald-500"
-    },
-    {
-      icon: Rocket,
-      value: "300%",
-      label: "Performance Growth",
-      color: "from-orange-500 to-red-500"
-    }
-  ]
 
   return (
     <section
@@ -168,36 +140,6 @@ export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
             Each milestone represents deeper expertise and broader impact in shaping the future of technology.
           </motion.p>
 
-          {/* Animated Stats Grid */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            viewport={{ once: true }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto"
-          >
-            {stats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ scale: 0, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                transition={{
-                  duration: 0.5,
-                  delay: 0.8 + index * 0.1,
-                  type: "spring",
-                  stiffness: 200
-                }}
-                viewport={{ once: true }}
-                className="text-center p-6 rounded-2xl bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-sm border border-border/50 hover:border-primary/30 transition-all duration-300 group"
-              >
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}>
-                  <stat.icon className="w-6 h-6 text-white" />
-                </div>
-                <div className="text-3xl md:text-4xl font-bold text-primary mb-1">{stat.value}</div>
-                <div className="text-sm text-muted-foreground font-medium">{stat.label}</div>
-              </motion.div>
-            ))}
-          </motion.div>
         </motion.div>
 
         {/* Experience Cards Grid */}
@@ -308,7 +250,7 @@ export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
 
           <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
             With a proven track record of building scalable systems and leading technical teams,
-            I'm always excited to take on new challenges and drive innovation in emerging technologies.
+            I&apos;m always excited to take on new challenges and drive innovation in emerging technologies.
           </p>
 
           <motion.div
@@ -319,7 +261,7 @@ export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
             className="flex items-center justify-center gap-2 text-primary"
           >
             <Rocket className="w-5 h-5" />
-            <span className="text-sm font-medium">Let's build something extraordinary</span>
+            <span className="text-sm font-medium">Let&apos;s build something extraordinary</span>
           </motion.div>
         </motion.div>
       </div>

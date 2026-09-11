@@ -1,33 +1,54 @@
-import { Building2, TrendingUp, Code2, Server, Cpu, Globe } from "lucide-react"
+import { Building2, TrendingUp, Code2, Server } from "lucide-react"
 import type { ExperienceItem } from "@/types/experience"
 
 export const experiences: ExperienceItem[] = [
   {
+    id: "afriasia-career-center",
+    company: "AfriAsia Career Development Center",
+    role: "Full-Stack Developer",
+    duration: "08/2026 - Present",
+    location: "Juja, Kenya",
+    website: "https://afriasiacareercenter.com/",
+    isCurrent: true,
+    group: "EuroAfrique Corporate Skills sister companies",
+    impact: [
+      "Built and launched a premium-client career development website as a sister-company platform to EuroAfrique Corporate Skills",
+      "Adapted reusable full-stack patterns into a focused digital experience for premium career development services",
+      "Handled responsive implementation, structured content, production deployment, and search-ready page architecture"
+    ],
+    systems: ["Premium Career Development Website", "Structured Content Platform", "Production Deployment"],
+    technologies: ["Laravel", "PHP", "JavaScript", "MySQL", "Cloudflare", "GitHub Actions"],
+    outcomes: ["Built in August 2026", "Live at afriasiacareercenter.com", "Premium-client experience launched"],
+    icon: Code2,
+    accentColor: "from-amber-500 to-orange-500"
+  },
+  {
     id: "chania-publishers",
     company: "Chania Publishers Limited",
-    role: "IT Department Lead",
-    duration: "2026 - Present",
-    location: "Nairobi, Kenya",
+    role: "Full-Stack Developer (Sole Technical Owner)",
+    duration: "12/2025 - Present",
+    location: "Juja, Kenya",
     website: "https://chaniapublishers.com/",
     isCurrent: true,
+    group: "EuroAfrique Corporate Skills sister companies",
     impact: [
-      "Architected and maintained full digital infrastructure for Kenya's leading educational publisher",
-      "Engineered automated publishing workflows reducing production time by 40%",
-      "Implemented technical SEO strategies driving 300% increase in organic traffic",
-      "Designed scalable cloud architecture supporting 10,000+ daily active users"
+      "Designed, developed, and maintain a Laravel corporate training platform for an alumni network of 25,000+ professionals across 50+ countries",
+      "Built MySQL schemas, RESTful services, M-Pesa and card payment workflows, webhooks, fee calculations, and payment verification",
+      "Configured Redis, Cloudflare edge caching, GitHub Actions, Linux VPS deployments, cron jobs, and queue workers",
+      "Reduced average latency by approximately 35% and manual operational work by approximately 60%"
     ],
     systems: [
-      "Digital Publishing Platform",
-      "Content Management System",
-      "Automated Distribution Pipeline",
-      "Analytics Dashboard"
+      "Corporate Training Platform",
+      "Payment and Enrolment Workflows",
+      "Publishing Automation",
+      "SEO and Analytics Infrastructure"
     ],
     technologies: ["PHP", "Laravel", "MySQL", "AWS", "Docker", "Nginx", "Redis"],
     outcomes: [
-      "40% faster publishing cycles",
-      "300% SEO traffic growth",
-      "99.9% system uptime",
-      "Zero security incidents"
+      "25,000+ professionals supported",
+      "50+ countries reached",
+      "35% lower average latency",
+      "60% less manual operations"
     ],
     icon: Building2,
     accentColor: "from-blue-500 to-cyan-500"
@@ -35,37 +56,64 @@ export const experiences: ExperienceItem[] = [
   {
     id: "euroafrique-corporate",
     company: "EuroAfrique Corporate Skills",
-    role: "IT Department Lead",
-    duration: "2025 - Present",
-    location: "Nairobi, Kenya",
+    role: "Full-Stack Developer (Sole Technical Owner)",
+    duration: "08/2025 - Present",
+    location: "Juja, Kenya",
     website: "https://www.euroafriquecorporateskills.com/",
     isCurrent: true,
+    group: "EuroAfrique Corporate Skills sister companies",
     impact: [
-      "Built comprehensive corporate training platform from ground up",
-      "Automated enrollment and certification systems reducing manual work by 70%",
-      "Implemented DevOps practices enabling 3x faster deployment cycles",
-      "Architected microservices infrastructure for scalability"
+      "Designed and developed a complete Laravel Learning Management System from concept to production",
+      "Implemented RBAC, automated enrolment, payment verification, and protected access to premium learning content",
+      "Improved page speed by approximately 60% through caching, asset optimization, and efficient resource delivery",
+      "Managed hosting, DNS, SSL, security hardening, deployments, monitoring, and technical SEO"
     ],
-    systems: [
-      "Corporate LMS Platform",
-      "Automated Enrollment System",
-      "Certification Engine",
-      "Performance Analytics"
-    ],
+    systems: ["Learning Management System", "Role-Based Access Control", "Payment and Course Access", "Technical SEO Architecture"],
     technologies: ["Next.js", "PostgreSQL", "Node.js", "Docker", "AWS", "GitHub Actions"],
-    outcomes: [
-      "70% reduction in manual processing",
-      "500+ active corporate users",
-      "3x faster feature releases",
-      "60% improvement in training efficiency"
-    ],
+    outcomes: ["60% faster page speed", "Secure premium content access", "Production deployment owned end to end", "Improved organic search visibility"],
     icon: TrendingUp,
     accentColor: "from-green-500 to-emerald-500"
   },
   {
+    id: "freelance-tutor",
+    company: "Freelance | Self-Employed",
+    role: "Freelance Web Development Tutor",
+    duration: "05/2025 - 08/2025",
+    location: "Remote",
+    impact: [
+      "Delivered project-based mentorship across HTML, CSS, JavaScript, React, PHP, Laravel, Node.js, REST APIs, SQL, Git, and deployment workflows",
+      "Guided learners through requirements analysis, system design, development, debugging, testing, deployment, and maintenance",
+      "Taught GitHub workflows, code organization, debugging, and software engineering practices",
+      "Coached a learner to design, build, and deploy a full-stack web application within six weeks"
+    ],
+    systems: ["Project-Based Curriculum", "Full-Stack Applications", "Deployment Workflows", "Career Coaching"],
+    technologies: ["JavaScript", "React", "PHP", "Laravel", "Node.js", "SQL", "Git"],
+    outcomes: ["First full-stack application shipped within six weeks", "Production-focused software practices taught"],
+    icon: Code2,
+    accentColor: "from-cyan-500 to-blue-500"
+  },
+  {
+    id: "gicatech-network-technician",
+    company: "Gicatech Enterprise Solutions",
+    role: "Network Technician",
+    duration: "08/2024 - 02/2025",
+    location: "Kisii County, Kenya",
+    impact: [
+      "Installed, configured, and maintained wired and wireless network infrastructure for business clients",
+      "Diagnosed network performance, connectivity, and hardware issues to minimize downtime",
+      "Configured routers and firewalls, access controls, and basic network hardening measures",
+      "Performed preventive maintenance, monitoring, and infrastructure health checks"
+    ],
+    systems: ["Wired and Wireless Networks", "Router and Firewall Configuration", "Infrastructure Monitoring", "Preventive Maintenance"],
+    technologies: ["Networking", "Firewalls", "Routing", "Infrastructure Monitoring"],
+    outcomes: ["Improved network reliability", "Reduced client connectivity downtime"],
+    icon: Server,
+    accentColor: "from-slate-500 to-slate-700"
+  },
+  {
     id: "independent-projects",
     company: "Muhscience Tech iLabs",
-    role: "Founder & Systems Architect",
+    role: "Independent Full-Stack Developer",
     duration: "2024 - Present",
     location: "Nairobi, Kenya",
     isCurrent: true,
@@ -95,13 +143,13 @@ export const experiences: ExperienceItem[] = [
     id: "secunets-intern",
     company: "Secunets Technologies Ltd",
     role: "Software Engineer Intern",
-    duration: "2024",
-    location: "Nairobi, Kenya",
+    duration: "05/2024 - 08/2024",
+    location: "Kikuyu, Kenya",
     impact: [
-      "Developed secure web applications following cybersecurity best practices",
-      "Contributed to system integration projects for enterprise clients",
-      "Learned enterprise development workflows and DevOps methodologies",
-      "Built foundation in secure coding and architecture principles"
+      "Built a Flask password manager using SQLite, AES encryption, PBKDF2 key derivation, and biometric authentication",
+      "Identified more than 15 access-control vulnerabilities and reduced the simulated attack surface by approximately 30%",
+      "Contributed to a GSMA SAS-UP compliance audit at Sintel Security Print Solutions",
+      "Provided backend development and cybersecurity support during the National Research Fund Hackathon"
     ],
     systems: [
       "Secure Web Applications",
@@ -111,10 +159,10 @@ export const experiences: ExperienceItem[] = [
     ],
     technologies: ["React", "Node.js", "MongoDB", "Express", "JWT", "Python"],
     outcomes: [
-      "Completed internship with distinction",
-      "Production-ready applications delivered",
-      "Strong foundation in security practices",
-      "Transitioned to full-time roles"
+      "15+ access-control vulnerabilities identified",
+      "30% lower simulated attack surface",
+      "GSMA SAS-UP audit experience",
+      "Hackathon backend and security support"
     ],
     icon: Server,
     accentColor: "from-orange-500 to-amber-500"

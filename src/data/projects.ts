@@ -2,6 +2,7 @@ export interface Project {
   id: string
   title: string
   category: string
+  role?: string
   description: string
   problem: string
   solution: string
@@ -17,45 +18,48 @@ export interface Project {
   github?: string
   demo?: string
   image: string
+  favicon?: string
   featured: boolean
   year: number
 }
 
 export const projects: Project[] = [
   {
-    id: "utdrs",
-    title: "UTDRS - Unified Threat Detection & Response System",
-    category: "Cybersecurity",
-    description: "AI-driven platform for real-time threat detection and automated response in enterprise environments.",
-    problem: "Organizations struggle with overwhelming security alerts and slow response times to cyber threats, leading to data breaches and financial losses.",
-    solution: "Built an intelligent system that uses machine learning to analyze security logs, correlate threats, and automate response actions while providing human oversight.",
-    architecture: "Microservices architecture with event-driven processing, distributed ML inference, and secure API gateways for enterprise integration.",
-    technologies: ["Python", "TensorFlow", "Kubernetes", "Elasticsearch", "Kafka", "FastAPI"],
+    id: "afriasia-career-center",
+    title: "AfriAsia Career Development Center",
+    category: "Full-stack Engineering",
+    role: "Full-stack developer and sole technical owner",
+    description: "Premium career development center website built in August 2026 as a sister-company counterpart to the EuroAfrique platform for premium clients.",
+    problem: "Premium clients needed a dedicated digital presence for career development services, with a clear experience tailored to their audience rather than the broader EuroAfrique platform.",
+    solution: "Built and deployed a polished career development center website with reusable full-stack patterns, responsive interfaces, structured content, and a production-ready client experience.",
+    architecture: "Production web application built around reusable Laravel and modern frontend patterns, with managed hosting, deployment, and search-ready content architecture.",
+    technologies: ["Laravel", "PHP", "JavaScript", "MySQL", "Cloudflare", "GitHub Actions"],
     challenges: [
-      "Processing high-volume security logs in real-time",
-      "Reducing false positives while maintaining threat detection accuracy",
-      "Ensuring system reliability in enterprise environments",
-      "Implementing ethical AI decision-making frameworks"
+      "Creating a premium client-facing experience with a distinct visual identity",
+      "Structuring career development content for clear discovery and conversion",
+      "Delivering a responsive experience across mobile and desktop devices",
+      "Maintaining reliable production deployment and search-ready content"
     ],
     outcomes: [
-      "97% accuracy in threat detection",
-      "60% reduction in mean time to respond (MTTR)",
-      "Top 5 finalist in Mozilla Responsible Computing Challenge 2025"
+      "Live at afriasiacareercenter.com",
+      "Dedicated premium-client sister-company experience delivered",
+      "Responsive production website launched"
     ],
     metrics: [
-      { label: "Detection Accuracy", value: "97%" },
-      { label: "MTTR Reduction", value: "60%" },
-      { label: "False Positive Rate", value: "< 2%" }
+      { label: "Status", value: "Live" },
+      { label: "Audience", value: "Premium" },
+      { label: "Delivery", value: "Production" }
     ],
     lessons: [
-      "The importance of explainable AI in security systems",
-      "Building trust through transparency in automated decision-making",
-      "The value of human-AI collaboration in high-stakes environments"
+      "A focused audience benefits from a focused product experience",
+      "Reusable platform patterns can support distinct client brands",
+      "Clear content architecture is as important as implementation quality"
     ],
-    github: "https://github.com/Alex-Muhscience/UTDRS-Capstone-Project.git",
-    image: "/images/projects/utdrs.jpg",
+    demo: "https://afriasiacareercenter.com",
+    favicon: "/images/projects/afriasia-career-center.ico",
+    image: "/images/projects/afriasia-career-center.jpg",
     featured: true,
-    year: 2024
+    year: 2026
   },
   {
     id: "healthcare-platform",
@@ -88,7 +92,7 @@ export const projects: Project[] = [
       "The value of iterative development with healthcare stakeholders"
     ],
     image: "/images/projects/healthcare.jpg",
-    featured: true,
+    featured: false,
     year: 2023
   },
   {
@@ -231,9 +235,10 @@ export const projects: Project[] = [
     id: "euroafrique-platform",
     title: "EuroAfrique Corporate Skills Platform",
     category: "Full-stack Engineering",
-    description: "Comprehensive corporate training and development platform serving professional skill enhancement across East Africa.",
-    problem: "Organizations needed a centralized platform for corporate training, skill development, and professional certification programs.",
-    solution: "Built a full-featured LMS with course management, progress tracking, certification modules, and administrative dashboards.",
+    role: "Full-stack developer and sole technical owner",
+    description: "Scalable corporate training platform with automated publishing, enrolment, payment processing, RBAC, and multi-regional SEO for an international alumni network.",
+    problem: "A distributed professional network needed a reliable way to publish programmes, manage enrolment, verify payments, and report on learning activity across more than 50 countries.",
+    solution: "Built and operated the Laravel platform end to end, including MySQL architecture, Redis and Cloudflare caching, M-Pesa and card payments, queues, cron automation, CI/CD, and production infrastructure.",
     architecture: "Modern web application with responsive design, secure authentication, and scalable backend infrastructure.",
     technologies: ["PHP", "Laravel", "MariaDB", "CSS", "JavaScript", "Bootstrap", "CMS"],
     challenges: [
@@ -243,10 +248,9 @@ export const projects: Project[] = [
       "Integrating payment and enrollment systems"
     ],
     outcomes: [
-      "Successfully deployed and actively used by multiple organizations",
-      "Improved training program efficiency by 60%",
-      "Enhanced user engagement and completion rates",
-      "Established as a leading corporate training platform"
+      "Supports 25,000+ professionals across 50+ countries",
+      "Reduced average application latency by approximately 35%",
+      "Reduced manual operational work by approximately 60%"
     ],
     metrics: [
       { label: "Active Users", value: "500+" },
@@ -259,6 +263,7 @@ export const projects: Project[] = [
       "The value of comprehensive analytics in learning management"
     ],
     demo: "https://www.euroafriquecorporateskills.com/",
+    favicon: "/images/projects/euroafrique.ico",
     image: "/images/projects/euroafrique.jpg",
     featured: true,
     year: 2025
@@ -267,9 +272,10 @@ export const projects: Project[] = [
     id: "chania-publishers",
     title: "Chania Publishers Digital Platform",
     category: "Web Systems",
-    description: "Modern digital publishing platform for educational content distribution and content management system.",
-    problem: "Traditional publishing needed modernization for digital content delivery, online ordering, and inventory management.",
-    solution: "Developed a comprehensive e-commerce and content management platform with online ordering, digital downloads, and administrative tools.",
+    role: "Full-stack developer and sole technical owner",
+    description: "End-to-end Learning Management System with secure authentication, automated enrolment, payment processing, protected video content, and production deployment.",
+    problem: "An educational publisher needed to move from traditional publishing workflows to a secure digital learning platform with paid course access and dependable content delivery.",
+    solution: "Designed and built the Laravel LMS with RBAC, payment verification, protected premium content, optimized delivery, technical SEO, and the hosting and deployment systems around it.",
     architecture: "Full-stack web application with secure payment integration, content delivery network, and robust database management.",
     technologies: ["PHP", "Laravel", "MariaDB", "CSS", "JavaScript", "Bootstrap", "CMS"],
     challenges: [
@@ -279,10 +285,9 @@ export const projects: Project[] = [
       "Ensuring compatibility with various devices and browsers"
     ],
     outcomes: [
-      "Increased online sales by 300%",
-      "Expanded digital content availability",
-      "Improved operational efficiency for publishing workflows",
-      "Enhanced customer experience with modern ordering system"
+      "Improved page speed by approximately 60%",
+      "Production-ready LMS deployed and maintained end to end",
+      "Secure enrolment and premium content access workflows"
     ],
     metrics: [
       { label: "Online Sales Growth", value: "300%" },
@@ -295,6 +300,7 @@ export const projects: Project[] = [
       "Building systems that serve both B2B and B2C markets"
     ],
     demo: "https://chaniapublishers.com/",
+    favicon: "/images/projects/chania.ico",
     image: "/images/projects/chania.jpg",
     featured: true,
     year: 2026

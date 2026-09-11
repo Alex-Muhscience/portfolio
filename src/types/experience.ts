@@ -14,6 +14,7 @@ export interface ExperienceItem {
   accentColor?: string
   website?: string
   isCurrent?: boolean
+  group?: string
 }
 
 export interface TimelineItemProps {

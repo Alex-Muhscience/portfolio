@@ -1,18 +1,16 @@
 'use client'
 
 import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { AnimatePresence, MotionConfig, motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Menu, X, Download, ExternalLink } from "lucide-react"
 import { ThemeSwitcher } from "./ThemeSwitcher"
+import { Logo } from "./Logo"
 import Link from "next/link"
 
 const navigation = [
-  { name: "Home", href: "#home" },
-  { name: "About", href: "#about" },
+  { name: "Work", href: "#projects" },
   { name: "Experience", href: "#experience" },
-  { name: "Skills", href: "#skills" },
-  { name: "Projects", href: "#projects" },
   { name: "Contact", href: "#contact" },
 ]
 
@@ -40,35 +38,20 @@ export function Header() {
   }
 
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-        ? "bg-background/95 backdrop-blur-md border-b shadow-sm"
-        : "bg-transparent"
-        }`}
-    >
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="font-bold text-xl"
-          >
-            <Link href="/" className="text-foreground hover:text-primary transition-colors">
-              Alex M. Kamau
-            </Link>
-          </motion.div>
+      <header className={`site-header ${isScrolled ? "site-header-scrolled" : ""}`}>
+      <MotionConfig reducedMotion="user" transition={{ duration: 0.2 }}>
+      <div className="portfolio-shell header-shell">
+        <div className="header-row">
+          <div className="site-logo"><Logo /></div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="site-nav hidden md:flex" aria-label="Primary navigation">
             {navigation.map((item) => (
               item.href.startsWith('#') ? (
                 <button
                   key={item.name}
                   onClick={() => scrollToSection(item.href)}
-                  className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium"
+                  className="site-nav-link"
                 >
                   {item.name}
                 </button>
@@ -76,7 +59,7 @@ export function Header() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium"
+                  className="site-nav-link"
                 >
                   {item.name}
                 </Link>
@@ -85,16 +68,16 @@ export function Header() {
           </nav>
 
           {/* View CV Button */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="site-header-actions hidden md:flex">
             <ThemeSwitcher />
-            <Button asChild size="sm" className="gap-2">
+            <Button asChild size="sm" className="header-resume">
               <a
                 href="https://flowcv.com/resume/t249m8own6"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <Download className="w-4 h-4" />
-                View CV
+                Résumé
                 <ExternalLink className="w-3 h-3" />
               </a>
             </Button>
@@ -102,7 +85,7 @@ export function Header() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2"
+            className="mobile-menu-button"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -121,16 +104,16 @@ export function Header() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="md:hidden border-t bg-background/95 backdrop-blur-md"
+                transition={{ duration: 0.2 }}
+              className="mobile-menu md:hidden"
             >
-              <div className="space-y-4">
+              <div className="mobile-menu-links">
                 {navigation.map((item) => (
                   item.href.startsWith('#') ? (
                     <button
                       key={item.name}
                       onClick={() => scrollToSection(item.href)}
-                      className="block w-full text-left px-4 py-2 text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                      className="mobile-menu-link"
                     >
                       {item.name}
                     </button>
@@ -138,7 +121,7 @@ export function Header() {
                     <Link
                       key={item.name}
                       href={item.href}
-                      className="block px-4 py-2 text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                      className="mobile-menu-link"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       {item.name}
@@ -146,14 +129,14 @@ export function Header() {
                   )
                 ))}
               </div>
-              <div className="px-4 pt-4 border-t">
-                <div className="flex items-center gap-4 mb-4">
+              <div className="mobile-menu-actions">
+                <div>
                   <ThemeSwitcher />
                 </div>
-                <Button asChild className="w-full gap-2">
+                <Button asChild className="header-resume">
                   <a href="https://flowcv.com/resume/t249m8own6" target="_blank" rel="noopener noreferrer">
                     <Download className="w-4 h-4" />
-                    View CV
+                      Résumé
                     <ExternalLink className="w-3 h-3" />
                   </a>
                 </Button>
@@ -162,6 +145,7 @@ export function Header() {
           )}
         </AnimatePresence>
       </div>
-    </motion.header>
+      </MotionConfig>
+      </header>
   )
 }

@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/shared/Header";
 import { Footer } from "@/components/shared/Footer";
 import { FloatingWhatsApp } from "@/components/shared/FloatingWhatsApp";
+import { ThemeProvider } from "next-themes";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,23 +18,23 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Alex M. Kamau - Computer Scientist & Systems Architect",
-    template: "%s | Alex M. Kamau"
+    default: "Alex Murimi Kamau - Full-Stack Developer",
+    template: "%s | Alex Murimi Kamau"
   },
-  description: "Computer Scientist specializing in distributed systems, cybersecurity, and full-stack engineering. Building scalable systems with security by design.",
+  description: "Full-Stack Developer specializing in Laravel, React, Next.js, PHP, DevOps, secure application design, and performance engineering.",
   keywords: [
-    "Computer Scientist",
-    "Systems Architect",
     "Full-Stack Developer",
+    "Laravel Developer",
+    "React Developer",
     "Cybersecurity",
     "Distributed Systems",
     "AI/ML",
     "Kenya",
     "Software Engineering"
   ],
-  authors: [{ name: "Alex M. Kamau" }],
-  creator: "Alex M. Kamau",
-  publisher: "Alex M. Kamau",
+  authors: [{ name: "Alex Murimi Kamau" }],
+  creator: "Alex Murimi Kamau",
+  publisher: "Alex Murimi Kamau",
   robots: {
     index: true,
     follow: true,
@@ -48,19 +49,19 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://alex-kamau.vercel.app',
-    title: 'Alex M. Kamau - Computer Scientist & Systems Architect',
-    description: 'Computer Scientist specializing in distributed systems, cybersecurity, and full-stack engineering. Building scalable systems with security by design.',
-    siteName: 'Alex M. Kamau Portfolio',
+    url: 'https://portfolio-alex-m-kamau.vercel.app',
+    title: 'Alex Murimi Kamau - Full-Stack Developer',
+    description: 'Full-Stack Developer specializing in Laravel, React, Next.js, PHP, DevOps, and secure high-performance web applications.',
+    siteName: 'Alex Murimi Kamau Portfolio',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Alex M. Kamau - Computer Scientist & Systems Architect',
-    description: 'Computer Scientist specializing in distributed systems, cybersecurity, and full-stack engineering.',
+    title: 'Alex Murimi Kamau - Full-Stack Developer',
+    description: 'Full-Stack Developer specializing in Laravel, React, Next.js, PHP, DevOps, and secure high-performance web applications.',
     creator: '@AlexMuhscience',
   },
   alternates: {
-    canonical: 'https://alex-kamau.vercel.app',
+    canonical: 'https://portfolio-alex-m-kamau.vercel.app',
   },
 };
 
@@ -70,7 +71,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="google-site-verification" content="M1ruyE4wie7Ei_x3caoezOYlvtHt4QJj56iDbvIWWPE" />
         <script
@@ -79,13 +80,13 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Person",
-              "name": "Alex M. Kamau",
-              "jobTitle": "Computer Scientist & Systems Architect",
-              "description": "Computer Scientist specializing in distributed systems, cybersecurity, and full-stack engineering.",
-              "url": "https://alex-kamau.vercel.app",
+              "name": "Alex Murimi Kamau",
+              "jobTitle": "Full-Stack Developer",
+              "description": "Full-Stack Developer specializing in Laravel, React, Next.js, PHP, DevOps, and secure high-performance web applications.",
+              "url": "https://portfolio-alex-m-kamau.vercel.app",
               "sameAs": [
                 "https://github.com/Alex-Muhscience",
-                "https://www.linkedin.com/in/alex-m-kamau-20015b340/",
+                "https://www.linkedin.com/in/alex-mkamau-20015b340",
                 "https://twitter.com/AlexMuhscience",
                 "https://wa.me/254746254055"
               ],
@@ -101,13 +102,13 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
-      >
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <FloatingWhatsApp />
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+          <FloatingWhatsApp />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -33,7 +33,7 @@ export default function ProjectsPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.24 }}
             className="text-center max-w-4xl mx-auto"
           >
             <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
@@ -98,7 +98,7 @@ export default function ProjectsPage() {
                 layout
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.24 }}
               >
                 <Card className="h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
                   <CardHeader>

@@ -44,7 +44,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.24 }}
             className="max-w-4xl mx-auto text-center"
           >
             <div className="flex items-center justify-center gap-4 mb-6">
@@ -96,7 +96,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.24 }}
             viewport={{ once: true }}
             className="max-w-4xl mx-auto"
           >
@@ -121,7 +121,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.24 }}
             viewport={{ once: true }}
             className="max-w-4xl mx-auto"
           >
@@ -146,7 +146,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.24 }}
             viewport={{ once: true }}
             className="max-w-4xl mx-auto"
           >
@@ -171,7 +171,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.24 }}
             viewport={{ once: true }}
             className="max-w-4xl mx-auto"
           >
@@ -218,7 +218,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.24 }}
             viewport={{ once: true }}
             className="max-w-4xl mx-auto"
           >
@@ -229,7 +229,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   key={index}
                   initial={{ opacity: 0, scale: 0.8 }}
                   whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  transition={{ duration: 0.24 }}
                   viewport={{ once: true }}
                 >
                   <Card className="text-center">
@@ -251,7 +251,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.24 }}
             viewport={{ once: true }}
             className="max-w-4xl mx-auto"
           >
@@ -283,7 +283,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.24 }}
             viewport={{ once: true }}
             className="max-w-4xl mx-auto text-center"
           >
