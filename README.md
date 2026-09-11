@@ -25,6 +25,8 @@ Personal portfolio for **Alex Murimi Kamau**, a Full-Stack Developer based in Na
 
 ## Getting Started
 
+The project targets Node.js `20.9.0` through `24.x`, matching the supported Next.js runtime range and avoiding Node 26 deprecation warnings from the current Tailwind toolchain.
+
 Install dependencies:
 
 ```bash
