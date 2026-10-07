@@ -1,13 +1,4 @@
-'use client'
-
-import { MotionConfig, motion } from "framer-motion"
-
+/** Remounts on every navigation, so each route arrives with a page-turn (CSS only, see base.css). */
 export default function Template({ children }: Readonly<{ children: React.ReactNode }>) {
-  return (
-    <MotionConfig reducedMotion="user" transition={{ duration: 0.24 }}>
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-      {children}
-      </motion.div>
-    </MotionConfig>
-  )
+  return <div className="page-turn">{children}</div>
 }

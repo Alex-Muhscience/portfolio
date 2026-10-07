@@ -1,42 +1,58 @@
-'use client'
-
-import { ArrowDown, ArrowUpRight, Github, Linkedin, Mail } from "lucide-react"
-import Link from "next/link"
 import Image from "next/image"
-import { MotionConfig, motion } from "framer-motion"
+import Link from "next/link"
+import { ArrowRight, ArrowUpRight, Github, Linkedin } from "lucide-react"
+import { site } from "@/lib/site"
+
+const facts = [
+  { term: "Based in", detail: `${site.location} · ${site.timezone}` },
+  { term: "Currently", detail: "Technical owner for EuroAfrique Corporate Skills and its sister companies, since 2025" },
+  { term: "Works across", detail: "Architecture, frontend, backend, databases, security, deployment and production operations" },
+  { term: "Core stack", detail: "TypeScript, React, Next.js, Laravel, PostgreSQL, MySQL, Redis, Docker, Linux" },
+]
 
 export function Hero() {
   return (
-    <MotionConfig reducedMotion="user" transition={{ duration: 0.24 }}>
-    <section id="home" className="portfolio-hero">
-      <div className="portfolio-shell">
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="hero-copy">
-          <p className="eyebrow"><span>01</span> Alex Murimi Kamau · Nairobi, Kenya</p>
-          <h1>Full-Stack Developer <em>building secure products</em> that do useful work.</h1>
-          <p className="hero-intro">I design, build, deploy, and maintain high-performance web applications across Laravel, React, Next.js, PHP, and DevOps.</p>
+    <section id="intro" className="hero" aria-labelledby="hero-title">
+      <div className="shell hero-grid">
+        <div className="hero-copy">
+          <p className="kicker">{site.name} · {site.role}</p>
+          <h1 id="hero-title">
+            I build production web applications and business systems, from the first requirement to the server they run on.
+          </h1>
+          <p className="hero-intro">
+            I work across product requirements, architecture, frontend, backend, databases, APIs, security and deployment,
+            and I stay responsible for a system once it is live. The stack is chosen for the problem: Laravel or Node.js,
+            React and Next.js, PostgreSQL or MySQL.
+          </p>
           <div className="hero-actions">
-            <Link href="#projects" className="button button-primary">Explore selected work <ArrowUpRight size={17} /></Link>
-            <Link href="#contact" className="button button-quiet">Start a conversation</Link>
+            <Link href="/#work" className="button button-primary">View selected work <ArrowRight size={16} aria-hidden="true" /></Link>
+            <Link href="/#contact" className="button">Contact me</Link>
+            <a href={site.links.github} className="button button-ghost" target="_blank" rel="noopener noreferrer">
+              <Github size={16} aria-hidden="true" /> GitHub
+            </a>
+            <a href={site.links.linkedin} className="button button-ghost" target="_blank" rel="noopener noreferrer">
+              <Linkedin size={16} aria-hidden="true" /> LinkedIn
+            </a>
+            <a href={site.links.resume} className="button button-ghost" target="_blank" rel="noopener noreferrer">
+              Résumé <ArrowUpRight size={15} aria-hidden="true" />
+            </a>
           </div>
-          <div className="hero-links" aria-label="Social links">
-            <a href="https://github.com/Alex-Muhscience" target="_blank" rel="noopener noreferrer"><Github size={17} /> GitHub</a>
-            <a href="https://www.linkedin.com/in/alex-mkamau-20015b340" target="_blank" rel="noopener noreferrer"><Linkedin size={17} /> LinkedIn</a>
-            <a href="mailto:alex.kamau.2558@gmail.com"><Mail size={17} /> Email</a>
-          </div>
-        </motion.div>
+        </div>
 
-        <motion.aside initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} className="hero-index">
-          <div className="hero-profile">
-            <Image src="/images/profile.jpg" alt="Alex Murimi Kamau" fill sizes="(max-width: 800px) 160px, 240px" priority />
+        <aside className="hero-aside" aria-label="At a glance">
+          <div className="hero-portrait">
+            <Image src="/images/profile.jpg" alt={`Portrait of ${site.name}`} fill sizes="(max-width: 900px) 96px, 280px" preload />
           </div>
-          <span className="index-label">Currently</span>
-          <strong>Designing resilient products, platforms, and teams.</strong>
-          <span className="index-rule" />
-          <div className="index-meta"><span>01</span><span>Selected work</span></div>
-          <a href="#projects" className="index-scroll">Scroll to explore <ArrowDown size={16} /></a>
-        </motion.aside>
+          <dl className="fact-list">
+            {facts.map((fact) => (
+              <div key={fact.term}>
+                <dt>{fact.term}</dt>
+                <dd>{fact.detail}</dd>
+              </div>
+            ))}
+          </dl>
+        </aside>
       </div>
     </section>
-    </MotionConfig>
   )
 }

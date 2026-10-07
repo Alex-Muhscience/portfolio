@@ -1,9 +1,8 @@
 export const education = [
   {
     institution: "Kisii University",
-    qualification: "Bachelor of Science - BS, Computer Science",
-    duration: "September 2021 - April 2025",
-    location: "Kisii, Kenya",
+    qualification: "BSc Computer Science",
+    period: "2021 – 2025",
     result: "Second Class Honours (Upper Division)",
   },
-]
+] as const

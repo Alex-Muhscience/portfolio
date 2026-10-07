@@ -1,70 +1,68 @@
 # Alex Murimi Kamau Portfolio
 
-Personal portfolio for **Alex Murimi Kamau**, a Full-Stack Developer based in Nairobi, Kenya. The site presents selected case studies, technical capabilities, experience across the EuroAfrique Corporate Skills sister companies, education, and direct contact options.
+Personal portfolio for **Alex Murimi Kamau**, a Full-Stack Developer based in Nairobi, Kenya. The site presents engineering case studies, how I work across the stack, professional experience and contact details.
 
-## Highlights
+## What is here
 
-- Editorial, responsive portfolio layout focused on case studies.
-- Light and dark themes with system preference detection and persisted selection.
-- Featured work for AfriAsia Career Development Center, EuroAfrique Corporate Skills, and Chania Publishers.
-- Experience timeline covering full-stack development, tutoring, networking, and cybersecurity.
-- Education section for the BSc Computer Science degree from Kisii University.
-- Accessible WhatsApp contact widget with a prefilled project message.
-- Local project favicon assets and optimized profile image rendering.
-- Reduced-motion-aware scroll reveals and route transitions capped at 240ms.
+- Homepage: positioning, capabilities, selected work, engineering areas, principles, experience, about and contact.
+- `/work` and `/work/[slug]`: statically generated case studies (problem, role, system overview, engineering notes, decisions, outcome, links).
+- Old `/projects` URLs redirect permanently to `/work`.
+- Book view on the homepage: the site opens as a closed book with a hard cover and a contents list. Opening it swings the cover back; inside, each section is a page that folds over like paper to reveal the next (buttons, arrow keys, swipe, or scrolling past the end of a page). On touch screens the page follows your finger and can be let go to finish or cancel the turn. A header toggle switches to an ordinary scrolling page; the choice is remembered, and viewports under 480px tall (a phone held sideways) always scroll. Without JavaScript the site is the scrolling page.
+- Seven colour themes. Navy (navy blue with a scarlet accent) is the default; Paper, Slate, Sepia, Ink, Midnight and Forest are in the palette menu, and the choice is remembered.
+- Generated `sitemap.xml`, `robots.txt`, Open Graph image and JSON-LD (Person, WebSite, CreativeWork, BreadcrumbList).
 
 ## Tech Stack
 
-- Next.js 16 with the App Router
-- React 19 and TypeScript
-- Tailwind CSS 4
-- Framer Motion
-- `next-themes`
-- Lucide React and React Icons
+- Next.js 16 (App Router) with React 19 and TypeScript
+- Plain CSS with design tokens in `src/styles` (no CSS framework)
+- `next-themes` and Lucide icons
 - ESLint
+
+Pages are server components. Client components are limited to the book, the theme picker, the view toggle and the mobile menu. All animation is CSS and is disabled under `prefers-reduced-motion`.
+
+To add a theme, add its tokens under `[data-theme="…"]` in `src/styles/tokens.css` and list it in `src/lib/themes.ts`.
 
 ## Getting Started
 
-The project targets Node.js `20.9.0` through `24.x`, matching the supported Next.js runtime range and avoiding Node 26 deprecation warnings from the current Tailwind toolchain.
-
-Install dependencies:
+Requires Node.js `20.9.0` or newer (below 26).
 
 ```bash
-npm install
+pnpm install
+pnpm dev
 ```
 
-Start the development server:
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000).
 
 ## Scripts
 
 ```bash
-npm run dev      # Start the development server
-npm run lint     # Run ESLint
-npm run build    # Create a production build
-npm run start    # Start the production server
+pnpm dev             # Development server
+pnpm lint            # ESLint
+pnpm exec tsc --noEmit   # Type-check
+pnpm build           # Production build
+pnpm start           # Serve the production build
 ```
 
 ## Project Structure
 
 ```text
 src/
-  app/                 App Router pages, metadata, theme provider, and global styles
+  app/                 Layout, homepage, /work routes, sitemap, robots, Open Graph image
   components/
-    animations/        Scroll reveal and animation helpers
-    sections/          Hero, projects, skills, about, experience, education, contact
-    shared/            Header, logo, footer, theme toggle, WhatsApp widget
-    ui/                Reusable interface primitives
-  data/                Experience, education, and project content
-  types/               Shared TypeScript contracts
+    sections/          Homepage sections
+    shared/            Header, footer, navigation, theme toggle, small shared pieces
+    book/              Page-flip book for the homepage
+    work/              Case-study components (system map, status, links, listings)
+  data/                Projects, experience, education, engineering areas and principles
+  lib/site.ts          Site URL, contact details and navigation
+  styles/              Tokens, base, components, homepage and case-study styles
 public/
-  images/              Profile photo and local project favicon assets
+  images/              Profile photo
 ```
+
+## Editing content
+
+All copy for case studies lives in `src/data/projects.ts`. Adding an entry there creates the page, the listing rows and the sitemap entry. Only state what can be backed up: there are no fields for invented metrics.
 
 ## Content and Links
 
@@ -74,8 +72,8 @@ public/
 - LinkedIn: [linkedin.com/in/alex-mkamau-20015b340](https://www.linkedin.com/in/alex-mkamau-20015b340)
 - WhatsApp: [+254 746 254 055](https://wa.me/254746254055)
 
-Project and experience content is maintained in `src/data/projects.ts`, `src/data/experience.ts`, and `src/data/education.ts`.
+Contact details and the canonical site URL are set in `src/lib/site.ts`.
 
 ## Deployment
 
-The project is configured for deployment on Vercel or any platform that supports Next.js. Run `npm run build` before deployment to verify TypeScript compilation, route generation, and production output.
+The project is configured for deployment on Vercel or any platform that supports Next.js. Run `pnpm build` before deployment to verify TypeScript compilation, route generation, and production output.

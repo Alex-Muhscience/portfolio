@@ -1,71 +1,24 @@
-'use client'
-
-import { motion } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Home, Search } from "lucide-react"
+import type { Metadata } from "next"
 import Link from "next/link"
+import { ArrowRight } from "lucide-react"
+
+export const metadata: Metadata = {
+  title: "Page not found",
+  robots: { index: false, follow: true },
+}
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.24 }}
-        className="text-center max-w-md mx-auto"
-      >
-        <Card className="border-0 shadow-lg">
-          <CardContent className="p-8">
-            <motion.div
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.24 }}
-              className="mb-8"
-            >
-              <div className="text-8xl font-bold text-primary/20 mb-4">404</div>
-              <h1 className="text-2xl font-bold mb-4">Page Not Found</h1>
-              <p className="text-muted-foreground mb-8">
-                The page you&apos;re looking for doesn&apos;t exist or has been moved.
-                Let&apos;s get you back on track.
-              </p>
-            </motion.div>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild className="flex-1">
-                <Link href="/">
-                  <Home className="w-4 h-4 mr-2" />
-                  Go Home
-                </Link>
-              </Button>
-              <Button variant="outline" asChild className="flex-1">
-                <Link href="/projects">
-                  <Search className="w-4 h-4 mr-2" />
-                  View Projects
-                </Link>
-              </Button>
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.24 }}
-              className="mt-8 pt-6 border-t"
-            >
-              <p className="text-sm text-muted-foreground">
-                If you believe this is an error, please{" "}
-                <a
-                  href="mailto:alex.kamau.2558@gmail.com"
-                  className="text-primary hover:underline"
-                >
-                  contact me
-                </a>
-                .
-              </p>
-            </motion.div>
-          </CardContent>
-        </Card>
-      </motion.div>
-    </div>
+    <section className="section not-found">
+      <div className="shell">
+        <p className="kicker"><span>404</span>Not found</p>
+        <h1>This page does not exist.</h1>
+        <p className="section-note">The address may be out of date. Older project pages have moved to the work section.</p>
+        <div className="hero-actions">
+          <Link href="/" className="button button-primary">Go to the homepage</Link>
+          <Link href="/work" className="button">Browse case studies <ArrowRight size={16} aria-hidden="true" /></Link>
+        </div>
+      </div>
+    </section>
   )
 }
