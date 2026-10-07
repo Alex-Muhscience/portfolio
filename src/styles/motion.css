@@ -1,0 +1,188 @@
+/* Decorative motion. Everything here is switched off by the reduced-motion rule in base.css. */
+
+/* Hero: lines rise in sequence on first load. */
+.hero-copy > *,
+.hero-aside > * {
+  animation: rise 700ms cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+}
+
+.hero-copy > :nth-child(2) { animation-delay: 80ms; }
+.hero-copy > :nth-child(3) { animation-delay: 160ms; }
+.hero-copy > :nth-child(4) { animation-delay: 240ms; }
+.hero-aside > :nth-child(1) { animation-delay: 200ms; }
+.hero-aside > :nth-child(2) { animation-delay: 320ms; }
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+/* An accent rule draws itself under the hero heading. */
+.hero-copy h1 {
+  position: relative;
+  padding-bottom: var(--space-5);
+}
+
+.hero-copy h1::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 4.5rem;
+  height: 3px;
+  background: var(--accent);
+  transform-origin: left;
+  animation: draw 900ms 500ms cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+}
+
+@keyframes draw {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+.hero-portrait img {
+  transition: transform 600ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.hero-portrait:hover img {
+  transform: scale(1.04);
+}
+
+/* Buttons and links: the arrow leads. */
+.button svg,
+.text-link svg,
+.project-links a svg,
+.contact-list a > svg:last-child {
+  transition: transform 200ms ease;
+}
+
+.button:hover svg:last-child,
+.text-link:hover svg,
+.project-links a:hover svg:last-child {
+  transform: translateX(3px);
+}
+
+.contact-list a:hover > svg:last-child {
+  transform: translate(3px, -3px);
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+/* Rules that respond to the pointer: the top border fills with the accent. */
+.capability-grid li,
+.project-feature,
+.case-pager a {
+  position: relative;
+}
+
+.capability-grid li::before,
+.project-feature::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 500ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.capability-grid li:hover::before,
+.project-feature:hover::before,
+.project-feature:focus-within::before {
+  transform: scaleX(1);
+}
+
+.project-row,
+.area-row,
+.experience-item,
+.contact-list a {
+  transition: padding-left 250ms ease, background-color 250ms ease;
+}
+
+.project-row:hover,
+.area-row:hover,
+.contact-list a:hover {
+  padding-left: var(--space-3);
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+}
+
+.project-feature-side {
+  transition: border-color 250ms ease, transform 350ms cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 350ms ease;
+}
+
+.project-feature:hover .project-feature-side {
+  border-color: var(--border-strong);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px -18px var(--page-shade);
+}
+
+.tech-list li {
+  transition: border-color 150ms ease, color 150ms ease;
+}
+
+.tech-list li:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+/* Live systems get a slow pulse on their status dot. */
+.status[data-status="production"] .status-dot {
+  animation: pulse 2.6s ease-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--status-production) 55%, transparent);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 0.45rem transparent;
+  }
+}
+
+/* System map: requests flow down the connectors, and a node lifts when inspected. */
+.system-layer + .system-layer::before {
+  width: 2px;
+  background: linear-gradient(to bottom, var(--accent) 50%, transparent 50%) 0 0 / 2px 8px repeat-y;
+  animation: flow 900ms linear infinite;
+}
+
+@keyframes flow {
+  to {
+    background-position-y: 8px;
+  }
+}
+
+.system-node {
+  transition: border-color 200ms ease, transform 250ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.system-node:hover {
+  border-left-color: var(--accent);
+  transform: translateX(3px);
+}
+
+.case-pager a {
+  transition: border-color 200ms ease, transform 250ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.case-pager a:hover {
+  transform: translateY(-2px);
+}
+
+.logo-mark {
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+.logo:hover .logo-mark {
+  background: var(--text);
+  color: var(--bg);
+}

@@ -1,17 +1,49 @@
-import { ArrowUpRight, Github, Linkedin, Mail, Phone } from "lucide-react"
+import { ArrowUpRight, FileText, Github, Linkedin, Mail, MessageCircle } from "lucide-react"
+import { site } from "@/lib/site"
+import { SectionHeading } from "@/components/shared/SectionHeading"
+
+const channels = [
+  { label: "Email", value: site.email, href: `mailto:${site.email}`, icon: Mail, external: false },
+  { label: "LinkedIn", value: "linkedin.com/in/alex-mkamau-20015b340", href: site.links.linkedin, icon: Linkedin, external: true },
+  { label: "GitHub", value: "github.com/Alex-Muhscience", href: site.links.github, icon: Github, external: true },
+  { label: "WhatsApp", value: site.phone, href: site.links.whatsapp, icon: MessageCircle, external: true },
+  { label: "Résumé", value: "View online", href: site.links.resume, icon: FileText, external: true },
+]
 
 export function Contact() {
   return (
     <section id="contact" className="section" aria-labelledby="contact-title">
-      <div className="portfolio-shell contact-layout">
-        <div><p className="section-kicker">Contact</p><h2 id="contact-title">Have a good problem? Let&apos;s talk.</h2></div>
-        <div className="contact-links">
-          <a href="mailto:alex.kamau.2558@gmail.com"><span><Mail size={16} /> alex.kamau.2558@gmail.com</span><ArrowUpRight size={16} /></a>
-          <a href="tel:+254746254055"><span><Phone size={16} /> +254 746 254 055</span><ArrowUpRight size={16} /></a>
-          <a href="https://github.com/Alex-Muhscience" target="_blank" rel="noopener noreferrer"><span><Github size={16} /> GitHub</span><ArrowUpRight size={16} /></a>
-          <a href="https://www.linkedin.com/in/alex-mkamau-20015b340" target="_blank" rel="noopener noreferrer"><span><Linkedin size={16} /> LinkedIn</span><ArrowUpRight size={16} /></a>
-          <a href="https://flowcv.com/resume/t249m8own6" target="_blank" rel="noopener noreferrer"><span>Résumé</span><ArrowUpRight size={16} /></a>
+      <div className="shell contact-layout">
+        <div>
+          <SectionHeading id="contact-title" index="06" label="Contact" title="Get in touch." />
+          <p className="contact-note reveal">
+            I am open to conversations about full-stack and product engineering roles and projects, remote or in Nairobi.
+            Email is the most reliable way to reach me.
+          </p>
+          <dl className="meta-list contact-meta">
+            <div>
+              <dt>Location</dt>
+              <dd>{site.location}</dd>
+            </div>
+            <div>
+              <dt>Time zone</dt>
+              <dd>{site.timezone}</dd>
+            </div>
+          </dl>
         </div>
+
+        <ul className="contact-list">
+          {channels.map(({ label, value, href, icon: Icon, external }) => (
+            <li key={label}>
+              <a href={href} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+                <Icon size={18} aria-hidden="true" />
+                <span className="contact-label">{label}</span>
+                <span className="contact-value">{value}</span>
+                <ArrowUpRight size={16} aria-hidden="true" />
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   )
