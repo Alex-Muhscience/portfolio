@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight, ArrowUpRight, Github, Linkedin, Mail } from "lucide-react"
+import { ArrowRight, ArrowUpRight, Mail } from "lucide-react"
+import { GitHubIcon, LinkedInIcon } from "@/components/shared/BrandIcons"
 import { site } from "@/lib/site"
 
 export function Hero() {
@@ -28,10 +29,10 @@ export function Hero() {
             </a>
             <span className="hero-socials">
               <a href={site.links.github} className="icon-button" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub">
-                <Github size={18} aria-hidden="true" />
+                <GitHubIcon size={18} aria-hidden="true" />
               </a>
               <a href={site.links.linkedin} className="icon-button" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn">
-                <Linkedin size={18} aria-hidden="true" />
+                <LinkedInIcon size={18} aria-hidden="true" />
               </a>
               <a href={`mailto:${site.email}`} className="icon-button" aria-label="Email" title="Email">
                 <Mail size={18} aria-hidden="true" />

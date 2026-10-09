@@ -1,12 +1,13 @@
-import { ArrowRight, ArrowUpRight, FileText, Github, Linkedin, Mail, MessageCircle } from "lucide-react"
+import { ArrowRight, ArrowUpRight, FileText, Mail } from "lucide-react"
+import { GitHubIcon, LinkedInIcon, WhatsAppIcon } from "@/components/shared/BrandIcons"
 import { site } from "@/lib/site"
 import { SectionHeading } from "@/components/shared/SectionHeading"
 
 const channels = [
   { label: "Email", value: site.email, href: `mailto:${site.email}`, icon: Mail, external: false },
-  { label: "LinkedIn", value: "linkedin.com/in/alex-m-kamau-20015b340", href: site.links.linkedin, icon: Linkedin, external: true },
-  { label: "GitHub", value: "github.com/Alex-Muhscience", href: site.links.github, icon: Github, external: true },
-  { label: "WhatsApp", value: site.phone, href: site.links.whatsapp, icon: MessageCircle, external: true },
+  { label: "LinkedIn", value: "linkedin.com/in/alex-m-kamau-20015b340", href: site.links.linkedin, icon: LinkedInIcon, external: true },
+  { label: "GitHub", value: "github.com/Alex-Muhscience", href: site.links.github, icon: GitHubIcon, external: true },
+  { label: "WhatsApp", value: site.phone, href: site.links.whatsapp, icon: WhatsAppIcon, external: true },
   { label: "Résumé", value: "View online", href: site.links.resume, icon: FileText, external: true },
 ]
 
