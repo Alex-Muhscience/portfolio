@@ -455,10 +455,9 @@ html[data-view="book"] .book-bar {
   transition: transform 200ms ease;
 }
 
+/* Nothing before the cover or after the last page: hide the button rather than label a dead end. */
 .book-turn:disabled {
-  color: var(--text-muted);
-  cursor: default;
-  opacity: 0.55;
+  visibility: hidden;
 }
 
 .book-ticks {

@@ -1,13 +1,13 @@
 import { Book, type BookPage } from "@/components/book/Book"
 import { BookCover } from "@/components/book/BookCover"
 import { About } from "@/components/sections/About"
-import { Capabilities } from "@/components/sections/Capabilities"
 import { Contact } from "@/components/sections/Contact"
 import { Engineering } from "@/components/sections/Engineering"
 import { Experience } from "@/components/sections/Experience"
 import { Hero } from "@/components/sections/Hero"
 import { Principles } from "@/components/sections/Principles"
 import { SelectedWork } from "@/components/sections/SelectedWork"
+import { SystemFlow } from "@/components/sections/SystemFlow"
 import { JsonLd } from "@/components/shared/JsonLd"
 import { absoluteUrl, site } from "@/lib/site"
 
@@ -74,7 +74,7 @@ export default function HomePage() {
         {/* A real element, not a fragment: fragments are flattened across the server/client boundary. */}
         <div>
           <Hero />
-          <Capabilities />
+          <SystemFlow />
         </div>
         <SelectedWork />
         <Engineering />

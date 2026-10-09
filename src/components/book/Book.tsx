@@ -374,7 +374,7 @@ export function Book({ pages, children }: { pages: BookPage[]; children: ReactNo
       <nav className="book-bar" aria-label="Pages">
         <button type="button" className="book-turn" onClick={() => goTo(current - 1)} disabled={!previous}>
           <ArrowLeft size={16} aria-hidden="true" />
-          <span>{previous ? previous.label : "Closed"}</span>
+          <span>{previous?.label}</span>
         </button>
 
         <ol className="book-ticks">
@@ -397,7 +397,7 @@ export function Book({ pages, children }: { pages: BookPage[]; children: ReactNo
         </p>
 
         <button type="button" className="book-turn book-turn-next" onClick={() => goTo(current + 1)} disabled={!next}>
-          <span>{next ? next.label : "End"}</span>
+          <span>{next?.label}</span>
           <ArrowRight size={16} aria-hidden="true" />
         </button>
       </nav>

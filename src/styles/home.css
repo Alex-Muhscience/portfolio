@@ -16,25 +16,89 @@
 
 /* Hero */
 .hero {
-  padding-block: clamp(2.5rem, 1rem + 6vw, 5.5rem);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding-block: clamp(2.5rem, 1rem + 6vw, 5.5rem) clamp(2rem, 1rem + 3vw, 3.5rem);
   border-bottom: 1px solid var(--border);
+}
+
+/* Depth: a faint engineering grid that fades out, and a glow in the accent colour behind the portrait. */
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.hero::before {
+  inset: 0;
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--border) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--border) 55%, transparent) 1px, transparent 1px);
+  background-size: 3.5rem 3.5rem;
+  mask-image: radial-gradient(ellipse 70% 60% at 70% 30%, #000 10%, transparent 75%);
+}
+
+.hero::after {
+  top: -10rem;
+  right: -8rem;
+  width: 42rem;
+  height: 42rem;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 22%, transparent), transparent 62%);
+  filter: blur(10px);
 }
 
 .hero-grid {
   display: grid;
   gap: var(--space-7);
+  align-items: center;
+}
+
+.hero-award {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  max-width: 100%;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, var(--border));
+  border-radius: 1.25rem;
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+}
+
+.hero-award svg:first-child {
+  color: var(--accent);
+}
+
+.hero-award strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.hero-award:hover {
+  border-color: var(--accent);
+  color: var(--text);
 }
 
 .hero-copy h1 {
-  max-width: 21ch;
-  margin-block: var(--space-4) var(--space-5);
-  font-size: var(--text-display);
-  line-height: 1.06;
-  letter-spacing: -0.035em;
+  max-width: 16ch;
+  margin-block: var(--space-5);
+  font-size: clamp(2.375rem, 1.2rem + 4.4vw, 4.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+.hero-copy h1 em {
+  color: var(--accent);
+  font-style: normal;
 }
 
 .hero-intro {
-  max-width: 38rem;
+  max-width: 36rem;
   color: var(--text-muted);
   font-size: var(--text-lg);
   line-height: 1.6;
@@ -43,94 +107,346 @@
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: var(--space-3);
   margin-top: var(--space-6);
 }
 
-.hero-aside {
-  display: grid;
-  gap: var(--space-5);
-  align-content: start;
+.hero-actions .button {
+  min-height: 3rem;
+  padding-inline: var(--space-5);
+}
+
+.hero-socials {
+  display: inline-flex;
+  gap: var(--space-1);
+  margin-left: var(--space-1);
+}
+
+.hero-socials .icon-button {
+  color: var(--text-muted);
+}
+
+.hero-socials .icon-button:hover {
+  color: var(--text);
+}
+
+.hero-availability {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.hero-availability .status-dot,
+.hero-chip .status-dot {
+  background: var(--status-production);
+}
+
+/* Portrait: an editorial offset frame in the accent colour, and a floating status chip. */
+.hero-portrait-card {
+  position: relative;
+  width: min(100%, 22rem);
+  margin: 0 auto var(--space-4);
+}
+
+.hero-portrait-card::before {
+  content: "";
+  position: absolute;
+  inset: 0.875rem -0.875rem -0.875rem 0.875rem;
+  border: 1px solid var(--accent);
 }
 
 .hero-portrait {
   position: relative;
-  width: 6rem;
-  aspect-ratio: 1;
+  aspect-ratio: 4 / 5;
   overflow: hidden;
   border: 1px solid var(--border);
   background: var(--surface-sunken);
+  box-shadow: 0 30px 60px -30px var(--page-shade);
+}
+
+.hero-portrait::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, color-mix(in srgb, var(--bg) 55%, transparent), transparent 40%);
 }
 
 .hero-portrait img {
   object-fit: cover;
-  object-position: 50% 20%;
+  object-position: 50% 22%;
+  /* The original has a bright sky; calm it so the photo sits in the palette. */
+  filter: saturate(0.82) contrast(1.04) brightness(0.96);
 }
 
-.fact-list {
+.hero-chip {
+  position: absolute;
+  bottom: 1.25rem;
+  left: -0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 12px 28px -14px var(--page-shade);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+/* Proof strip */
+.hero-metrics {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: clamp(2.5rem, 1rem + 4vw, 4.5rem);
   border-top: 1px solid var(--border-strong);
 }
 
-.fact-list > div {
-  padding-block: var(--space-3);
+.hero-metrics > div {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: var(--space-1);
+  padding: var(--space-4) var(--space-4) var(--space-4) 0;
   border-bottom: 1px solid var(--border);
 }
 
-.fact-list dd {
+.hero-metrics > div:nth-child(2n) {
+  padding-left: var(--space-4);
+  border-left: 1px solid var(--border);
+}
+
+.hero-metrics dd {
+  font-size: clamp(1.75rem, 1.2rem + 1.8vw, 2.5rem);
+  font-weight: 650;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-metrics dt {
+  color: var(--text-muted);
   font-size: var(--text-sm);
-  line-height: 1.5;
+  line-height: 1.45;
 }
 
 @media (min-width: 60rem) {
   .hero-grid {
-    grid-template-columns: minmax(0, 1fr) 17.5rem;
+    grid-template-columns: minmax(0, 1fr) 21rem;
     gap: var(--space-8);
-    align-items: start;
+  }
+
+  .hero-portrait-card {
+    margin: 0;
+  }
+
+  .hero-metrics {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .hero-metrics > div {
+    padding: var(--space-5) var(--space-5) var(--space-2);
+    border-bottom: 0;
+  }
+
+  .hero-metrics > div:first-child {
+    padding-left: 0;
+  }
+
+  .hero-metrics > div + div {
+    border-left: 1px solid var(--border);
+  }
+}
+
+@media (max-width: 59.99rem) {
+  .hero-portrait-card {
+    width: min(100% - 1rem, 20rem);
   }
 
   .hero-portrait {
-    width: 100%;
+    aspect-ratio: 1;
   }
 }
 
-/* Capabilities */
-.capability-grid {
+/* System flow: the path every platform shares, with a request travelling through it. */
+.flow-band {
+  background:
+    radial-gradient(ellipse 60% 80% at 50% 0%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 70%),
+    var(--surface-sunken);
+}
+
+.flow-head {
   display: grid;
-  gap: var(--space-6);
+  gap: var(--space-3);
+  max-width: 44rem;
+  margin-bottom: var(--space-7);
 }
 
-.capability-grid li {
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--border-strong);
+.flow-head h2 {
+  font-size: var(--text-2xl);
 }
 
-.capability-index {
+.flow {
+  --cycle: calc(var(--stages) * 0.8s);
+  --link: var(--space-6);
+  display: grid;
+  gap: var(--link);
+}
+
+.flow-node {
+  --delay: calc(var(--i) * 0.8s);
+  position: relative;
+  display: grid;
+  gap: var(--space-2);
+  align-content: start;
+  padding: var(--space-5);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--border-strong);
+  background: var(--surface);
+  animation: flow-arrive var(--cycle) var(--delay) ease-out infinite;
+}
+
+.flow-step {
   color: var(--accent);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
 }
 
-.capability-grid h3 {
-  margin-block: var(--space-2);
+.flow-node h3 {
   font-size: var(--text-lg);
 }
 
-.capability-grid p {
+.flow-node p {
   color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.flow-node .tech-list {
+  margin-top: auto;
+  padding-top: var(--space-2);
+}
+
+/* Phones: a compact timeline, the step number in its own column. */
+@media (max-width: 59.99rem) {
+  .flow-node {
+    grid-template-columns: 2rem minmax(0, 1fr);
+    column-gap: var(--space-3);
+    row-gap: var(--space-1);
+    padding: var(--space-4);
+  }
+
+  .flow-node > :not(.flow-step, .flow-link) {
+    grid-column: 2;
+  }
+
+  .flow-step {
+    grid-row: 1 / span 3;
+    padding-top: 0.3rem;
+  }
+
+  .flow-link {
+    left: calc(var(--space-4) + 0.5rem);
+  }
+}
+
+/* Connector to the next stage: vertical on small screens, horizontal from 60rem. */
+.flow-link {
+  position: absolute;
+  top: 100%;
+  left: var(--space-6);
+  width: 2px;
+  height: var(--link);
+  background: linear-gradient(to bottom, var(--border-strong) 50%, transparent 50%) 0 0 / 2px 6px repeat-y;
+  opacity: 0.6;
+}
+
+.flow-packet {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent), 0 0 14px var(--accent);
+  opacity: 0;
+  translate: -50% -50%;
+  animation: flow-packet-y var(--cycle) calc(var(--delay) + 0.1s) ease-in-out infinite;
+}
+
+.flow-guarantees {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+.flow-guarantees li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
   font-size: var(--text-sm);
 }
 
-@media (min-width: 40rem) {
-  .capability-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+.flow-guarantees svg {
+  color: var(--status-production);
+}
+
+@media (min-width: 60rem) {
+  .flow {
+    --link: var(--space-5);
+    grid-template-columns: repeat(var(--stages), minmax(0, 1fr));
+  }
+
+  .flow-link {
+    top: 50%;
+    left: 100%;
+    width: var(--link);
+    height: 2px;
+    background: linear-gradient(to right, var(--border-strong) 50%, transparent 50%) 0 0 / 6px 2px repeat-x;
+  }
+
+  .flow-packet {
+    top: 50%;
+    left: 0;
+    animation-name: flow-packet-x;
+  }
+
+  .flow-guarantees {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
-@media (min-width: 68rem) {
-  .capability-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+@keyframes flow-arrive {
+  0% {
+    border-top-color: var(--accent);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent), 0 18px 40px -24px var(--accent);
   }
+  30%,
+  100% {
+    border-top-color: var(--border-strong);
+    box-shadow: none;
+  }
+}
+
+@keyframes flow-packet-x {
+  0% { left: 0; opacity: 0; }
+  3% { opacity: 1; }
+  15% { opacity: 1; }
+  17.5% { left: 100%; opacity: 0; }
+  100% { left: 100%; opacity: 0; }
+}
+
+@keyframes flow-packet-y {
+  0% { top: 0; opacity: 0; }
+  3% { opacity: 1; }
+  15% { opacity: 1; }
+  17.5% { top: 100%; opacity: 0; }
+  100% { top: 100%; opacity: 0; }
 }
 
 /* Featured projects */
@@ -184,8 +500,8 @@
 
 .project-facts dd {
   color: var(--text-muted);
-  font-size: var(--text-sm);
-  line-height: 1.65;
+  font-size: var(--text-base);
+  line-height: 1.7;
 }
 
 .project-feature-side {
@@ -214,6 +530,47 @@
 
   .project-feature-foot {
     padding-left: calc(var(--space-4) + 1.5rem);
+  }
+}
+
+/* Proof points on each featured card: the number leads, the label explains it. */
+.project-highlights {
+  display: grid;
+  gap: var(--space-4);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--border);
+}
+
+.project-highlights > div {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0.125rem;
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--accent);
+}
+
+.project-highlights dd {
+  font-size: clamp(1.5rem, 1.2rem + 0.9vw, 1.875rem);
+  font-weight: 650;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.project-highlights dt {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+}
+
+.meta-inline {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* On phones the numbers come first: they are the hook, the prose is the detail. */
+@media (max-width: 59.99rem) {
+  .project-feature-side {
+    order: -1;
   }
 }
 
@@ -533,6 +890,29 @@
   max-width: 30rem;
   margin-top: calc(var(--space-5) * -1);
   color: var(--text-muted);
+}
+
+.contact-band {
+  background:
+    radial-gradient(ellipse 55% 70% at 15% 100%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%),
+    var(--bg);
+}
+
+.contact-band .section-heading h2 {
+  font-size: clamp(1.875rem, 1.2rem + 2.4vw, 3rem);
+  letter-spacing: -0.035em;
+}
+
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+.contact-actions .button {
+  min-height: 3rem;
+  padding-inline: var(--space-5);
 }
 
 .contact-meta {

@@ -7,8 +7,9 @@ Personal portfolio for **Alex Murimi Kamau**, a Full-Stack Developer based in Na
 - Homepage: positioning, capabilities, selected work, engineering areas, principles, experience, about and contact.
 - `/work` and `/work/[slug]`: statically generated case studies (problem, role, system overview, engineering notes, decisions, outcome, links).
 - Old `/projects` URLs redirect permanently to `/work`.
-- Book view on the homepage: the site opens as a closed book with a hard cover and a contents list. Opening it swings the cover back; inside, each section is a page that folds over like paper to reveal the next (buttons, arrow keys, swipe, or scrolling past the end of a page). On touch screens the page follows your finger and can be let go to finish or cancel the turn. A header toggle switches to an ordinary scrolling page; the choice is remembered, and viewports under 480px tall (a phone held sideways) always scroll. Without JavaScript the site is the scrolling page.
-- Seven colour themes. Navy (navy blue with a scarlet accent) is the default; Paper, Slate, Sepia, Ink, Midnight and Forest are in the palette menu, and the choice is remembered.
+- Homepage hero with headline proof points (production platforms, reach, automation) and an animated "system flow" strip showing the path every platform shares, from client to data. Pure CSS, static under `prefers-reduced-motion`.
+- Optional book view: the header toggle turns the homepage into a closed book with a hard cover and a contents list. Opening it swings the cover back; inside, each section is a page that folds over like paper to reveal the next (buttons, arrow keys, swipe, or scrolling past the end of a page). On touch screens the page follows your finger and can be let go to finish or cancel the turn. The scrolling page is the default; the choice is remembered, and viewports under 480px tall (a phone held sideways) always scroll. Without JavaScript the site is the scrolling page.
+- Dark (navy with a scarlet accent, the default) and light (paper) themes, toggled from the header. The choice is remembered; visitors who picked one of the earlier palettes are mapped to the closest of the two.
 - Generated `sitemap.xml`, `robots.txt`, Open Graph image and JSON-LD (Person, WebSite, CreativeWork, BreadcrumbList).
 
 ## Tech Stack
@@ -18,9 +19,9 @@ Personal portfolio for **Alex Murimi Kamau**, a Full-Stack Developer based in Na
 - `next-themes` and Lucide icons
 - ESLint
 
-Pages are server components. Client components are limited to the book, the theme picker, the view toggle and the mobile menu. All animation is CSS and is disabled under `prefers-reduced-motion`.
+Pages are server components. Client components are limited to the book, the theme toggle, the view toggle and the mobile menu. All animation is CSS and is disabled under `prefers-reduced-motion`.
 
-To add a theme, add its tokens under `[data-theme="…"]` in `src/styles/tokens.css` and list it in `src/lib/themes.ts`.
+Theme tokens live in `src/styles/tokens.css` (`:root` for dark, `[data-theme="light"]` for light); the theme list is in `src/lib/themes.ts`.
 
 ## Getting Started
 

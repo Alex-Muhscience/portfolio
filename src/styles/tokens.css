@@ -11,7 +11,7 @@
   --surface: #112148;
   --surface-sunken: #060f26;
   --text: #eef1f8;
-  --text-muted: #a7b3cf;
+  --text-muted: #b6c1da;
   --border: #25376a;
   --border-strong: #eef1f8;
   --accent: #ff3b1f;
@@ -69,11 +69,17 @@
   --cta-hover-text: var(--accent-contrast);
 }
 
-/* Light themes share these. */
-[data-theme="light"],
-[data-theme="slate"],
-[data-theme="sepia"] {
+/* Light theme: warm paper, ink text, brick accent. */
+[data-theme="light"] {
   color-scheme: light;
+  --bg: #fafaf8;
+  --surface: #ffffff;
+  --surface-sunken: #f2f2ee;
+  --text: #18181a;
+  --text-muted: #55554f;
+  --border: #e2e2dc;
+  --border-strong: #18181a;
+  --accent: #c2361c;
   --accent-contrast: #ffffff;
   --focus: #1d4ed8;
   --status-production: #1a7f4b;
@@ -81,79 +87,4 @@
   --status-research: #2f5fc4;
   --page-shade: rgb(0 0 0 / 0.14);
   --curl-shadow: rgb(0 0 0 / 0.28);
-}
-
-[data-theme="light"] {
-  --bg: #fafaf8;
-  --surface: #ffffff;
-  --surface-sunken: #f2f2ee;
-  --text: #18181a;
-  --text-muted: #5d5d59;
-  --border: #e2e2dc;
-  --border-strong: #18181a;
-  --accent: #c2361c;
-}
-
-[data-theme="slate"] {
-  --bg: #f4f6f9;
-  --surface: #ffffff;
-  --surface-sunken: #e9edf3;
-  --text: #0f172a;
-  --text-muted: #4a5568;
-  --border: #d8dfe9;
-  --border-strong: #0f172a;
-  --accent: #2456d6;
-  --focus: #b4530b;
-}
-
-[data-theme="sepia"] {
-  --bg: #f4ecd8;
-  --surface: #fbf6e8;
-  --surface-sunken: #eadfc6;
-  --text: #2b2118;
-  --text-muted: #62513f;
-  --border: #d8c9a8;
-  --border-strong: #2b2118;
-  --accent: #9a3412;
-  --status-production: #1f6b3f;
-  --status-in-development: #8a4f00;
-  --status-research: #2a4f9e;
-}
-
-[data-theme="dark"] {
-  --bg: #0f0f11;
-  --surface: #17171a;
-  --surface-sunken: #0a0a0c;
-  --text: #ededea;
-  --text-muted: #a9a9a4;
-  --border: #2c2c31;
-  --border-strong: #ededea;
-  --accent: #ff8a6b;
-  --accent-contrast: #0f0f11;
-  --focus: #93b4ff;
-}
-
-[data-theme="midnight"] {
-  --bg: #0b1220;
-  --surface: #121b2f;
-  --surface-sunken: #070c17;
-  --text: #e6ecf7;
-  --text-muted: #9fb0cc;
-  --border: #24324c;
-  --border-strong: #e6ecf7;
-  --accent: #5cc8ff;
-  --accent-contrast: #0b1220;
-}
-
-[data-theme="forest"] {
-  --bg: #0e1512;
-  --surface: #151e1a;
-  --surface-sunken: #090e0c;
-  --text: #e8efe9;
-  --text-muted: #a3b3a8;
-  --border: #27362e;
-  --border-strong: #e8efe9;
-  --accent: #f2b84b;
-  --accent-contrast: #0e1512;
-  --focus: #9fd8ff;
 }

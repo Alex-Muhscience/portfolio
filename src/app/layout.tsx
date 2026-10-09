@@ -5,7 +5,7 @@ import { ThemeProvider } from "next-themes"
 import { Footer } from "@/components/shared/Footer"
 import { Header } from "@/components/shared/Header"
 import { site } from "@/lib/site"
-import { defaultTheme, themeIds } from "@/lib/themes"
+import { defaultTheme, legacyThemes, themeIds } from "@/lib/themes"
 import { viewModeScript } from "@/lib/view-mode"
 import "./globals.css"
 
@@ -54,7 +54,14 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} data-scroll-behavior="smooth" suppressHydrationWarning>
       <body>
         <Script id="view-mode" strategy="beforeInteractive">{viewModeScript}</Script>
-        <ThemeProvider attribute="data-theme" themes={[...themeIds]} defaultTheme={defaultTheme} enableSystem={false} disableTransitionOnChange>
+        <ThemeProvider
+          attribute="data-theme"
+          themes={[...themeIds, ...Object.keys(legacyThemes)]}
+          value={{ navy: "navy", light: "light", ...legacyThemes }}
+          defaultTheme={defaultTheme}
+          enableSystem={false}
+          disableTransitionOnChange
+        >
           <Header />
           <main id="main">{children}</main>
           <Footer />
