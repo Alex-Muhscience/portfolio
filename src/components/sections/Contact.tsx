@@ -4,7 +4,7 @@ import { SectionHeading } from "@/components/shared/SectionHeading"
 
 const channels = [
   { label: "Email", value: site.email, href: `mailto:${site.email}`, icon: Mail, external: false },
-  { label: "LinkedIn", value: "linkedin.com/in/alex-mkamau-20015b340", href: site.links.linkedin, icon: Linkedin, external: true },
+  { label: "LinkedIn", value: "linkedin.com/in/alex-m-kamau-20015b340", href: site.links.linkedin, icon: Linkedin, external: true },
   { label: "GitHub", value: "github.com/Alex-Muhscience", href: site.links.github, icon: Github, external: true },
   { label: "WhatsApp", value: site.phone, href: site.links.whatsapp, icon: MessageCircle, external: true },
   { label: "Résumé", value: "View online", href: site.links.resume, icon: FileText, external: true },
