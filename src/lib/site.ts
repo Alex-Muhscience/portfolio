@@ -12,7 +12,7 @@ export const site = {
   phone: "+254 746 254 055",
   links: {
     github: "https://github.com/Alex-Muhscience",
-    linkedin: "https://www.linkedin.com/in/alex-mkamau-20015b340",
+    linkedin: "https://www.linkedin.com/in/alex-m-kamau-20015b340",
     whatsapp: "https://wa.me/254746254055",
     resume: "https://flowcv.com/resume/t249m8own6",
   },
