@@ -1,5 +1,14 @@
 import { Book, type BookPage } from "@/components/book/Book"
 import { BookCover } from "@/components/book/BookCover"
+import {
+  AboutChapter,
+  ContactChapter,
+  EngineeringChapter,
+  ExperienceChapter,
+  IntroChapter,
+  PrinciplesChapter,
+  WorkChapter,
+} from "@/components/book/Chapters"
 import { About } from "@/components/sections/About"
 import { Contact } from "@/components/sections/Contact"
 import { Engineering } from "@/components/sections/Engineering"
@@ -52,15 +61,19 @@ const structuredData = {
   ],
 }
 
-/** One entry per child of <Book>, in order. Ids match the section ids used by /#… links. */
+/** One entry per chapter of <Book>, in order. Ids match the section ids used by /#… links. */
 const chapters: BookPage[] = [
-  { id: "intro", label: "Introduction" },
-  { id: "work", label: "Work" },
-  { id: "engineering", label: "Engineering" },
-  { id: "principles", label: "Principles" },
-  { id: "experience", label: "Experience" },
-  { id: "about", label: "About" },
-  { id: "contact", label: "Contact" },
+  { id: "intro", label: "Introduction", summary: "Who I am, the work I do and where I do it from." },
+  {
+    id: "work",
+    label: "Work",
+    summary: "Systems I have designed, built and run. Each one has a full case study: the problem, my role, the architecture and the decisions behind it.",
+  },
+  { id: "engineering", label: "Engineering", summary: "Depth across the stack, by area, with the case study where each is easiest to see." },
+  { id: "principles", label: "Principles", summary: "The defaults I work from, whatever the stack." },
+  { id: "experience", label: "Experience", summary: "Where I have worked, most recent first." },
+  { id: "about", label: "About", summary: "Full-stack by responsibility, not only by tools." },
+  { id: "contact", label: "Contact", summary: "Open to full-stack and backend roles, remote or in Nairobi." },
 ]
 
 const bookPages: BookPage[] = [{ id: "cover", label: "Cover", cover: true }, ...chapters]
@@ -69,19 +82,27 @@ export default function HomePage() {
   return (
     <>
       <JsonLd data={structuredData} />
-      <Book pages={bookPages}>
-        <BookCover chapters={chapters} />
-        {/* A real element, not a fragment: fragments are flattened across the server/client boundary. */}
-        <div>
-          <Hero />
-          <SystemFlow />
-        </div>
+      {/* The scrolling page (the default) and the book are separate renderings of the same material.
+          CSS shows one or the other from <html data-view>, which is set before first paint. */}
+      <div className="scroll-view">
+        <Hero />
+        <SystemFlow />
         <SelectedWork />
         <Engineering />
         <Principles />
         <Experience />
         <About />
         <Contact />
+      </div>
+      <Book pages={bookPages}>
+        <BookCover chapters={chapters} />
+        <IntroChapter />
+        <WorkChapter />
+        <EngineeringChapter />
+        <PrinciplesChapter />
+        <ExperienceChapter />
+        <AboutChapter />
+        <ContactChapter />
       </Book>
     </>
   )

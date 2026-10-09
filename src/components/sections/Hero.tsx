@@ -2,6 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, ArrowUpRight, Mail } from "lucide-react"
 import { GitHubIcon, LinkedInIcon } from "@/components/shared/BrandIcons"
+import { Headline } from "@/components/shared/Headline"
 import { site } from "@/lib/site"
 
 export function Hero() {
@@ -11,14 +12,9 @@ export function Hero() {
         <div className="hero-copy">
           <p className="kicker">{site.name} · {site.role}</p>
 
-          <h1 id="hero-title">
-            I design, build and <em>run</em> the systems businesses depend on.
-          </h1>
+          <h1 id="hero-title"><Headline /></h1>
 
-          <p className="hero-intro">
-            Full-stack engineer in Nairobi and the sole technical owner of three production platforms, from requirements
-            and architecture through payments and security to the Linux servers they run on.
-          </p>
+          <p className="hero-intro">{site.summary}</p>
 
           <div className="hero-actions">
             <Link href="/#work" className="button button-primary">
@@ -42,7 +38,7 @@ export function Hero() {
 
           <p className="hero-availability">
             <span className="status-dot" aria-hidden="true" />
-            Open to full-stack and backend roles · remote or Nairobi, {site.timezone}
+            {site.availability}, {site.timezone}
           </p>
         </div>
 

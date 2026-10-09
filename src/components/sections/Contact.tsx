@@ -3,7 +3,7 @@ import { GitHubIcon, LinkedInIcon, WhatsAppIcon } from "@/components/shared/Bran
 import { site } from "@/lib/site"
 import { SectionHeading } from "@/components/shared/SectionHeading"
 
-const channels = [
+export const channels = [
   { label: "Email", value: site.email, href: `mailto:${site.email}`, icon: Mail, external: false },
   { label: "LinkedIn", value: "linkedin.com/in/alex-m-kamau-20015b340", href: site.links.linkedin, icon: LinkedInIcon, external: true },
   { label: "GitHub", value: "github.com/Alex-Muhscience", href: site.links.github, icon: GitHubIcon, external: true },

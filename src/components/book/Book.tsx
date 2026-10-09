@@ -1,8 +1,9 @@
 'use client'
 
-import { Children, useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react"
+import { Children, useCallback, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import { useViewMode } from "@/lib/view-mode"
+import { BookVerso } from "./BookVerso"
 import { clamp, drawCover, drawFold, easeInOut, easeOut, resetFold } from "./fold"
 
 export interface BookPage {
@@ -11,6 +12,8 @@ export interface BookPage {
   label: string
   /** The hard front cover: swings open rigidly instead of folding, and carries no folio. */
   cover?: boolean
+  /** One or two sentences for the chapter opener on the left-hand page. */
+  summary?: string
 }
 
 interface Flip {
@@ -36,7 +39,7 @@ interface Gesture {
   turn?: { forward: boolean; target: number }
 }
 
-const FLIP_MS = 900
+const FLIP_MS = 600
 /** Longest step the animation clock takes in one frame (two frames at 60 Hz). */
 const MAX_FRAME_MS = 34
 const WHEEL_THRESHOLD = 160
@@ -45,6 +48,27 @@ const SWIPE_THRESHOLD = 60
 
 const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
+/** Wide and tall enough for a two-page spread. Must match the media query in book.css. */
+const SPREAD = "(min-width: 64rem) and (min-height: 37.5rem)"
+
+function subscribeSpread(onChange: () => void) {
+  const query = window.matchMedia(SPREAD)
+  query.addEventListener("change", onChange)
+  return () => query.removeEventListener("change", onChange)
+}
+
+function useSpread() {
+  return useSyncExternalStore(subscribeSpread, () => window.matchMedia(SPREAD).matches, () => false)
+}
+
+/** What scrolls when a page's content is too tall: the right-hand page in a spread, otherwise the whole page. */
+function scrollerOf(page: HTMLElement | null | undefined, spread: boolean) {
+  if (!page) return null
+  return spread ? (page.querySelector<HTMLElement>(".book-recto") ?? page) : page
+}
+
+const folio = (index: number) => String(index).padStart(2, "0")
+
 function indexFromHash(pages: BookPage[]) {
   const index = pages.findIndex((page) => page.id === window.location.hash.slice(1))
   return index === -1 ? 0 : index
@@ -52,11 +76,17 @@ function indexFromHash(pages: BookPage[]) {
 
 /**
  * Presents its children as the pages of a book: one at a time, each folded over to reveal the next.
- * Every page stays in the DOM (server-rendered, crawlable). In "scroll" view mode,
- * or without JavaScript, this renders as an ordinary stack of sections.
+ * Every page stays in the DOM (server-rendered, crawlable). The book is only shown in
+ * "book" view mode; otherwise (and without JavaScript) the scrolling page is shown instead.
+ * On wide screens each page is a two-page spread and only the right-hand page turns.
  */
 export function Book({ pages, children }: { pages: BookPage[]; children: ReactNode }) {
   const isBook = useViewMode() === "book"
+  const spread = useSpread()
+  const spreadRef = useRef(spread)
+  useLayoutEffect(() => {
+    spreadRef.current = spread
+  }, [spread])
   const [current, setCurrent] = useState(0)
   const [flip, setFlip] = useState<Flip | null>(null)
   const currentRef = useRef(0)
@@ -78,7 +108,7 @@ export function Book({ pages, children }: { pages: BookPage[]; children: ReactNo
       if (!sheet || !leaf || !volume) return
       progressRef.current = progress
       if (pages[top].cover) drawCover(sheet, volume, progress)
-      else if (curlRef.current) drawFold(leaf, sheet, curlRef.current, progress)
+      else if (curlRef.current) drawFold(leaf, sheet, curlRef.current, progress, spreadRef.current ? 0.5 : 0)
     },
     [pages],
   )
@@ -91,7 +121,8 @@ export function Book({ pages, children }: { pages: BookPage[]; children: ReactNo
       setCurrent(index)
       // A page you turn to starts at its top; a page you turn back to is where you left it.
       const page = pageRefs.current[index]
-      if (page && forward) page.scrollTop = 0
+      const scroller = scrollerOf(page, spreadRef.current)
+      if (scroller && forward) scroller.scrollTop = 0
       if (updateUrl) history.replaceState(null, "", index === 0 ? window.location.pathname : `#${pages[index].id}`)
       if (focus) page?.focus({ preventScroll: true })
     },
@@ -191,12 +222,27 @@ export function Book({ pages, children }: { pages: BookPage[]; children: ReactNo
       const target = event.target as HTMLElement
       if (target.closest("input, textarea, select, [contenteditable]")) return
       const here = currentRef.current
-      if (event.key === "ArrowRight" || event.key === "PageDown") {
+      if (event.key === "ArrowRight") {
         event.preventDefault()
         goTo(here + 1)
-      } else if (event.key === "ArrowLeft" || event.key === "PageUp") {
+      } else if (event.key === "ArrowLeft") {
         event.preventDefault()
         goTo(here - 1)
+      } else if (event.key === "PageDown" || event.key === "PageUp") {
+        // Page keys read through a long page first, and only turn it once there is nothing left to scroll.
+        event.preventDefault()
+        const down = event.key === "PageDown"
+        const scroller = scrollerOf(pageRefs.current[here], spreadRef.current)
+        const canScroll = scroller
+          ? down
+            ? scroller.scrollTop + scroller.clientHeight < scroller.scrollHeight - 2
+            : scroller.scrollTop > 0
+          : false
+        if (scroller && canScroll) {
+          scroller.scrollBy({ top: (down ? 1 : -1) * scroller.clientHeight * 0.9, behavior: prefersReducedMotion() ? "auto" : "smooth" })
+        } else {
+          goTo(here + (down ? 1 : -1))
+        }
       } else if (event.key === "Home") {
         goTo(0)
       } else if (event.key === "End") {
@@ -229,7 +275,7 @@ export function Book({ pages, children }: { pages: BookPage[]; children: ReactNo
       if (gap < WHEEL_PAUSE_MS) return
       state.needsPause = false
     }
-    const page = pageRefs.current[current]
+    const page = scrollerOf(pageRefs.current[current], spreadRef.current)
     if (!page || now < state.lockedUntil) return
     const atBottom = page.scrollTop + page.clientHeight >= page.scrollHeight - 2
     const atTop = page.scrollTop <= 0
@@ -247,7 +293,9 @@ export function Book({ pages, children }: { pages: BookPage[]; children: ReactNo
   const onTouchStart = (event: React.TouchEvent) => {
     if (event.touches.length !== 1 || flip?.mode === "run") return
     const touch = event.touches[0]
-    gesture.current = { x: touch.clientX, y: touch.clientY, time: performance.now(), width: volumeRef.current?.clientWidth ?? window.innerWidth }
+    // In a spread only the right-hand page turns, so a full turn is half the book's width.
+    const width = (volumeRef.current?.clientWidth ?? window.innerWidth) * (spreadRef.current ? 0.5 : 1)
+    gesture.current = { x: touch.clientX, y: touch.clientY, time: performance.now(), width }
   }
 
   // The page follows the finger: dragging left peels it over, dragging right brings the last one back.
@@ -346,12 +394,23 @@ export function Book({ pages, children }: { pages: BookPage[]; children: ReactNo
                 inert={isBook && index !== current}
                 tabIndex={isBook ? -1 : undefined}
               >
-                {sheet}
-                {!isCover && (
-                  <p className="book-folio" aria-hidden="true">
-                    <span>{pages[index].label}</span>
-                    <span>{String(index).padStart(2, "0")} / {String(pages.length - 1).padStart(2, "0")}</span>
-                  </p>
+                {isCover ? (
+                  sheet
+                ) : (
+                  // A spread on wide screens: the chapter opener on the left, its content on the right.
+                  // On phones the same markup stacks into a single page.
+                  <div className="book-spread">
+                    <BookVerso page={pages[index]} index={index} />
+                    <div className="book-recto">
+                      <p className="book-runhead book-runhead-recto" aria-hidden="true">{pages[index].label}</p>
+                      <div className="book-recto-body">{sheet}</div>
+                      <p className="book-folio book-folio-recto" aria-hidden="true">
+                        <span className="book-folio-label">{pages[index].label}</span>
+                        <span className="book-folio-single">{folio(index)} / {folio(pages.length - 1)}</span>
+                        <span className="book-folio-spread">{index * 2 + 1}</span>
+                      </p>
+                    </div>
+                  </div>
                 )}
               </div>
             </div>
@@ -362,7 +421,16 @@ export function Book({ pages, children }: { pages: BookPage[]; children: ReactNo
           <div ref={curlRef} className="book-curl" aria-hidden="true">
             <div className="book-curl-mirror">
               <div className="book-curl-clip">
-                <div className="book-curl-paper"><span /></div>
+                <div className="book-curl-paper">
+                  {/* In a spread the back of the turning page is the next left-hand page. It is drawn
+                      mirrored here, so that reflecting the sheet across the fold reads it the right way round. */}
+                  {spread && !pages[flip.under].cover && (
+                    <div className="book-curl-back">
+                      <BookVerso page={pages[flip.under]} index={flip.under} />
+                    </div>
+                  )}
+                  <span />
+                </div>
               </div>
             </div>
             <span className="book-curl-cast" />
