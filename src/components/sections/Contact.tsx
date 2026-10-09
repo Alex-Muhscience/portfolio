@@ -1,25 +1,34 @@
-import { ArrowUpRight, FileText, Github, Linkedin, Mail, MessageCircle } from "lucide-react"
+import { ArrowRight, ArrowUpRight, FileText, Mail } from "lucide-react"
+import { GitHubIcon, LinkedInIcon, WhatsAppIcon } from "@/components/shared/BrandIcons"
 import { site } from "@/lib/site"
 import { SectionHeading } from "@/components/shared/SectionHeading"
 
-const channels = [
+export const channels = [
   { label: "Email", value: site.email, href: `mailto:${site.email}`, icon: Mail, external: false },
-  { label: "LinkedIn", value: "linkedin.com/in/alex-m-kamau-20015b340", href: site.links.linkedin, icon: Linkedin, external: true },
-  { label: "GitHub", value: "github.com/Alex-Muhscience", href: site.links.github, icon: Github, external: true },
-  { label: "WhatsApp", value: site.phone, href: site.links.whatsapp, icon: MessageCircle, external: true },
+  { label: "LinkedIn", value: "linkedin.com/in/alex-m-kamau-20015b340", href: site.links.linkedin, icon: LinkedInIcon, external: true },
+  { label: "GitHub", value: "github.com/Alex-Muhscience", href: site.links.github, icon: GitHubIcon, external: true },
+  { label: "WhatsApp", value: site.phone, href: site.links.whatsapp, icon: WhatsAppIcon, external: true },
   { label: "Résumé", value: "View online", href: site.links.resume, icon: FileText, external: true },
 ]
 
 export function Contact() {
   return (
-    <section id="contact" className="section" aria-labelledby="contact-title">
+    <section id="contact" className="section contact-band" aria-labelledby="contact-title">
       <div className="shell contact-layout">
         <div>
-          <SectionHeading id="contact-title" index="06" label="Contact" title="Get in touch." />
+          <SectionHeading id="contact-title" index="06" label="Contact" title="Have a system that needs an owner?" />
           <p className="contact-note reveal">
-            I am open to conversations about full-stack and product engineering roles and projects, remote or in Nairobi.
-            Email is the most reliable way to reach me.
+            I am open to full-stack and backend engineering roles and to projects where reliability matters, remote or in
+            Nairobi. Email is the most reliable way to reach me.
           </p>
+          <div className="contact-actions">
+            <a href={`mailto:${site.email}`} className="button button-primary">
+              Email me <ArrowRight size={16} aria-hidden="true" />
+            </a>
+            <a href={site.links.resume} className="button" target="_blank" rel="noopener noreferrer">
+              Résumé <ArrowUpRight size={15} aria-hidden="true" />
+            </a>
+          </div>
           <dl className="meta-list contact-meta">
             <div>
               <dt>Location</dt>

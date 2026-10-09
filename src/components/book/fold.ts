@@ -16,11 +16,16 @@ export const easeOut = (t: number) => 1 - Math.pow(1 - t, 3)
  * inside it so it does not move. The back of the page is the same construction for the
  * other side of the line, then reflected. Only transforms change, so the compositor does
  * all the work.
+ *
+ * `spine` is where the fold comes to rest, as a fraction of the width. 0 is a single page
+ * folding right across itself. 0.5 is a two-page spread: only the right-hand page turns,
+ * over the spine, and its back lands on the left-hand page.
  */
-export function drawFold(leaf: HTMLElement, sheet: HTMLElement, curl: HTMLElement, progress: number) {
+export function drawFold(leaf: HTMLElement, sheet: HTMLElement, curl: HTMLElement, progress: number, spine = 0) {
   const width = leaf.parentElement!.clientWidth
   const height = leaf.parentElement!.clientHeight
-  const travel = width * 1.04
+  // A single page overshoots slightly so it clears the edge completely; a spread's page lands exactly on the spine.
+  const travel = width * (1 - spine) * (spine > 0 ? 1 : 1.04)
   const xb = width - clamp(progress * 1.2) * travel
   const xt = width - clamp((progress - 0.16) / 0.84) * travel
 
@@ -43,7 +48,8 @@ export function drawFold(leaf: HTMLElement, sheet: HTMLElement, curl: HTMLElemen
   const [mirror, cast, edge] = curl.children as unknown as HTMLElement[]
   const clip = mirror.firstElementChild as HTMLElement
   const paper = clip.firstElementChild as HTMLElement
-  const shade = paper.firstElementChild as HTMLElement
+  // The light across the back of the page. Looked up by tag: in a spread the paper also holds the next page.
+  const shade = paper.querySelector<HTMLElement>(":scope > span")!
   const onFold = `translate3d(${middle}px, ${lift}px, 0) rotate(${angle}rad)`
   size(clip, boxWidth, boxHeight)
   size(paper, width, height)

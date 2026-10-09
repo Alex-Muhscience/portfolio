@@ -1,30 +1,26 @@
-export interface Capability {
-  title: string
-  description: string
+export interface FlowStage {
+  name: string
+  role: string
+  tools: string[]
 }
 
-/** What a team gets, stated as work rather than as tools. */
-export const capabilities: Capability[] = [
-  {
-    title: "Requirements to architecture",
-    description:
-      "I start from the business process, the data it produces and the ways it can fail, then choose a structure and stack that fit the problem and the people who will maintain it.",
-  },
-  {
-    title: "Interfaces and APIs",
-    description:
-      "Typed React and Next.js front ends, server-rendered Laravel applications, and the REST APIs, validation and business logic behind them.",
-  },
-  {
-    title: "Data, access and security",
-    description:
-      "Schema design in PostgreSQL and MySQL, authentication, role-based authorization, tenant isolation, payment verification and audit trails.",
-  },
-  {
-    title: "Deployment and operations",
-    description:
-      "Containers, CI pipelines, Linux servers, caching, queues, backups and monitoring. I stay with a system after it ships.",
-  },
+/**
+ * The path a request takes through the platforms I run, edge to data.
+ * Shown as the animated system strip under the hero.
+ */
+export const systemFlow: FlowStage[] = [
+  { name: "Client", role: "Server-rendered pages, accessible forms", tools: ["Next.js", "React", "Livewire"] },
+  { name: "Edge", role: "TLS, caching, security headers, rate limits", tools: ["Cloudflare", "nginx"] },
+  { name: "Application", role: "Domain logic behind RBAC, MFA and audit", tools: ["Laravel", "Node.js", "REST"] },
+  { name: "Workers", role: "Queues, outbox, PDFs and signed webhooks", tools: ["Redis", "Cron", "M-Pesa", "Paystack"] },
+  { name: "Data", role: "Isolated, audited, backed up and restore-tested", tools: ["PostgreSQL", "MySQL"] },
+]
+
+/** Guarantees that hold across every platform, stated as outcomes. */
+export const flowGuarantees = [
+  "Payments confirmed only by signed provider callbacks",
+  "Slow work queued, so a failure never blocks a checkout",
+  "Every deploy gated on tests, lint and security audits",
 ]
 
 export interface EngineeringArea {

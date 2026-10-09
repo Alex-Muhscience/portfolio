@@ -3,8 +3,9 @@
  * before first paint. Without it (no JavaScript, or "scroll" mode) the homepage is a
  * normal stack of sections and none of this applies.
  */
-.book-bar,
-.book-folio {
+/* One rendering at a time: the book in book view, the scrolling page otherwise (and without JavaScript). */
+html:not([data-view="book"]) .book,
+html[data-view="book"] .scroll-view {
   display: none;
 }
 
@@ -130,20 +131,27 @@ html[data-view="book"] .book-page:focus {
   outline: none;
 }
 
-/* Front cover: cloth in the accent colour, a darker spine, a ruled frame. */
+/*
+ * Front cover: navy cloth, a scarlet binding stripe beside the hinge, a scarlet ruled frame
+ * and white type. Fixed colours, not theme tokens: a printed cover does not change with the room.
+ */
 html[data-view="book"] .book-page-cover {
+  --cover-navy: #0a1736;
+  --cover-scarlet: #ff3b1f;
+  --cover-white: #ffffff;
   right: auto;
   left: calc((100% - var(--closed-w)) / 2);
   width: var(--closed-w);
   overflow: hidden auto;
   clip-path: none;
   background:
-    linear-gradient(to right, rgb(0 0 0 / 0.34) 0, rgb(0 0 0 / 0.12) 1.1rem, rgb(255 255 255 / 0.1) 1.35rem, transparent 1.9rem),
-    linear-gradient(135deg, rgb(255 255 255 / 0.1), transparent 40%, rgb(0 0 0 / 0.16)),
-    var(--accent);
+    linear-gradient(to right, rgb(0 0 0 / 0.42) 0, rgb(0 0 0 / 0.14) 1.1rem, rgb(255 255 255 / 0.07) 1.35rem, transparent 1.9rem),
+    linear-gradient(to right, transparent 2rem, var(--cover-scarlet) 2rem 2.25rem, transparent 2.25rem),
+    linear-gradient(135deg, rgb(255 255 255 / 0.07), transparent 40%, rgb(0 0 0 / 0.28)),
+    var(--cover-navy);
   /* Darkens as the board swings away from the light. */
   box-shadow: inset 0 0 0 100vmax rgb(0 0 0 / var(--cover-shade, 0));
-  color: var(--accent-contrast);
+  color: var(--cover-white);
   transform-origin: left center;
   backface-visibility: hidden;
 }
@@ -158,15 +166,15 @@ html[data-view="book"] .cover {
   max-width: 34rem;
   min-height: 0;
   margin-inline: auto;
-  padding: clamp(1.5rem, 5vh, 3rem) clamp(1.25rem, 4vw, 2.5rem) clamp(1.5rem, 5vh, 3rem) clamp(2.5rem, 7vw, 3.75rem);
+  padding: clamp(1.5rem, 5vh, 3rem) clamp(1.25rem, 4vw, 2.5rem) clamp(1.5rem, 5vh, 3rem) clamp(3rem, 7vw, 4.25rem);
 }
 
 /* Ruled frame, inset from the cover's edge. */
 html[data-view="book"] .book-page-cover::after {
   content: "";
   position: absolute;
-  inset: 0.875rem 0.875rem 0.875rem 2.25rem;
-  border: 1px solid color-mix(in srgb, var(--accent-contrast) 45%, transparent);
+  inset: 0.875rem 0.875rem 0.875rem 2.75rem;
+  border: 1px solid color-mix(in srgb, var(--cover-scarlet) 70%, transparent);
   pointer-events: none;
 }
 
@@ -179,6 +187,35 @@ html[data-view="book"] .book-page-cover::after {
   text-transform: uppercase;
 }
 
+.cover-kicker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--cover-scarlet);
+}
+
+/* The site's monogram, stamped on the cover. */
+.cover-mark {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--cover-white);
+  color: var(--cover-white);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.cover-contents p,
+.cover-contents a span {
+  color: var(--cover-scarlet);
+}
+
+.cover-open span {
+  color: color-mix(in srgb, var(--cover-white) 65%, var(--cover-navy));
+}
+
 .cover-name {
   font-size: clamp(2rem, 1.2rem + 3.4vw, 3.25rem);
   font-weight: 700;
@@ -189,6 +226,7 @@ html[data-view="book"] .book-page-cover::after {
 
 .cover-role {
   margin-top: var(--space-3);
+  color: color-mix(in srgb, var(--cover-white) 82%, var(--cover-navy));
   font-size: var(--text-xl);
   font-weight: 600;
   letter-spacing: -0.01em;
@@ -198,7 +236,8 @@ html[data-view="book"] .book-page-cover::after {
   max-width: 24rem;
   margin-top: var(--space-4);
   padding-top: var(--space-4);
-  border-top: 2px solid currentColor;
+  border-top: 2px solid var(--cover-scarlet);
+  color: color-mix(in srgb, var(--cover-white) 78%, var(--cover-navy));
   font-size: var(--text-base);
   line-height: 1.5;
 }
@@ -215,7 +254,7 @@ html[data-view="book"] .book-page-cover::after {
   align-items: center;
   gap: var(--space-3);
   min-height: 2rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--accent-contrast) 30%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--cover-white) 18%, transparent);
   font-size: var(--text-sm);
   font-weight: 600;
   transition: padding-left 200ms ease;
@@ -229,7 +268,6 @@ html[data-view="book"] .book-page-cover::after {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   font-weight: 400;
-  opacity: 0.8;
 }
 
 .cover-open {
@@ -247,19 +285,20 @@ html[data-view="book"] .book-page-cover::after {
   min-height: 2.75rem;
   padding-inline: var(--space-4);
   border-radius: var(--radius);
-  background: var(--accent-contrast);
-  color: var(--accent);
+  background: var(--cover-scarlet);
+  color: var(--cover-navy);
   font-size: var(--text-sm);
   font-weight: 700;
-  transition: transform 200ms ease;
+  transition: transform 200ms ease, background-color 200ms ease;
 }
 
 .cover-button:hover {
+  background: var(--cover-white);
   transform: translateX(3px);
 }
 
 .book-page-cover :focus-visible {
-  outline-color: var(--accent-contrast);
+  outline-color: var(--cover-white);
 }
 
 /* Short screens: drop the strapline and tighten, so the whole cover fits without scrolling. */
@@ -337,7 +376,7 @@ html[data-view="book"] .book-page-cover::after {
 }
 
 /* Light across the back of the page: dark in the crease, a highlight where the paper bows, then flat. */
-.book-curl-paper span {
+.book-curl-paper > span {
   position: absolute;
   top: 0;
   left: 0;
@@ -382,27 +421,513 @@ html[data-view="book"] .book-page-cover::after {
   opacity: calc(var(--lift) * 0.85);
 }
 
-html[data-view="book"] .book-page > .section,
-html[data-view="book"] .book-page > div > .section:last-child {
-  padding-bottom: var(--space-7);
-  border-bottom: 0;
+/*
+ * Pages. A chapter is a spread: the opener on the left-hand page (.book-verso) and its
+ * content on the right (.book-recto). On phones the two stack into one page that scrolls.
+ */
+html[data-view="book"] .book-spread {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
-/* Running footer, like a printed folio. */
-html[data-view="book"] .book-folio {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--space-4);
-  width: 100%;
-  max-width: calc(var(--shell) + 2 * var(--gutter));
-  margin: auto auto 0;
-  padding: var(--space-4) var(--gutter) var(--space-5);
-  border-top: 1px solid var(--border);
+html[data-view="book"] .book-verso {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-5) var(--gutter) var(--space-4);
+  border-bottom: 1px solid var(--border);
+}
+
+.book-runhead,
+.book-folio {
   color: var(--text-muted);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.book-chapter {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.book-title {
+  margin-top: var(--space-1);
+  font-size: var(--text-2xl);
+  letter-spacing: -0.03em;
+}
+
+.book-summary {
+  max-width: 34rem;
+  margin-top: var(--space-1);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+/* Single page: the opener is a compact header, so the running head, numeral and its folio go. */
+html[data-view="book"] .book-verso .book-runhead,
+html[data-view="book"] .book-numeral,
+html[data-view="book"] .book-folio-verso,
+html[data-view="book"] .book-runhead-recto,
+html[data-view="book"] .book-folio-spread {
+  display: none;
+}
+
+html[data-view="book"] .book-recto {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+html[data-view="book"] .book-recto-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: var(--space-5) var(--gutter);
+}
+
+html[data-view="book"] .book-folio-recto {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--gutter) var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+/* Wide screens: a real spread, with a gutter shadow either side of the spine. */
+@media (min-width: 64rem) and (min-height: 37.5rem) {
+  html[data-view="book"] .book-page:not(.book-page-cover) {
+    --page-x: clamp(2rem, 3.4vw, 3.5rem);
+    --page-y: clamp(1.25rem, 3.2vh, 2.25rem);
+    overflow: hidden;
+    border-radius: 3px;
+    box-shadow: none;
+  }
+
+  html[data-view="book"] .book-spread {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    height: 100%;
+    min-height: 0;
+  }
+
+  html[data-view="book"] .book-verso {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    height: 100%;
+    padding: var(--page-y) var(--page-x);
+    border-bottom: 0;
+    box-shadow: inset -2.5rem 0 2.25rem -2.25rem var(--page-shade);
+  }
+
+  html[data-view="book"] .book-recto {
+    height: 100%;
+    min-height: 0;
+    overflow: hidden auto;
+    overscroll-behavior: contain;
+    padding: var(--page-y) var(--page-x);
+    box-shadow: inset 2.5rem 0 2.25rem -2.25rem var(--page-shade);
+  }
+
+  html[data-view="book"] .book-verso .book-runhead,
+  html[data-view="book"] .book-numeral,
+  html[data-view="book"] .book-folio-verso,
+  html[data-view="book"] .book-runhead-recto,
+  html[data-view="book"] .book-folio-spread {
+    display: block;
+  }
+
+  html[data-view="book"] .book-runhead-recto {
+    text-align: right;
+  }
+
+  html[data-view="book"] .book-folio-label,
+  html[data-view="book"] .book-folio-single {
+    display: none;
+  }
+
+  html[data-view="book"] .book-opener {
+    display: grid;
+    gap: var(--space-2);
+    max-width: 26rem;
+    margin-block: auto;
+  }
+
+  /* An outlined chapter numeral, the one flourish on the page. */
+  html[data-view="book"] .book-numeral {
+    margin-bottom: var(--space-2);
+    color: transparent;
+    font-size: clamp(5rem, 3rem + 9vh, 9rem);
+    font-weight: 700;
+    line-height: 0.85;
+    letter-spacing: -0.06em;
+    -webkit-text-stroke: 1.5px var(--accent);
+  }
+
+  html[data-view="book"] .book-title {
+    font-size: clamp(2.25rem, 1.25rem + 3vh, 3.5rem);
+    letter-spacing: -0.04em;
+  }
+
+  html[data-view="book"] .book-summary {
+    font-size: var(--text-base);
+    line-height: 1.6;
+  }
+
+  html[data-view="book"] .book-recto-body {
+    padding: var(--space-4) 0;
+  }
+
+  html[data-view="book"] .book-folio-recto {
+    justify-content: flex-end;
+    padding: var(--space-3) 0 0;
+  }
+
+  html[data-view="book"] .book-folio-verso {
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--border);
+  }
+
+  /* The back of the turning page is the next left-hand page, pre-mirrored (see Book.tsx). */
+  .book-curl-paper {
+    background: var(--bg);
+  }
+
+  .book-curl-back {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    transform: scaleX(-1);
+  }
+
+  .book-curl-back .book-verso {
+    height: 100%;
+    background: var(--bg);
+  }
+
+  /* Light on the turning paper fades out as it lands, so the page it becomes matches exactly. */
+  .book-curl-paper > span {
+    opacity: var(--lift);
+  }
+}
+
+/*
+ * Chapter content. Each chapter is cut to fit one page; it sits in the middle of the
+ * page when there is room and starts at the top when there is not.
+ */
+.chapter {
+  display: grid;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 40rem;
+  margin-block: auto;
+}
+
+.chapter-period {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+}
+
+.chapter-row-note {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+}
+
+.chapter-headline {
+  font-size: clamp(1.75rem, 0.9rem + 2.4vw, 2.625rem);
+  font-weight: 650;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+.chapter-headline em {
+  color: var(--accent);
+  font-style: normal;
+}
+
+.chapter-headline-small {
+  font-size: clamp(1.5rem, 0.9rem + 1.6vw, 2.125rem);
+}
+
+.chapter-lead {
+  color: var(--text-muted);
+}
+
+.chapter-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.chapter .hero-availability {
+  margin-top: 0;
+}
+
+/* Introduction */
+.chapter-intro-id {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.chapter-intro-id p {
+  display: grid;
+  font-size: var(--text-sm);
+  line-height: 1.4;
+}
+
+.chapter-intro-id span {
+  color: var(--text-muted);
+}
+
+.chapter-portrait {
+  position: relative;
+  flex: none;
+  width: 3.5rem;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  outline: 1px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.chapter-portrait img {
+  object-fit: cover;
+  object-position: 50% 22%;
+}
+
+/* Rows shared by work, engineering, principles and experience */
+.chapter-rows {
+  border-top: 1px solid var(--border-strong);
+}
+
+.chapter-rows > li,
+.chapter-rows > div {
+  padding-block: var(--space-3);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Work */
+.chapter-work a {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.chapter-row-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.chapter-row-head svg {
+  color: var(--text-muted);
+  transition: transform 200ms ease, color 200ms ease;
+}
+
+.chapter-work a:hover strong,
+.chapter-work a:hover svg {
+  color: var(--accent);
+}
+
+.chapter-work a:hover svg {
+  transform: translateX(3px);
+}
+
+.chapter-work-meta {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.chapter-work .status {
+  font-size: var(--text-xs);
+  white-space: nowrap;
+}
+
+.chapter-work .chapter-row-note {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.chapter-more {
+  margin-top: calc(var(--space-2) * -1);
+}
+
+/* Engineering */
+.chapter-areas > div {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: var(--space-3);
+}
+
+.chapter-areas dt {
+  font-weight: 600;
+}
+
+.chapter-areas dd {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.chapter-tools {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: 1.6;
+}
+
+.chapter-areas a {
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--border);
+  text-underline-offset: 0.25em;
+}
+
+.chapter-areas a:hover {
+  color: var(--accent);
+}
+
+/* Principles */
+.chapter-principles {
+  counter-reset: principle;
+}
+
+.chapter-principles li {
+  counter-increment: principle;
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  column-gap: var(--space-2);
+  padding-block: var(--space-2);
+}
+
+.chapter-principles li::before {
+  content: counter(principle, decimal-leading-zero);
+  grid-row: span 2;
+  padding-top: 0.2rem;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+.chapter-principles strong {
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.chapter-principles .chapter-row-note {
+  font-size: var(--text-xs);
+}
+
+/* Experience */
+.chapter-roles > div {
+  display: grid;
+  gap: 0.15rem;
+  font-size: var(--text-sm);
+}
+
+.chapter-platforms {
+  display: grid;
+  gap: 0.15rem;
+  margin-top: var(--space-2);
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--accent);
+}
+
+.chapter-platforms li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-2);
+}
+
+.chapter-platforms a {
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--border);
+  text-underline-offset: 0.25em;
+}
+
+.chapter-platforms a:hover {
+  color: var(--accent);
+}
+
+.chapter-platforms span {
+  color: var(--text-muted);
+}
+
+/* About */
+.chapter-about p {
+  line-height: 1.65;
+}
+
+.chapter-about p + p {
+  color: var(--text-muted);
+}
+
+.chapter-about .chapter-education {
+  display: grid;
+  gap: 0.15rem;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.chapter-education strong {
+  color: var(--text);
+}
+
+/* Contact */
+.chapter-channels {
+  border-top: 1px solid var(--border-strong);
+}
+
+.chapter-channels a {
+  display: grid;
+  grid-template-columns: 1.25rem 6rem minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-3);
+  padding-block: 0.6rem;
+  border-bottom: 1px solid var(--border);
+  font-size: var(--text-sm);
+}
+
+.chapter-channels span {
+  overflow: hidden;
+  color: var(--text-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chapter-channels a:hover,
+.chapter-channels a:hover span {
+  color: var(--accent);
+}
+
+@media (max-width: 30rem) {
+  .chapter-areas > div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.15rem;
+  }
+
+  .chapter-channels a {
+    grid-template-columns: 1.25rem 5rem minmax(0, 1fr);
+  }
 }
 
 /* Page controls */
@@ -455,10 +980,9 @@ html[data-view="book"] .book-bar {
   transition: transform 200ms ease;
 }
 
+/* Nothing before the cover or after the last page: hide the button rather than label a dead end. */
 .book-turn:disabled {
-  color: var(--text-muted);
-  cursor: default;
-  opacity: 0.55;
+  visibility: hidden;
 }
 
 .book-ticks {
@@ -531,5 +1055,53 @@ html[data-view="book"] .book-bar {
     height: 1px;
     overflow: hidden;
     clip-path: inset(50%);
+  }
+}
+
+/* In a spread the right-hand page is wide: status and a one-line summary share a line. */
+@media (min-width: 64rem) and (min-height: 37.5rem) {
+  .chapter-work-meta {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+  }
+
+  .chapter-work .chapter-row-note {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+/* Laptop-height screens: tighter rows so a chapter still fits on its page. */
+@media (max-height: 52rem) {
+  .chapter {
+    gap: var(--space-3);
+  }
+
+  .chapter-rows > li,
+  .chapter-rows > div {
+    padding-block: var(--space-2);
+  }
+
+  .chapter-principles .chapter-row-note {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+  }
+}
+
+/* Short laptop screens (around 720px tall): the work list is the longest chapter, tighten it further. */
+@media (max-height: 46rem) {
+  .chapter-rows > li,
+  .chapter-rows > div {
+    padding-block: 0.375rem;
+  }
+
+  .chapter {
+    gap: var(--space-2);
   }
 }
