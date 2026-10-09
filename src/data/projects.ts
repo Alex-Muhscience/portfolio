@@ -654,22 +654,23 @@ export const projects: Project[] = [
     slug: "unified-threat-detection-response",
     title: "Unified Threat Detection & Response System",
     summary:
-      "Python threat-detection system combining rule-based, anomaly and machine-learning detection behind an authenticated API. Top 5 finalist in the Mozilla Responsible Computing Challenge.",
+      "Threat detection and response: every event runs through rule-based, anomaly and ML detectors, and analysts triage the resulting alerts in a web dashboard. Top 5 finalist in the Mozilla Responsible Computing Challenge.",
     status: "research",
-    statusLabel: "Research project · public repositories",
+    statusLabel: "Research project · open source",
     period: "2025 – 2026",
     role: "Developer",
     featured: false,
     problem:
       "Smaller organisations rarely have a security operations team, yet they face the same threats as larger ones. UTDRS explores how far a single system can go in collecting security events, detecting threats with several complementary methods and presenting alerts an operator can act on, while keeping the AI components explainable and accountable.",
     built:
-      "A set of Python services: an API gateway handling authentication and alert, event, asset and rule management; a core detection engine; a data processor; and a device scanner. The project was a Top 5 finalist in the Mozilla Responsible Computing Challenge.",
-    stack: ["Python", "Flask", "FastAPI", "MongoDB", "Docker", "JWT"],
+      "One repository of services: a React and TypeScript dashboard where analysts triage alerts; a FastAPI gateway for authentication and alert, event, asset and rule management, which sends every event to a core detection engine; a data processor; and a device scanner in C. An event posted to the gateway comes back as an alert, linked to the event and mapped to MITRE ATT&CK, within seconds. The project was a Top 5 finalist in the Mozilla Responsible Computing Challenge.",
+    stack: ["Python", "FastAPI", "MongoDB", "React", "TypeScript", "C", "Docker"],
     system: [
+      { layer: "Interface", nodes: [{ name: "Dashboard", detail: "React, TypeScript; alert triage" }] },
       { layer: "Collection", nodes: [{ name: "Device scanner", detail: "Agents report over TLS" }, { name: "Event intake" }] },
       {
         layer: "API",
-        nodes: [{ name: "API gateway", detail: "JWT auth, RBAC, rate limiting, request IDs" }],
+        nodes: [{ name: "API gateway", detail: "JWT auth, security headers, request IDs" }],
       },
       {
         layer: "Detection",
@@ -691,16 +692,16 @@ export const projects: Project[] = [
       {
         area: "Detection",
         points: [
-          "Layered detection: signature rules, anomaly detection, machine-learning models and threat-intelligence lookups feed one alert pipeline.",
+          "Layered detection: signature rules, correlation, anomaly detection, behavioural (ML) scoring and threat-intelligence lookups run concurrently, and the most specific verdict becomes the alert.",
           "Detection rules are data, mapped to MITRE ATT&CK techniques, and can be enabled, disabled or run in a testing state.",
         ],
       },
       {
         area: "API and access control",
         points: [
-          "API gateway with JWT authentication, bcrypt password hashing and role-based access control.",
-          "Rate limiting, request validation, security headers and request-ID tracing on every call.",
-          "Endpoints for alerts, events, assets, detection rules and threat simulations.",
+          "API gateway with JWT authentication and bcrypt password hashing; new accounts are analysts and cannot raise their own role.",
+          "Request validation, host checks, size limits, security headers and request-ID tracing on every call.",
+          "Every stored event is sent to the detection engine in the background, so ingestion never waits on, or fails because of, detection.",
         ],
       },
       {
@@ -718,8 +719,18 @@ export const projects: Project[] = [
         ],
       },
       {
-        area: "Deployment",
-        points: ["Each service is containerised with Docker and Docker Compose, with separate development and production configuration."],
+        area: "Dashboard",
+        points: [
+          "React 19 and TypeScript, with API types generated from the gateway's OpenAPI schema; CI fails if the two drift apart.",
+          "Analysts follow each alert back to the event that raised it and the MITRE ATT&CK techniques it matched, then investigate, assign and resolve it.",
+        ],
+      },
+      {
+        area: "Testing and delivery",
+        points: [
+          "Unit, service and system tests for each component, and Playwright tests that drive the dashboard against the real services.",
+          "Every service ships a Docker image that runs as a non-root user; CI tests every component and builds every image on each pull request.",
+        ],
       },
     ],
     decisions: [
@@ -731,20 +742,15 @@ export const projects: Project[] = [
       {
         decision: "A gateway in front of the detection engine",
         rationale:
-          "Authentication, rate limiting and input validation live in one place, and the engine only ever sees requests that have already passed them.",
+          "Authentication and input validation live in one place, and the engine, an internal service behind a shared secret, only ever sees requests that have already passed them.",
       },
       {
         decision: "Dead-letter failed documents",
         rationale: "One malformed event should not stall the pipeline, but it also should not disappear. Keeping it with its error makes failures inspectable.",
       },
     ],
-    outcomes: ["Top 5 finalist, Mozilla Responsible Computing Challenge.", "Service source code is public on GitHub."],
-    links: [
-      { label: "Core engine", href: "https://github.com/Alex-Muhscience/utdrs-core-engine", kind: "repository" },
-      { label: "API gateway", href: "https://github.com/Alex-Muhscience/utdrs-api-gateway", kind: "repository" },
-      { label: "Data processor", href: "https://github.com/Alex-Muhscience/UTDRS-Data-Processor", kind: "repository" },
-      { label: "Device scanner", href: "https://github.com/Alex-Muhscience/UTDRS-Device-Scanner", kind: "repository" },
-    ],
+    outcomes: ["Top 5 finalist, Mozilla Responsible Computing Challenge.", "Source code is public on GitHub in one repository."],
+    links: [{ label: "Source code", href: "https://github.com/Alex-Muhscience/UTDRS-Capstone-Project", kind: "repository" }],
   },
 ]
 
