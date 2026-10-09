@@ -10,7 +10,10 @@ import type { BookPage } from "./Book"
 export function BookCover({ chapters }: { chapters: BookPage[] }) {
   return (
     <div className="cover" aria-label="Front cover">
-      <p className="cover-kicker">Portfolio</p>
+      <p className="cover-kicker">
+        Portfolio
+        <span className="cover-mark" aria-hidden="true">AMK</span>
+      </p>
 
       <div className="cover-title">
         <p className="cover-name">{site.name}</p>

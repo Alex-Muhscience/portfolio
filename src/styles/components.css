@@ -344,7 +344,6 @@
 .meta-list dt,
 .case-meta dt,
 .project-facts dt,
-.fact-list dt,
 .education dt {
   margin-bottom: var(--space-1);
   color: var(--text-muted);
@@ -458,73 +457,6 @@
 
 .not-found .hero-actions {
   margin-top: var(--space-6);
-}
-
-/* Theme picker */
-.theme-picker {
-  position: relative;
-}
-
-.theme-menu {
-  position: absolute;
-  top: calc(100% + var(--space-2));
-  right: 0;
-  z-index: 30;
-  width: 12rem;
-  padding: var(--space-2);
-  border: 1px solid var(--border);
-  background: var(--surface);
-  box-shadow: 0 12px 32px -12px var(--page-shade);
-  animation: menu-in 160ms ease-out;
-}
-
-.theme-menu button {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  width: 100%;
-  min-height: 2.5rem;
-  padding-inline: var(--space-2);
-  border: 0;
-  border-radius: var(--radius);
-  background: transparent;
-  font-size: var(--text-sm);
-  font-weight: 500;
-  text-align: left;
-}
-
-.theme-menu button:hover,
-.theme-menu button[aria-pressed="true"] {
-  background: var(--surface-sunken);
-}
-
-.theme-menu button svg {
-  margin-left: auto;
-  color: var(--accent);
-}
-
-.theme-swatch {
-  display: flex;
-  overflow: hidden;
-  width: 2.25rem;
-  height: 1.25rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-}
-
-.theme-swatch span {
-  flex: 1;
-}
-
-.theme-swatch span:first-child {
-  flex: 2;
-}
-
-@keyframes menu-in {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
 }
 
 /* Very short viewports always scroll (see lib/view-mode.ts), so the toggle has nothing to offer there. */

@@ -11,15 +11,16 @@ const TOO_SHORT = "(max-height: 30rem)"
 
 /**
  * Runs before hydration so the first paint already has the right layout.
+ * The scrolling page is the default; the book is opt-in from the header toggle.
  * Without JS the site is a normal scrolling page.
  */
-export const viewModeScript = `try{document.documentElement.dataset.view=localStorage.getItem("${STORAGE_KEY}")==="scroll"||matchMedia("${TOO_SHORT}").matches?"scroll":"book"}catch(e){document.documentElement.dataset.view="book"}`
+export const viewModeScript = `try{document.documentElement.dataset.view=localStorage.getItem("${STORAGE_KEY}")==="book"&&!matchMedia("${TOO_SHORT}").matches?"book":"scroll"}catch(e){document.documentElement.dataset.view="scroll"}`
 
 function preference(): ViewMode {
   try {
-    return localStorage.getItem(STORAGE_KEY) === "scroll" ? "scroll" : "book"
+    return localStorage.getItem(STORAGE_KEY) === "book" ? "book" : "scroll"
   } catch {
-    return "book"
+    return "scroll"
   }
 }
 

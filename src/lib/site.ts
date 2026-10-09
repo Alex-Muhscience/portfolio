@@ -6,6 +6,10 @@ export const site = {
   title: "Alex Murimi Kamau — Full-Stack Developer",
   description:
     "Full-Stack Developer in Nairobi building production web applications and business systems across React, Next.js, TypeScript, Laravel, PostgreSQL, MySQL and Linux infrastructure.",
+  /** The paragraph under the homepage headline. */
+  summary:
+    "Full-stack engineer in Nairobi and the sole technical owner of three production platforms, from requirements and architecture through payments and security to the Linux servers they run on.",
+  availability: "Open to full-stack and backend roles · remote or Nairobi",
   location: "Nairobi, Kenya",
   timezone: "EAT (UTC+3)",
   email: "alex.kamau.2558@gmail.com",

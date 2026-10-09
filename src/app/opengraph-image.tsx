@@ -26,7 +26,7 @@ export default function OpenGraphImage() {
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           <div style={{ display: "flex", fontSize: 84, fontWeight: 700, letterSpacing: -3 }}>{site.name}</div>
           <div style={{ display: "flex", fontSize: 34, lineHeight: 1.35, color: "#a7b3cf", maxWidth: 940 }}>
-            Production web applications and business systems across frontend, backend, data and infrastructure.
+            I design, build and run the systems businesses depend on: three production platforms, owned end to end.
           </div>
         </div>
         <div style={{ display: "flex", fontSize: 24, color: "#8493b8" }}>

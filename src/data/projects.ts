@@ -21,6 +21,12 @@ export interface SystemLayer {
   nodes: { name: string; detail?: string }[]
 }
 
+/** A headline number or fact for a project card, drawn from the outcomes below. */
+export interface Highlight {
+  value: string
+  label: string
+}
+
 export interface Project {
   slug: string
   title: string
@@ -38,6 +44,8 @@ export interface Project {
   engineering: EngineeringNote[]
   decisions: Decision[]
   outcomes: string[]
+  /** Up to three proof points shown on the homepage card. */
+  highlights?: Highlight[]
   links: ProjectLink[]
   /** Shown where there is nothing public to link to. */
   accessNote?: string
@@ -193,6 +201,11 @@ export const projects: Project[] = [
       "The web application covers a subset of those modules and is being extended module by module.",
       "Not yet publicly available.",
     ],
+    highlights: [
+      { value: "7", label: "business domains on one governed data model" },
+      { value: "RLS", label: "tenant isolation enforced inside PostgreSQL" },
+      { value: "E2E", label: "Playwright and k6 against the full Docker stack" },
+    ],
     links: [],
     accessNote: "The repository is private. I am happy to walk through the architecture and code in a conversation.",
   },
@@ -334,6 +347,11 @@ export const projects: Project[] = [
       "Average latency reduced by approximately 35% through caching and delivery changes.",
       "Manual operational work reduced by approximately 60% through payment, enrolment and document automation.",
     ],
+    highlights: [
+      { value: "25,000+", label: "professionals across 50+ countries" },
+      { value: "~35%", label: "lower average latency" },
+      { value: "~60%", label: "less manual operational work" },
+    ],
     links: [{ label: "Live site", href: "https://www.euroafriquecorporateskills.com/", kind: "live" }],
     accessNote: "The source repository is private.",
   },
@@ -442,6 +460,11 @@ export const projects: Project[] = [
       "In production at chaniapublishers.com.",
       "Page speed improved by approximately 60% through caching and asset optimisation.",
       "Enrolment, payment verification and premium content access run without manual intervention.",
+    ],
+    highlights: [
+      { value: "~60%", label: "faster page loads" },
+      { value: "0", label: "manual steps from payment to course access" },
+      { value: "Per request", label: "subscription check on every video stream" },
     ],
     links: [{ label: "Live site", href: "https://chaniapublishers.com/", kind: "live" }],
     accessNote: "The source repository is private.",

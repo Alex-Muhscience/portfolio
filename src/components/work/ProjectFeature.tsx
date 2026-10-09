@@ -34,7 +34,17 @@ export function ProjectFeature({ project, index }: { project: Project; index: nu
         </div>
 
         <div className="project-feature-side">
-          <dl className="meta-list">
+          {project.highlights && (
+            <dl className="project-highlights" aria-label={`${project.title} in numbers`}>
+              {project.highlights.map((item) => (
+                <div key={item.label}>
+                  <dt>{item.label}</dt>
+                  <dd>{item.value}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+          <dl className="meta-list meta-inline">
             <div>
               <dt>Role</dt>
               <dd>{project.role}</dd>
@@ -42,14 +52,6 @@ export function ProjectFeature({ project, index }: { project: Project; index: nu
             <div>
               <dt>Period</dt>
               <dd>{project.period}</dd>
-            </div>
-            <div>
-              <dt>Engineering</dt>
-              <dd>
-                <ul className="plain-list">
-                  {project.engineering.map((note) => <li key={note.area}>{note.area}</li>)}
-                </ul>
-              </dd>
             </div>
           </dl>
           <TechList items={project.stack} label={`${project.title} stack`} />
