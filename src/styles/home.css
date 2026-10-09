@@ -16,72 +16,14 @@
 
 /* Hero */
 .hero {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  padding-block: clamp(2.5rem, 1rem + 6vw, 5.5rem) clamp(2rem, 1rem + 3vw, 3.5rem);
+  padding-block: clamp(2.5rem, 1rem + 6vw, 5.5rem);
   border-bottom: 1px solid var(--border);
-}
-
-/* Depth: a faint engineering grid that fades out, and a glow in the accent colour behind the portrait. */
-.hero::before,
-.hero::after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  pointer-events: none;
-}
-
-.hero::before {
-  inset: 0;
-  background-image:
-    linear-gradient(to right, color-mix(in srgb, var(--border) 55%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in srgb, var(--border) 55%, transparent) 1px, transparent 1px);
-  background-size: 3.5rem 3.5rem;
-  mask-image: radial-gradient(ellipse 70% 60% at 70% 30%, #000 10%, transparent 75%);
-}
-
-.hero::after {
-  top: -10rem;
-  right: -8rem;
-  width: 42rem;
-  height: 42rem;
-  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 22%, transparent), transparent 62%);
-  filter: blur(10px);
 }
 
 .hero-grid {
   display: grid;
   gap: var(--space-7);
   align-items: center;
-}
-
-.hero-award {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  max-width: 100%;
-  padding: var(--space-1) var(--space-3);
-  border: 1px solid color-mix(in srgb, var(--accent) 55%, var(--border));
-  border-radius: 1.25rem;
-  background: color-mix(in srgb, var(--accent) 10%, transparent);
-  color: var(--text-muted);
-  font-size: var(--text-xs);
-  line-height: 1.5;
-}
-
-.hero-award svg:first-child {
-  color: var(--accent);
-}
-
-.hero-award strong {
-  color: var(--text);
-  font-weight: 600;
-}
-
-.hero-award:hover {
-  border-color: var(--accent);
-  color: var(--text);
 }
 
 .hero-copy h1 {
@@ -140,12 +82,11 @@
   font-size: var(--text-sm);
 }
 
-.hero-availability .status-dot,
-.hero-chip .status-dot {
+.hero-availability .status-dot {
   background: var(--status-production);
 }
 
-/* Portrait: an editorial offset frame in the accent colour, and a floating status chip. */
+/* Portrait: an editorial offset frame in the accent colour. */
 .hero-portrait-card {
   position: relative;
   width: min(100%, 22rem);
@@ -182,58 +123,6 @@
   filter: saturate(0.82) contrast(1.04) brightness(0.96);
 }
 
-.hero-chip {
-  position: absolute;
-  bottom: 1.25rem;
-  left: -0.75rem;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
-  border: 1px solid var(--border);
-  background: color-mix(in srgb, var(--surface) 88%, transparent);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 12px 28px -14px var(--page-shade);
-  font-size: var(--text-sm);
-  font-weight: 600;
-}
-
-/* Proof strip */
-.hero-metrics {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin-top: clamp(2.5rem, 1rem + 4vw, 4.5rem);
-  border-top: 1px solid var(--border-strong);
-}
-
-.hero-metrics > div {
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: flex-end;
-  gap: var(--space-1);
-  padding: var(--space-4) var(--space-4) var(--space-4) 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.hero-metrics > div:nth-child(2n) {
-  padding-left: var(--space-4);
-  border-left: 1px solid var(--border);
-}
-
-.hero-metrics dd {
-  font-size: clamp(1.75rem, 1.2rem + 1.8vw, 2.5rem);
-  font-weight: 650;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  font-variant-numeric: tabular-nums;
-}
-
-.hero-metrics dt {
-  color: var(--text-muted);
-  font-size: var(--text-sm);
-  line-height: 1.45;
-}
-
 @media (min-width: 60rem) {
   .hero-grid {
     grid-template-columns: minmax(0, 1fr) 21rem;
@@ -242,23 +131,6 @@
 
   .hero-portrait-card {
     margin: 0;
-  }
-
-  .hero-metrics {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .hero-metrics > div {
-    padding: var(--space-5) var(--space-5) var(--space-2);
-    border-bottom: 0;
-  }
-
-  .hero-metrics > div:first-child {
-    padding-left: 0;
-  }
-
-  .hero-metrics > div + div {
-    border-left: 1px solid var(--border);
   }
 }
 
@@ -274,9 +146,7 @@
 
 /* System flow: the path every platform shares, with a request travelling through it. */
 .flow-band {
-  background:
-    radial-gradient(ellipse 60% 80% at 50% 0%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 70%),
-    var(--surface-sunken);
+  background: var(--surface-sunken);
 }
 
 .flow-head {
@@ -890,12 +760,6 @@
   max-width: 30rem;
   margin-top: calc(var(--space-5) * -1);
   color: var(--text-muted);
-}
-
-.contact-band {
-  background:
-    radial-gradient(ellipse 55% 70% at 15% 100%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%),
-    var(--bg);
 }
 
 .contact-band .section-heading h2 {

@@ -7,7 +7,7 @@ Personal portfolio for **Alex Murimi Kamau**, a Full-Stack Developer based in Na
 - Homepage: positioning, capabilities, selected work, engineering areas, principles, experience, about and contact.
 - `/work` and `/work/[slug]`: statically generated case studies (problem, role, system overview, engineering notes, decisions, outcome, links).
 - Old `/projects` URLs redirect permanently to `/work`.
-- Homepage hero with headline proof points (production platforms, reach, automation) and an animated "system flow" strip showing the path every platform shares, from client to data. Pure CSS, static under `prefers-reduced-motion`.
+- Homepage hero with a short positioning headline and portrait, followed by an animated "system flow" strip showing the path every platform shares, from client to data. Pure CSS, static under `prefers-reduced-motion`.
 - Optional book view: the header toggle turns the homepage into a closed book with a hard cover and a contents list. Opening it swings the cover back; inside, each section is a page that folds over like paper to reveal the next (buttons, arrow keys, swipe, or scrolling past the end of a page). On touch screens the page follows your finger and can be let go to finish or cancel the turn. The scrolling page is the default; the choice is remembered, and viewports under 480px tall (a phone held sideways) always scroll. Without JavaScript the site is the scrolling page.
 - Dark (navy with a scarlet accent, the default) and light (paper) themes, toggled from the header. The choice is remembered; visitors who picked one of the earlier palettes are mapped to the closest of the two.
 - Generated `sitemap.xml`, `robots.txt`, Open Graph image and JSON-LD (Person, WebSite, CreativeWork, BreadcrumbList).
