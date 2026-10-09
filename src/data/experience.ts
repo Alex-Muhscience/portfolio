@@ -82,7 +82,7 @@ export const experience: ExperienceItem[] = [
     period: "May 2024 – Aug 2024",
     location: "Kikuyu, Kenya",
     highlights: [
-      "Built a Flask password manager using SQLite, AES encryption and PBKDF2 key derivation.",
+      "Built KeyGen, a Flutter password manager with AES-encrypted SQLite storage, PBKDF2 key derivation and biometric authentication.",
       "Reviewed web applications for access-control weaknesses and reported the findings.",
       "Contributed to a GSMA SAS-UP compliance audit and provided back-end and security support during the National Research Fund Hackathon.",
     ],
