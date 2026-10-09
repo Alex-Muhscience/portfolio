@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# The project uses pnpm (see packageManager); an npm lockfile would only drift and be scanned for stale versions.
+package-lock.json
