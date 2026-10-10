@@ -4,7 +4,7 @@ import { useSyncExternalStore } from "react"
 
 export type ViewMode = "book" | "scroll"
 
-const STORAGE_KEY = "view-mode"
+const STORAGE_KEY = "view-mode-v2"
 const EVENT = "viewmodechange"
 /** Too little height for a page to be readable inside the book frame, e.g. a phone held sideways. */
 const TOO_SHORT = "(max-height: 30rem)"
