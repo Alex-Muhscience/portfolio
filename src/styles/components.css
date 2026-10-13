@@ -381,9 +381,6 @@
   background: var(--status-in-development);
 }
 
-.status[data-status="research"] .status-dot {
-  background: var(--status-research);
-}
 
 /* Project links */
 .project-links {

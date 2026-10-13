@@ -39,7 +39,7 @@ export default function WorkPage() {
           <p className="kicker">Work</p>
           <h1 id="work-index-title">Case studies</h1>
           <p className="section-note">
-            Production systems, an ongoing platform build and a research project. Each one sets out the problem, my role,
+            Production systems and two platforms still in development. Each one sets out the problem, my role,
             the architecture and the reasoning behind the main decisions.
           </p>
         </div>
