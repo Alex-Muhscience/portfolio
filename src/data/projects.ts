@@ -1,4 +1,4 @@
-export type ProjectStatus = "production" | "in-development" | "research"
+export type ProjectStatus = "production" | "in-development"
 
 export interface ProjectLink {
   label: string
@@ -655,9 +655,9 @@ export const projects: Project[] = [
     title: "Unified Threat Detection & Response System",
     summary:
       "Threat detection and response: every event runs through rule-based, anomaly and ML detectors, and analysts triage the resulting alerts in a web dashboard. Top 5 finalist in the Mozilla Responsible Computing Challenge.",
-    status: "research",
-    statusLabel: "Research project · open source",
-    period: "2025 – 2026",
+    status: "in-development",
+    statusLabel: "In development · private repository",
+    period: "2025 – present",
     role: "Developer",
     featured: false,
     problem:
@@ -749,8 +749,12 @@ export const projects: Project[] = [
         rationale: "One malformed event should not stall the pipeline, but it also should not disappear. Keeping it with its error makes failures inspectable.",
       },
     ],
-    outcomes: ["Top 5 finalist, Mozilla Responsible Computing Challenge.", "Source code is public on GitHub in one repository."],
-    links: [{ label: "Source code", href: "https://github.com/Alex-Muhscience/UTDRS-Capstone-Project", kind: "repository" }],
+    outcomes: [
+      "Top 5 finalist, Mozilla Responsible Computing Challenge.",
+      "Now being developed further as a proprietary product. Not publicly available.",
+    ],
+    links: [],
+    accessNote: "The repository is private. I am happy to walk through the architecture and code in a conversation.",
   },
 ]
 

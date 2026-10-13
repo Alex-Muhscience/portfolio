@@ -26,7 +26,6 @@
 
   --status-production: #5fd39a;
   --status-in-development: #f0b860;
-  --status-research: #8fb0ff;
 
   --page-shade: rgb(0 0 0 / 0.5);
   --curl-shadow: rgb(0 0 0 / 0.6);
@@ -84,7 +83,6 @@
   --focus: #1d4ed8;
   --status-production: #1a7f4b;
   --status-in-development: #9a5b00;
-  --status-research: #2f5fc4;
   --page-shade: rgb(0 0 0 / 0.14);
   --curl-shadow: rgb(0 0 0 / 0.28);
 }
