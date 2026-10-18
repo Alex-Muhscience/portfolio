@@ -470,6 +470,148 @@ export const projects: Project[] = [
     accessNote: "The source repository is private.",
   },
   {
+    slug: "secure-file-sharing",
+    title: "Secure File Sharing Platform",
+    summary:
+      "Encrypted file sharing for teams: resumable uploads encrypted chunk by chunk, malware scanning before release, workspace roles, verified recipients and measured lossless compression.",
+    status: "in-development",
+    statusLabel: "In development · private repository",
+    period: "2024 – present",
+    role: "Architecture and full-stack development",
+    featured: false,
+    problem:
+      "Contracts, financial records, research data and design files are often too large or too sensitive for email attachments, and an attachment is out of the sender's control the moment it leaves. Teams need to send large files that are encrypted at rest, scanned before anyone can open them, limited to the people meant to receive them, revocable at any time, and provably intact on arrival.",
+    built:
+      "A Node.js and Express application on MongoDB with private filesystem or S3-compatible storage, running as a Docker Compose stack with a background worker, ClamAV scanning and a local mail server. Files upload in resumable encrypted chunks, are quarantined until scanned, and reach recipients who verify their email before downloading. I started it as a prototype in December 2024 and resumed it in October 2026 with a full rebuild. Version 0.6.0 is a local pilot release, not yet a production service.",
+    stack: ["Node.js", "Express", "JavaScript", "MongoDB", "S3", "ClamAV", "libsodium", "Docker", "Stripe", "M-Pesa", "Playwright", "GitHub Actions"],
+    system: [
+      { layer: "Client", nodes: [{ name: "Browser app", detail: "Resumable uploads, compression in a Web Worker" }] },
+      {
+        layer: "API",
+        nodes: [{ name: "Express API", detail: "Email sign-in, workspace roles, range downloads, one-use download tickets" }],
+      },
+      {
+        layer: "Background",
+        nodes: [
+          { name: "Worker", detail: "Scan queue with leases and retries, notifications, deletion" },
+          { name: "ClamAV", detail: "Streamed scanning, fail-closed quarantine" },
+          { name: "Mail", detail: "Sign-in codes and notifications" },
+        ],
+      },
+      {
+        layer: "Data",
+        nodes: [
+          { name: "MongoDB", detail: "Users, workspaces, transfers, audit" },
+          { name: "Object storage", detail: "Filesystem or S3; ciphertext only" },
+        ],
+      },
+      {
+        layer: "Operations",
+        nodes: [
+          { name: "Encrypted snapshots", detail: "Streaming backup and restore" },
+          { name: "Key rotation", detail: "Data keys rewrapped in place" },
+          { name: "Storage migration", detail: "Filesystem to S3, verified and reversible" },
+        ],
+      },
+    ],
+    engineering: [
+      {
+        area: "Encryption and integrity",
+        points: [
+          "Each file gets its own random data key, wrapped by a server keyring. Every chunk is sealed with AES-256-GCM and authenticated before any of its plaintext is released.",
+          "A keyed manifest binds the complete, ordered set of chunks, so a missing, reordered or tampered chunk fails the download instead of producing a corrupted file.",
+          "Encryption is server-managed, not end to end: authorised operators can decrypt. The product documentation says so plainly.",
+        ],
+      },
+      {
+        area: "Uploads and downloads",
+        points: [
+          "Resumable uploads in 8–16 MiB chunks with persisted offsets and a SHA-256 per chunk; an interrupted upload continues from the last verified chunk.",
+          "Authenticated byte-range downloads stream from storage, so a large file never has to sit whole in server or page memory.",
+          "A browser download exchanges a one-use, 60-second ticket for a file-scoped HttpOnly cookie that cannot call any other API. Expiry, revocation and current membership are rechecked while the file streams.",
+        ],
+      },
+      {
+        area: "Access control",
+        points: [
+          "Email one-time codes that expire after ten minutes, allow five attempts and work once. Session tokens are hashed at rest, last an hour and are held only in browser memory.",
+          "Workspace roles: owners and admins manage transfers and members, members manage their own files, viewers cannot upload or revoke. Removing a member also invalidates the recipient grants they issued.",
+          "Platform operators are a separate, explicitly configured allowlist, and platform access never grants access to file contents.",
+        ],
+      },
+      {
+        area: "Malware scanning",
+        points: [
+          "Every completed upload is quarantined and streamed through ClamAV before release. If the scanner is unavailable the file stays quarantined.",
+          "Scan jobs run on the worker with leases, heartbeats, retries and backpressure, so a crashed or stalled scan is picked up again rather than lost.",
+        ],
+      },
+      {
+        area: "Compression",
+        points: [
+          "Chunks can be compressed in a browser Web Worker before upload, choosing per chunk between Brotli, Zstandard and a predictive bit-packing codec I wrote, and only then encrypted.",
+          "A documented single-file archive format with full SHA-256 verification, restorable in the app or offline from the command line. Decompression limits stop compression bombs.",
+          "Every result is measured per file against a 75% reduction target and reported as met or not met. Already-compressed media can grow, so no ratio is promised.",
+        ],
+      },
+      {
+        area: "Billing",
+        points: [
+          "Stripe subscriptions and prepaid terms, and M-Pesa prepaid renewals, with idempotent orders. A provider callback is treated as a hint: access changes only after the payment is verified with the provider.",
+          "Checkout ships switched off until prices, currency and merchant accounts are configured.",
+        ],
+      },
+      {
+        area: "Storage and recovery",
+        points: [
+          "Ciphertext lives in a private filesystem volume or S3-compatible storage, with verified, reversible migration between the two.",
+          "Streaming encrypted snapshots (XChaCha20-Poly1305), key rotation by rewrapping data keys, and restore into a fresh database and an empty storage target.",
+        ],
+      },
+      {
+        area: "Testing and delivery",
+        points: [
+          "Unit and integration tests run against real MongoDB and S3 storage; browser tests drive packaged Docker images with real ClamAV, using the EICAR test file, and a real mail server, in both storage modes.",
+          "Interface checks cover keyboard focus, 200% text, reduced motion and automated accessibility rules.",
+          "GitHub Actions runs all of it, plus secret scanning and a dependency audit, on every change.",
+        ],
+      },
+    ],
+    decisions: [
+      {
+        decision: "Encrypt per chunk, then bind the chunks with a manifest",
+        rationale:
+          "Resumable uploads and range downloads need chunks that can be handled independently. Per-chunk authentication alone would still let chunks be dropped or reordered, so a keyed manifest over the whole sequence closes that gap.",
+      },
+      {
+        decision: "Compress in the browser, before encryption",
+        rationale:
+          "Encrypted data does not compress, so compression has to come first. Doing it in a Web Worker cuts the bytes uploaded without blocking the page, and measuring each file keeps the claims honest when media will not shrink.",
+      },
+      {
+        decision: "Fail closed on scanning",
+        rationale: "If the scanner is down, files wait in quarantine. Releasing unscanned files to keep transfers moving would defeat the point of scanning.",
+      },
+      {
+        decision: "Publish the limits alongside the features",
+        rationale:
+          "Encryption and compression claims invite scrutiny. The documentation states that encryption is server-managed, that the 5 TiB size ceiling is a configuration limit rather than a demonstrated transfer, and that benchmarks use synthetic data.",
+      },
+    ],
+    outcomes: [
+      "Version 0.6.0 runs as a local pilot: encrypted transfers, workspaces, scanning, compression, billing in test mode and recovery work end to end in CI.",
+      "On a deliberately repetitive 1 GiB test file, stored size fell by 75% and the download matched byte for byte, with peak memory around 180 MiB.",
+      "Not yet in production: managed key storage, production infrastructure and an independent security review come first.",
+    ],
+    highlights: [
+      { value: "AES-256-GCM", label: "per chunk, with a keyed manifest over the whole file" },
+      { value: "Fail closed", label: "every upload quarantined until ClamAV clears it" },
+      { value: "~180 MiB", label: "peak memory moving a 1 GiB file" },
+    ],
+    links: [],
+    accessNote: "The repository is private. I am happy to walk through the architecture and code in a conversation.",
+  },
+  {
     slug: "afriasia-career-development-center",
     title: "AfriAsia Career Development Center",
     summary:
