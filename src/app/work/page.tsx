@@ -5,7 +5,7 @@ import { projects } from "@/data/projects"
 import { absoluteUrl, site } from "@/lib/site"
 
 const description =
-  "Case studies in full-stack engineering: a multi-tenant business platform, production training and learning platforms with payment integrations, a Next.js company site and a threat-detection system."
+  "Case studies in full-stack engineering: a multi-tenant business platform, production training and learning platforms with payment integrations, an encrypted file-sharing platform, a Next.js company site and a threat-detection system."
 
 export const metadata: Metadata = {
   title: "Work",
@@ -39,7 +39,7 @@ export default function WorkPage() {
           <p className="kicker">Work</p>
           <h1 id="work-index-title">Case studies</h1>
           <p className="section-note">
-            Production systems and two platforms still in development. Each one sets out the problem, my role,
+            Production systems and platforms still in development. Each one sets out the problem, my role,
             the architecture and the reasoning behind the main decisions.
           </p>
         </div>
