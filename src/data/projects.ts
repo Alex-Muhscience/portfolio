@@ -797,16 +797,16 @@ export const projects: Project[] = [
     title: "Unified Threat Detection & Response System",
     summary:
       "Threat detection and response: every event runs through rule-based, anomaly and ML detectors, and analysts triage the resulting alerts in a web dashboard. Top 5 finalist in the Mozilla Responsible Computing Challenge.",
-    status: "in-development",
-    statusLabel: "In development · private repository",
+    status: "production",
+    statusLabel: "Live on Vercel and Render · private repository",
     period: "2025 – present",
     role: "Developer",
     featured: false,
     problem:
       "Smaller organisations rarely have a security operations team, yet they face the same threats as larger ones. UTDRS explores how far a single system can go in collecting security events, detecting threats with several complementary methods and presenting alerts an operator can act on, while keeping the AI components explainable and accountable.",
     built:
-      "One repository of services: a React and TypeScript dashboard where analysts triage alerts; a FastAPI gateway for authentication and alert, event, asset and rule management, which sends every event to a core detection engine; a data processor; and a device scanner in C. An event posted to the gateway comes back as an alert, linked to the event and mapped to MITRE ATT&CK, within seconds. The project was a Top 5 finalist in the Mozilla Responsible Computing Challenge.",
-    stack: ["Python", "FastAPI", "MongoDB", "React", "TypeScript", "C", "Docker"],
+      "One repository of services: a React and TypeScript dashboard where analysts triage alerts; a FastAPI gateway for authentication and alert, event, asset and rule management, which sends every event to a core detection engine; a data processor; and a device scanner in C. An event posted to the gateway comes back as an alert, linked to the event and mapped to MITRE ATT&CK, within seconds. The dashboard is deployed on Vercel, the gateway and detection engine run as Docker services on Render, and the data lives in MongoDB Atlas. The project was a Top 5 finalist in the Mozilla Responsible Computing Challenge.",
+    stack: ["Python", "FastAPI", "MongoDB", "React", "TypeScript", "C", "Docker", "Render", "Vercel"],
     system: [
       { layer: "Interface", nodes: [{ name: "Dashboard", detail: "React, TypeScript; alert triage" }] },
       { layer: "Collection", nodes: [{ name: "Device scanner", detail: "Agents report over TLS" }, { name: "Event intake" }] },
@@ -893,9 +893,10 @@ export const projects: Project[] = [
     ],
     outcomes: [
       "Top 5 finalist, Mozilla Responsible Computing Challenge.",
-      "Now being developed further as a proprietary product. Not publicly available.",
+      "Live: the dashboard on Vercel, the API gateway and detection engine on Render, backed by MongoDB Atlas.",
+      "Still being developed further as a proprietary product.",
     ],
-    links: [],
+    links: [{ label: "Live dashboard", href: "https://utdrs-capstone-project.vercel.app", kind: "live" }],
     accessNote: "The repository is private. I am happy to walk through the architecture and code in a conversation.",
   },
 ]
