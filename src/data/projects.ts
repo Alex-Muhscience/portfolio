@@ -470,6 +470,140 @@ export const projects: Project[] = [
     accessNote: "The source repository is private.",
   },
   {
+    slug: "muhos",
+    title: "MuhOS",
+    summary:
+      "Open-source desktop shell for Hyprland on Fedora: a packaged fork of Serpantinum with a GDM session, a redesigned interface and benchmarked performance.",
+    status: "in-development",
+    statusLabel: "Pre-release · open source (AGPL-3.0)",
+    period: "2026 – present",
+    role: "Fork maintainer: packaging, interface design and QML development",
+    featured: true,
+    problem:
+      "Serpantinum is a capable Quickshell desktop shell for Hyprland, but it installs through a curl-to-bash script that takes over the system's configuration, it bundled fonts that cannot be redistributed, and it depends on versions of Quickshell, Matugen and Hyprland that Fedora does not ship. There was no clean, reversible way to run it on Fedora, and no evidence for how much it cost to run.",
+    built:
+      "Fedora packaging for the shell and its toolkit, a login session and systemd integration that leave the rest of the system alone, a licence inventory for every bundled asset, a virtual-machine test and benchmark harness, and a redesigned menu bar and control centre in QML. It is public on GitHub with ready-to-install pre-release RPMs.",
+    stack: [
+      "QML",
+      "Qt 6",
+      "Quickshell",
+      "Hyprland",
+      "Fedora RPM",
+      "systemd",
+      "GDM",
+      "Bash",
+      "Python",
+      "Podman",
+      "QEMU/KVM",
+      "GitHub Actions",
+    ],
+    system: [
+      {
+        layer: "Login",
+        nodes: [
+          { name: "GDM", detail: "\"MuhOS (Hyprland)\" session entry" },
+          { name: "muhos-session", detail: "Creates per-user config only if missing" },
+        ],
+      },
+      {
+        layer: "Session",
+        nodes: [
+          { name: "Hyprland", detail: "Packaged defaults plus the user's own user.lua" },
+          { name: "systemd user units", detail: "Shell bound to the session, restarted on crash" },
+        ],
+      },
+      {
+        layer: "Shell",
+        nodes: [
+          { name: "MuhOS interface", detail: "Menu bar, clock island, control centre (QML)" },
+          { name: "Serpantinum components", detail: "Launcher, dock, notifications, lock screen" },
+        ],
+      },
+      {
+        layer: "System services",
+        nodes: [
+          { name: "NetworkManager, BlueZ, UPower", detail: "Through Quickshell's service bindings" },
+          { name: "PipeWire", detail: "Volume, media and visualizer" },
+          { name: "Matugen", detail: "Colour themes from the wallpaper" },
+        ],
+      },
+      {
+        layer: "Delivery",
+        nodes: [
+          { name: "GitHub Releases", detail: "Binary and source RPMs with checksums" },
+          { name: "CI", detail: "Build, install tests, asset licences, lint baseline" },
+        ],
+      },
+    ],
+    engineering: [
+      {
+        area: "Packaging and system integration",
+        points: [
+          "Installed as RPMs instead of a script: nothing is written to /usr/local, no services are enabled permanently, GDM stays the login manager, and removing the package leaves the system as it was.",
+          "Quickshell 0.3.2 and Matugen 4.2 are packaged by the project because Fedora 44 ships older versions; Matugen's Rust dependencies are vendored so it builds offline.",
+          "The user's Hyprland configuration is a small stub that loads the packaged defaults and then the user's own file, so package updates improve the defaults without overwriting anyone's changes.",
+          "The shell runs as a systemd user service bound to the graphical session and is restarted if it crashes.",
+        ],
+      },
+      {
+        area: "Licensing and provenance",
+        points: [
+          "Every bundled font, sound and image is inventoried with its source and licence; the build fails if any asset is not cleared for redistribution.",
+          "Fonts that could not be redistributed were removed, and the public history starts from a clean import so they are not reachable in it.",
+          "Upstream is tracked on a vendor branch; every commit is labelled as general, Fedora-specific, branding or fork maintenance, and the AGPL change notice is generated from those labels.",
+        ],
+      },
+      {
+        area: "Interface",
+        points: [
+          "A menu bar and control centre rebuilt in QML: GNOME's layout and pill toggles, a transparent macOS-style bar, glass panels blurred by the compositor, and Adwaita icons.",
+          "The bar's text colour follows the brightness of the wallpaper under it, measured once per wallpaper change for each screen.",
+          "Popups open through an in-process call instead of a shell script that started a second Quickshell process for every click, which took 0.12–0.29 s in the test VM.",
+          "Design directions were compared as interactive mock-ups before any QML was written.",
+        ],
+      },
+      {
+        area: "Testing and measurement",
+        points: [
+          "A harness builds Fedora 44 virtual machines with the package installed, logs in through GDM and checks the session: Hyprland running, the shell active under systemd, no restarts, no changes to existing configuration.",
+          "Benchmarks run 5 times per scenario on a fresh disk overlay, with a warm-up and a measured window, and report medians with ranges.",
+          "GitHub Actions builds the RPM, runs 42 install tests, checks asset licences and fails if shellcheck or qmllint findings grow.",
+        ],
+      },
+    ],
+    decisions: [
+      {
+        decision: "Fork and package rather than rewrite",
+        rationale:
+          "Serpantinum already does most of what a desktop needs. Keeping its components, rebuilding only the parts the design required, and labelling every change keeps the fork maintainable and lets fixes flow back upstream.",
+      },
+      {
+        decision: "A login session instead of an install script",
+        rationale:
+          "Choosing \"MuhOS (Hyprland)\" at login, with the package owning only its own files, makes the desktop something you can try and remove without risk to the rest of the system.",
+      },
+      {
+        decision: "No performance claim without a benchmark",
+        rationale:
+          "Every number in the project's documentation comes from the VM protocol, including the bad ones: a growth in Hyprland's memory found that way is published as a known issue rather than left out.",
+      },
+    ],
+    outcomes: [
+      "Public on GitHub, with two pre-releases; the second ships ready-to-install RPMs alongside the source RPMs.",
+      "A full GDM login session works in Fedora 44 virtual machines; real hardware is not yet validated.",
+      "Measured in a VM: idle shell CPU fell from 0.62% to 0.07% of a core, and the first-run screen from 130% to 0.5%. Hyprland's memory grew by about 28 MiB, which is being investigated.",
+    ],
+    highlights: [
+      { value: "~9×", label: "less idle shell CPU, measured in a VM" },
+      { value: "42", label: "install tests run in CI on every push" },
+      { value: "RPM", label: "GDM session and systemd units, no install script" },
+    ],
+    links: [
+      { label: "Repository", href: "https://github.com/Alex-Muhscience/MuhOS", kind: "repository" },
+      { label: "Releases", href: "https://github.com/Alex-Muhscience/MuhOS/releases", kind: "live" },
+    ],
+  },
+  {
     slug: "secure-file-sharing",
     title: "Secure File Sharing Platform",
     summary:
