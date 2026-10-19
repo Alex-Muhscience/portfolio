@@ -48,6 +48,11 @@ const structuredData = {
         "MySQL",
         "API development",
         "Web application security",
+        "Linux",
+        "RPM packaging",
+        "systemd",
+        "QML and Qt",
+        "Open-source software",
       ],
     },
     {

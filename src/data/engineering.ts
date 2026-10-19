@@ -73,6 +73,27 @@ export const engineeringAreas: EngineeringArea[] = [
     tools: ["Redis queues", "Cron", "Health checks", "Backups"],
     evidence: { label: "EuroAfrique platform", slug: "euroafrique" },
   },
+  {
+    area: "Linux and packaging",
+    practice:
+      "Software shipped as distribution packages rather than install scripts: RPM specs with build-time checks, systemd user services bound to the login session, and installs that leave the rest of the system untouched and come off with one command.",
+    tools: ["Fedora RPM", "systemd", "Bash", "Podman", "GDM", "Linux"],
+    evidence: { label: "MuhOS", slug: "muhos" },
+  },
+  {
+    area: "Desktop interfaces",
+    practice:
+      "Declarative QML interfaces on Qt 6 for a Wayland desktop: design tokens, animated components, compositor integration with Hyprland, and system services such as audio, networking, Bluetooth and power wired into the interface.",
+    tools: ["QML", "Qt 6", "Quickshell", "Hyprland", "Wayland", "PipeWire"],
+    evidence: { label: "MuhOS", slug: "muhos" },
+  },
+  {
+    area: "Testing and measurement",
+    practice:
+      "Tests that run where the software runs: end-to-end against the full stack, load tests against realistic data, and reproducible benchmarks in throwaway virtual machines, reported as medians with ranges, regressions included.",
+    tools: ["Playwright", "k6", "QEMU/KVM", "GitHub Actions"],
+    evidence: { label: "MuhOS", slug: "muhos" },
+  },
 ]
 
 export interface Principle {
