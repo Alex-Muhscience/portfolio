@@ -746,6 +746,123 @@ export const projects: Project[] = [
     accessNote: "The repository is private. I am happy to walk through the architecture and code in a conversation.",
   },
   {
+    slug: "chania-finance-consultancy",
+    title: "Chania Finance Consultancy",
+    summary:
+      "Finance-training platform where clients search the catalogue, pick a venue and a start week on a calendar and register a team in minutes, with admin and trainer portals behind it.",
+    status: "in-development",
+    statusLabel: "In development · private repository",
+    period: "2026 – present",
+    role: "Full-stack developer and sole technical owner",
+    featured: false,
+    problem:
+      "A professional finance-training provider needed one system for the whole training cycle. Clients had to find the right course among a growing catalogue, see dates a year ahead, book individuals or corporate teams and receive an invoice they could pass to their employer. Staff needed sessions, fees, registrations, documents, certificates and trainers in one place, with nothing slipping through the cracks.",
+    built:
+      "A Laravel 12 application with Livewire booking and registration components, a role-gated admin portal and a trainer portal. Every course runs at every venue, so sessions belong to venues and follow a strict Monday-to-Friday rule, and fees depend on venue and course length. The catalogue is designed to stay fast at tens of thousands of courses.",
+    stack: ["Laravel 12", "PHP 8.2", "Livewire 4", "Alpine.js", "Tailwind CSS", "MySQL / MariaDB", "DomPDF", "Paystack", "Spatie Permission", "Vite"],
+    system: [
+      {
+        layer: "Clients",
+        nodes: [
+          { name: "Public site", detail: "Search, course pages, three-step booking, registration modal" },
+          { name: "Admin portal", detail: "Role-gated, with notification counters" },
+          { name: "Trainer portal", detail: "Session requests by category" },
+        ],
+      },
+      {
+        layer: "Application",
+        nodes: [
+          { name: "Laravel", detail: "Controllers, services, Livewire components" },
+          { name: "Course search", detail: "FULLTEXT ranking, synonyms, capped suggestions" },
+          { name: "Scheduler", detail: "Expires sessions at 00:01 on their start date" },
+        ],
+      },
+      {
+        layer: "Background",
+        nodes: [
+          { name: "Queued jobs", detail: "Invoices, invitation letters, brochures, emails" },
+          { name: "Notifications", detail: "Trainer invitations and request decisions" },
+        ],
+      },
+      {
+        layer: "Integrations and data",
+        nodes: [
+          { name: "Paystack", detail: "Invoice payment and webhook" },
+          { name: "MySQL / MariaDB", detail: "System of record, indexed for every list and filter" },
+        ],
+      },
+    ],
+    engineering: [
+      {
+        area: "Booking that fits the business",
+        points: [
+          "Three-step booking box on each course page: in person (default), online or in-house, then a venue with its fee, then a start week on a twelve-month calendar drawn in the browser so changing month costs no request.",
+          "Sessions belong to venues and every course can run in any session of its length. The model refuses any session that does not start on a Monday and end on a Friday, and 10-day sessions span two working weeks.",
+          "Fees are set per venue and per course length, and one calculation feeds the course page, registration modal, invoice and brochure so the numbers can't disagree.",
+          "Sessions disappear from the site at midnight and are marked expired at 00:01 on their start date in the business timezone, so nobody can register on the morning training starts. Clients can change their dates during registration without starting over.",
+        ],
+      },
+      {
+        area: "Performance at catalogue scale",
+        points: [
+          "Course search uses a MySQL FULLTEXT index with prefix matching, a synonym table for finance abbreviations and a ranking that prefers name matches. Suggestions are capped and result pages are paginated, so the cost doesn't grow with the catalogue.",
+          "Lazy loading is disabled outside production, and a test renders every main page against the full demo data and fails on N+1 queries or more than 60 queries per page.",
+          "Composite indexes on the status, date and foreign-key filters the admin lists actually use.",
+        ],
+      },
+      {
+        area: "Operations for a small team",
+        points: [
+          "Admin notification counters: unread registrations and new support messages in red, items awaiting a decision in orange, all read in a single indexed query, with a count in the browser tab that refreshes every minute.",
+          "Bulk session builder with a live preview: venues, length, period and frequency, skipping weeks that already have a session.",
+          "Optimistic locking on courses and content, so several admins can edit at once without silently overwriting each other.",
+          "Branded A4 PDFs for brochures, invoices (organisation-sponsored by default, due on the first training day), invitation letters and certificates, generated by queued jobs.",
+        ],
+      },
+      {
+        area: "Access and security",
+        points: [
+          "Spatie roles for six admin roles plus trainers, with no public sign-up. Single-session login, account lockout, password expiry and an audit log.",
+          "Trainers apply with up to five categories. Once approved, they only see paid sessions in their own categories, and an admin confirms one trainer per session.",
+          "Support tickets are reached through unguessable private links rather than guessable ticket numbers.",
+        ],
+      },
+    ],
+    decisions: [
+      {
+        decision: "Sessions belong to venues, not courses",
+        rationale:
+          "Every course is available at every venue all year. Tying sessions to courses would have multiplied the schedule by the size of the catalogue. Venue-owned sessions keep the admin work constant as courses are added.",
+      },
+      {
+        decision: "Enforce the Monday-to-Friday rule in the model",
+        rationale:
+          "Forms, the bulk builder and imports all create sessions. Putting the rule in one place on save means no path can create a session the business can't run.",
+      },
+      {
+        decision: "Make performance a failing test",
+        rationale:
+          "A page that runs one query per row looks fine on demo data and fails in production. Rendering every page under a query budget in the test suite catches it before release.",
+      },
+      {
+        decision: "Shared read state for registrations",
+        rationale:
+          "A small team works one inbox. Marking a registration read when anyone opens it stops two people picking up the same client, and \"mark as unread\" covers the case where it needs a second look.",
+      },
+    ],
+    outcomes: [
+      "Feature-complete for booking, billing, documents, trainers and content, with 140+ feature tests passing.",
+      "Not yet deployed: production hosting and go-live are the next step.",
+    ],
+    highlights: [
+      { value: "3 steps", label: "from course page to a booked start week" },
+      { value: "1 query", label: "for every admin notification counter" },
+      { value: "140+", label: "feature tests, including an N+1 query budget" },
+    ],
+    links: [],
+    accessNote: "The repository is private. I am happy to walk through the architecture and code in a conversation.",
+  },
+  {
     slug: "afriasia-career-development-center",
     title: "AfriAsia Career Development Center",
     summary:

@@ -12,7 +12,7 @@ export function Experience() {
           index="04"
           label="Experience"
           title="Where I have worked."
-          note="My current role is a single ongoing engagement that spans three businesses, each with its own platform. The engineering detail for each is in its case study."
+          note="My current role is a single ongoing engagement that spans four businesses, each with its own platform. The engineering detail for each is in its case study."
         />
 
         <ol className="experience-list">
@@ -54,9 +54,11 @@ export function Experience() {
                             <Link href={`/work/${platform.caseStudy}`} className="text-link" aria-label={`Case study: ${platform.business}`}>
                               Case study <ArrowRight size={14} aria-hidden="true" />
                             </Link>
-                            <a href={platform.website} className="text-link" target="_blank" rel="noopener noreferrer" aria-label={`${platform.business} website (opens in a new tab)`}>
-                              Website <ArrowUpRight size={14} aria-hidden="true" />
-                            </a>
+                            {platform.website && (
+                              <a href={platform.website} className="text-link" target="_blank" rel="noopener noreferrer" aria-label={`${platform.business} website (opens in a new tab)`}>
+                                Website <ArrowUpRight size={14} aria-hidden="true" />
+                              </a>
+                            )}
                           </p>
                         </li>
                       ))}

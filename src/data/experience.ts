@@ -2,7 +2,8 @@ export interface Platform {
   business: string
   product: string
   since: string
-  website: string
+  /** Omitted while the platform isn't publicly deployed yet. */
+  website?: string
   /** Case study slug in src/data/projects.ts, where the engineering detail lives. */
   caseStudy: string
   summary: string
@@ -29,12 +30,12 @@ export const experience: ExperienceItem[] = [
     period: "Aug 2025 – Present",
     location: "Juja, Kenya",
     context:
-      "One ongoing engineering role across three businesses under the same ownership: EuroAfrique Corporate Skills, Chania Publishers and AfriAsia Career Development Center. Each runs on its own platform, and I am the technical owner of all three.",
+      "One ongoing engineering role across four businesses under the same ownership: EuroAfrique Corporate Skills, Chania Publishers, AfriAsia Career Development Center and Chania Finance Consultancy. Each runs on its own platform, and I am the technical owner of all four.",
     highlights: [
       "Take each platform from requirements through architecture, build and launch, then keep it running: maintenance, releases and production support.",
       "Built the payment paths the businesses depend on: M-Pesa and card payments confirmed through signed provider callbacks, with fee calculation, verification and idempotent recording.",
       "Automated enrolment and document work that used to be manual, including invoices, invitation letters and certificates generated off the request path.",
-      "Run the infrastructure behind all three: Linux servers, DNS and TLS, Redis and Cloudflare caching, cron and queue processing, and a GitHub Actions pipeline that gates deployment on lint, security audits and tests.",
+      "Run the infrastructure behind the platforms: Linux servers, DNS and TLS, Redis and Cloudflare caching, cron and queue processing, and a GitHub Actions pipeline that gates deployment on lint, security audits and tests.",
       "Own security across the platforms: role-based access control, multi-factor authentication for administrators, rate limiting, session hardening and security headers.",
     ],
     responsibilities: [
@@ -73,6 +74,13 @@ export const experience: ExperienceItem[] = [
         website: "https://afriasiacareercenter.com/",
         caseStudy: "afriasia-career-development-center",
         summary: "Public course catalogue and an administration portal with permissions, MFA, payments and generated documents.",
+      },
+      {
+        business: "Chania Finance Consultancy",
+        product: "Finance-training and booking platform",
+        since: "Since Jul 2026 · in development",
+        caseStudy: "chania-finance-consultancy",
+        summary: "Catalogue search at scale, calendar booking by venue, organisation invoicing, and admin and trainer portals.",
       },
     ],
   },
