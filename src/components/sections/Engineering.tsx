@@ -5,7 +5,7 @@ import { TechList } from "@/components/shared/TechList"
 
 export function Engineering() {
   return (
-    <section id="engineering" className="section" aria-labelledby="engineering-title">
+    <section id="engineering" className="section texture-grid" aria-labelledby="engineering-title">
       <div className="shell">
         <SectionHeading
           id="engineering-title"

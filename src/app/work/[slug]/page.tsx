@@ -7,6 +7,8 @@ import { TechList } from "@/components/shared/TechList"
 import { ProjectLinks } from "@/components/work/ProjectLinks"
 import { StatusBadge } from "@/components/work/StatusBadge"
 import { SystemMap } from "@/components/work/SystemMap"
+import { BrowserFrame, PhoneFrame } from "@/components/work/DeviceFrames"
+import { getScreenshot } from "@/data/screenshots"
 import { getAdjacentProjects, getProject, projects } from "@/data/projects"
 import { absoluteUrl, site } from "@/lib/site"
 
@@ -38,6 +40,7 @@ export default async function CaseStudyPage({ params }: CaseStudyProps) {
   if (!project) notFound()
 
   const { previous, next } = getAdjacentProjects(project.slug)
+  const shot = getScreenshot(project.slug)
   const url = absoluteUrl(`/work/${project.slug}`)
 
   const structuredData = {
@@ -100,6 +103,13 @@ export default async function CaseStudyPage({ params }: CaseStudyProps) {
             </dd>
           </div>
         </dl>
+
+        {shot && (
+          <div className="case-shot">
+            <BrowserFrame shot={shot} sizes="(min-width: 60rem) 56rem, 92vw" priority />
+            <PhoneFrame shot={shot} />
+          </div>
+        )}
       </header>
 
       <div className="shell case-body">
