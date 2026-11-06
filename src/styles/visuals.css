@@ -25,40 +25,6 @@
   pointer-events: none;
 }
 
-/*
- * The inverse of the current theme, so one section reads as a different chapter:
- * black inside the light theme, white inside the dark theme.
- */
-.section-inverse {
-  --bg: #000000;
-  --surface: #111214;
-  --surface-sunken: #000000;
-  --text: #ffffff;
-  --text-muted: #b3b6bb;
-  --border: #2a2c30;
-  --border-strong: #ffffff;
-  --accent: #5ea8ec;
-  --accent-contrast: #000000;
-  --focus: #5ea8ec;
-  color-scheme: dark;
-  background: var(--bg);
-  color: var(--text);
-}
-
-[data-theme="dark"] .section-inverse {
-  --bg: #ffffff;
-  --surface: #ffffff;
-  --surface-sunken: #f4f6f8;
-  --text: #000000;
-  --text-muted: #616161;
-  --border: #e2e4e7;
-  --border-strong: #595959;
-  --accent: #005da6;
-  --accent-contrast: #ffffff;
-  --focus: #005da6;
-  color-scheme: light;
-}
-
 /* ── Device frames ────────────────────────────────────────────────────── */
 
 .browser-frame {
@@ -712,4 +678,185 @@
   ::view-transition-new(*) {
     animation: none !important;
   }
+}
+
+/* ── Colour bands: deep blue chapters, so the page is not a sheet of white ─ */
+
+.band-blue {
+  --bg: var(--band-to);
+  --surface: #0b5a9c;
+  --surface-sunken: #003563;
+  --text: #ffffff;
+  --text-muted: #d2e2f2;
+  --border: #3474ad;
+  --border-strong: #ffffff;
+  --accent: #ffffff;
+  --accent-contrast: var(--band-to);
+  --mark: #ffc2c8;
+  --focus: #ffd166;
+  /* Fixed scarlet: white text on it passes AA in both themes. */
+  --cta-bg: #d7263d;
+  --cta-text: #ffffff;
+  --cta-hover-bg: #ffffff;
+  --cta-hover-text: var(--band-to);
+  --status-production: #7be0ae;
+  --shadow-card: 0 1px 2px rgb(0 20 45 / 0.3), 0 16px 36px -20px rgb(0 20 45 / 0.6);
+  position: relative;
+  isolation: isolate;
+  color-scheme: dark;
+  color: var(--text);
+  background:
+    radial-gradient(60rem 30rem at 85% 0%, rgb(255 255 255 / 0.12), transparent 60%),
+    radial-gradient(40rem 26rem at 0% 100%, color-mix(in srgb, var(--scarlet) 22%, transparent), transparent 65%),
+    linear-gradient(135deg, var(--band-from), var(--band-to));
+  border-bottom: 0;
+}
+
+/* A fine dot pattern over the band, fading towards the bottom. */
+.band-blue::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: radial-gradient(rgb(255 255 255 / 0.16) 1px, transparent 1.2px);
+  background-size: 22px 22px;
+  mask-image: linear-gradient(to bottom, #000, transparent 85%);
+  pointer-events: none;
+}
+
+.band-blue .button:not(.button-primary) {
+  border-color: rgb(255 255 255 / 0.7);
+  color: #ffffff;
+}
+
+.band-blue .button:not(.button-primary):hover {
+  border-color: #ffffff;
+  background: rgb(255 255 255 / 0.1);
+}
+
+.band-blue .hero-portrait-card::before {
+  border-color: var(--scarlet);
+  border-width: 2px;
+}
+
+/* Pale tints between the bands. */
+.flow-band,
+#engineering {
+  background: var(--surface-sunken);
+}
+
+.section-warm {
+  background: var(--surface-warm);
+}
+
+/* Every section heading opens with a short scarlet rule. */
+.section-heading::before,
+.flow-head::before {
+  content: "";
+  display: block;
+  width: 2.75rem;
+  height: 3px;
+  margin-bottom: var(--space-2);
+  border-radius: 3px;
+  background: var(--scarlet);
+}
+
+/* ── Headline: a hand-drawn scarlet stroke under "run" ────────────────── */
+
+.mark {
+  position: relative;
+  display: inline-block;
+  color: var(--accent);
+  font-style: normal;
+}
+
+.mark-line {
+  position: absolute;
+  left: -3%;
+  bottom: -0.1em;
+  width: 106%;
+  height: 0.34em;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.mark-line path {
+  fill: none;
+  stroke: var(--scarlet);
+  stroke-width: 6;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 140;
+  stroke-dashoffset: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mark-line path {
+    animation: draw-mark 900ms 650ms cubic-bezier(0.6, 0, 0.2, 1) both;
+  }
+}
+
+@keyframes draw-mark {
+  from { stroke-dashoffset: 140; }
+}
+
+.book-prompt svg {
+  color: var(--mark);
+}
+
+.book-prompt strong {
+  text-decoration-color: var(--scarlet);
+}
+
+/* ── Ticker: a slow scarlet strip of the platforms I have built ───────── */
+
+.ticker {
+  overflow: hidden;
+  background: #d7263d;
+  color: #ffffff;
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+}
+
+.ticker-run {
+  display: flex;
+  flex: none;
+}
+
+.ticker-run li {
+  display: flex;
+  align-items: center;
+  padding: 0.95rem 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ticker-run li::after {
+  content: "";
+  width: 0.4rem;
+  height: 0.4rem;
+  margin-inline: 1.75rem;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.65);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ticker-track {
+    animation: ticker 48s linear infinite;
+  }
+
+  .ticker:hover .ticker-track {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes ticker {
+  to { transform: translateX(-50%); }
 }

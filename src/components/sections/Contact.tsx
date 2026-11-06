@@ -13,7 +13,7 @@ export const channels = [
 
 export function Contact() {
   return (
-    <section id="contact" className="section contact-band" aria-labelledby="contact-title">
+    <section id="contact" className="section contact-band band-blue" aria-labelledby="contact-title">
       <div className="shell contact-layout">
         <div>
           <SectionHeading id="contact-title" index="06" label="Contact" title="Have a system that needs an owner?" />

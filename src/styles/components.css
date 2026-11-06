@@ -224,7 +224,8 @@
 }
 
 .kicker span {
-  color: var(--accent);
+  color: var(--mark);
+  font-weight: 700;
 }
 
 .section-heading {

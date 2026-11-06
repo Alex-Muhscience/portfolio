@@ -17,6 +17,7 @@ import { Hero } from "@/components/sections/Hero"
 import { Principles } from "@/components/sections/Principles"
 import { SelectedWork } from "@/components/sections/SelectedWork"
 import { SystemFlow } from "@/components/sections/SystemFlow"
+import { Ticker } from "@/components/sections/Ticker"
 import { JsonLd } from "@/components/shared/JsonLd"
 import { absoluteUrl, site } from "@/lib/site"
 
@@ -91,6 +92,7 @@ export default function HomePage() {
           CSS shows one or the other from <html data-view>, which is set before first paint. */}
       <div className="scroll-view">
         <Hero />
+        <Ticker />
         <SystemFlow />
         <SelectedWork />
         <Engineering />

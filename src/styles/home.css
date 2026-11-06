@@ -33,7 +33,6 @@
 }
 
 .hero-copy h1 em {
-  color: var(--accent);
   font-style: normal;
 }
 
@@ -205,7 +204,8 @@
 }
 
 .flow-step {
-  color: var(--accent);
+  color: var(--mark);
+  font-weight: 700;
   font-family: var(--font-mono);
   font-size: var(--text-xs);
 }
@@ -458,7 +458,7 @@
   content: counter(principle, decimal-leading-zero);
   grid-row: span 2;
   padding-top: 0.2rem;
-  color: var(--accent);
+  color: var(--mark);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
 }

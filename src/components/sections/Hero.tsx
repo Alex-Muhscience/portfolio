@@ -8,7 +8,7 @@ import { site } from "@/lib/site"
 
 export function Hero() {
   return (
-    <section id="intro" className="hero" aria-labelledby="hero-title">
+    <section id="intro" className="hero band-blue" aria-labelledby="hero-title">
       <div className="shell hero-grid">
         <div className="hero-copy">
           <p className="kicker">{site.name} · {site.role}</p>
