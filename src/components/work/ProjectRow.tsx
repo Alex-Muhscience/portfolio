@@ -1,4 +1,5 @@
 import Image from "next/image"
+import { ViewTransition } from "react"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import type { Project } from "@/data/projects"
@@ -13,7 +14,11 @@ export function ProjectRow({ project, headingLevel = "h3" }: { project: Project;
     <article className="project-row reveal" data-thumb={shot ? "yes" : "no"}>
       <div className="project-thumb" aria-hidden="true">
         {shot
-          ? <Image src={shot.desktop} alt="" width={DESKTOP_SIZE.width} height={DESKTOP_SIZE.height} sizes="11rem" />
+          ? (
+            <ViewTransition name={`shot-${project.slug}`} share="morph" default="none">
+              <Image src={shot.desktop} alt="" width={DESKTOP_SIZE.width} height={DESKTOP_SIZE.height} sizes="11rem" />
+            </ViewTransition>
+          )
           : <span>Private · no public screens</span>}
       </div>
       <div>

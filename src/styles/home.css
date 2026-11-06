@@ -3,8 +3,6 @@
  * column to the widest content, which pushed long rows off the side of small screens.
  */
 .hero-grid,
-.project-feature-body,
-.area-row,
 .principles-layout,
 .experience-item,
 .earlier-list li,
@@ -429,56 +427,6 @@
 
 .section-more {
   margin-top: var(--space-5);
-}
-
-/* Engineering areas */
-.area-table {
-  border-bottom: 1px solid var(--border);
-}
-
-.area-row {
-  display: grid;
-  gap: var(--space-3);
-  padding-block: var(--space-5);
-  border-top: 1px solid var(--border);
-}
-
-.area-row h3 {
-  font-size: var(--text-lg);
-}
-
-.area-row > p {
-  color: var(--text-muted);
-}
-
-.area-side {
-  display: grid;
-  gap: var(--space-3);
-  align-content: start;
-}
-
-.area-evidence {
-  color: var(--text-muted);
-  font-size: var(--text-sm);
-}
-
-.area-evidence a {
-  color: var(--text);
-  font-weight: 600;
-  text-decoration: underline;
-  text-decoration-color: var(--border);
-  text-underline-offset: 0.3em;
-}
-
-.area-evidence a:hover {
-  color: var(--accent);
-}
-
-@media (min-width: 60rem) {
-  .area-row {
-    grid-template-columns: 11rem minmax(0, 1.4fr) minmax(0, 1fr);
-    gap: var(--space-6);
-  }
 }
 
 /* Principles */

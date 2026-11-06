@@ -1,3 +1,4 @@
+import { ViewTransition } from "react"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import type { Project } from "@/data/projects"
@@ -21,11 +22,13 @@ export function ProjectTile({ project, variant }: { project: Project; variant: T
       <div className="tile-visual">
         {shot ? (
           <>
-            <BrowserFrame
-              shot={shot}
-              sizes={variant === "lead" ? "(min-width: 60rem) 40rem, 92vw" : "(min-width: 60rem) 30rem, 92vw"}
-              priority={variant === "lead"}
-            />
+            <ViewTransition name={`shot-${project.slug}`} share="morph" default="none">
+              <BrowserFrame
+                shot={shot}
+                sizes={variant === "lead" ? "(min-width: 60rem) 40rem, 92vw" : "(min-width: 60rem) 30rem, 92vw"}
+                priority={variant === "lead"}
+              />
+            </ViewTransition>
             {variant === "lead" && <PhoneFrame shot={shot} />}
           </>
         ) : (
@@ -35,9 +38,11 @@ export function ProjectTile({ project, variant }: { project: Project; variant: T
 
       <div className="tile-body">
         <StatusBadge status={project.status} label={project.statusLabel} />
-        <h3 id={titleId}>
-          <Link href={`/work/${project.slug}`} className="tile-link">{project.title}</Link>
-        </h3>
+        <ViewTransition name={`title-${project.slug}`} share="morph" default="none">
+          <h3 id={titleId}>
+            <Link href={`/work/${project.slug}`} className="tile-link">{project.title}</Link>
+          </h3>
+        </ViewTransition>
         <p className="tile-summary">{project.summary}</p>
         {highlight && (
           <p className="tile-highlight">

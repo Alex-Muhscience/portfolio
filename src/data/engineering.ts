@@ -92,7 +92,7 @@ export const engineeringAreas: EngineeringArea[] = [
     area: "Backend",
     practice:
       "APIs and business logic organised by domain. Explicit commands for writes, validation at the boundary, third-party integrations behind verified callbacks, and background processing for slow work.",
-    tools: ["Laravel", "PHP", "Node.js", "Python", "REST APIs"],
+    tools: ["Laravel", "PHP", "Node.js", "Python", "Django", "REST APIs"],
     evidence: { label: "EuroAfrique platform", slug: "euroafrique" },
   },
   {
