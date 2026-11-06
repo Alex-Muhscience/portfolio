@@ -1,9 +1,9 @@
 /** Colour themes. Tokens for each live in src/styles/tokens.css under [data-theme="…"]. */
-export const defaultTheme = "navy"
+export const defaultTheme = "light"
 
 export const themes = [
-  { id: "navy", name: "Dark" },
   { id: "light", name: "Light" },
+  { id: "dark", name: "Dark" },
 ] as const
 
 export type ThemeId = (typeof themes)[number]["id"]
@@ -15,9 +15,9 @@ export const themeIds = themes.map((theme) => theme.id)
  * stored, so map it to the closest remaining theme instead of rendering an unstyled value.
  */
 export const legacyThemes: Record<string, ThemeId> = {
-  dark: "navy",
-  midnight: "navy",
-  forest: "navy",
+  navy: "dark",
+  midnight: "dark",
+  forest: "dark",
   slate: "light",
   sepia: "light",
 }

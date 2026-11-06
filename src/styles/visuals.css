@@ -27,36 +27,36 @@
 
 /*
  * The inverse of the current theme, so one section reads as a different chapter:
- * warm paper inside the navy theme, navy inside the light theme.
+ * black inside the light theme, white inside the dark theme.
  */
 .section-inverse {
-  --bg: #f3efe6;
-  --surface: #fbf9f4;
-  --surface-sunken: #ebe6da;
-  --text: #1b1d24;
-  --text-muted: #4c4e5a;
-  --border: #d6cfbf;
-  --border-strong: #1b1d24;
-  --accent: #c2361c;
-  --accent-contrast: #ffffff;
-  --focus: #1d4ed8;
-  color-scheme: light;
+  --bg: #000000;
+  --surface: #111214;
+  --surface-sunken: #000000;
+  --text: #ffffff;
+  --text-muted: #b3b6bb;
+  --border: #2a2c30;
+  --border-strong: #ffffff;
+  --accent: #5ea8ec;
+  --accent-contrast: #000000;
+  --focus: #5ea8ec;
+  color-scheme: dark;
   background: var(--bg);
   color: var(--text);
 }
 
-[data-theme="light"] .section-inverse {
-  --bg: #0a1736;
-  --surface: #112148;
-  --surface-sunken: #060f26;
-  --text: #eef1f8;
-  --text-muted: #b6c1da;
-  --border: #25376a;
-  --border-strong: #eef1f8;
-  --accent: #ff3b1f;
-  --accent-contrast: #0a1736;
-  --focus: #ffd166;
-  color-scheme: dark;
+[data-theme="dark"] .section-inverse {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-sunken: #f4f6f8;
+  --text: #000000;
+  --text-muted: #616161;
+  --border: #e2e4e7;
+  --border-strong: #595959;
+  --accent: #005da6;
+  --accent-contrast: #ffffff;
+  --focus: #005da6;
+  color-scheme: light;
 }
 
 /* ── Device frames ────────────────────────────────────────────────────── */
@@ -64,9 +64,9 @@
 .browser-frame {
   overflow: hidden;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 12px;
   background: var(--surface-sunken);
-  box-shadow: 0 24px 48px -28px rgb(0 0 0 / 0.55);
+  box-shadow: var(--shadow-card);
 }
 
 .browser-bar {
@@ -139,13 +139,17 @@
   align-content: start;
   overflow: hidden;
   border: 1px solid var(--border);
+  border-radius: var(--radius-card);
   background: var(--surface);
-  transition: border-color 250ms ease, transform 250ms ease;
+  box-shadow: var(--shadow-card);
+  transition: border-color 250ms ease, transform 300ms cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 300ms ease;
 }
 
 .tile:hover,
 .tile:focus-within {
-  border-color: color-mix(in srgb, var(--accent) 60%, var(--border));
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  box-shadow: var(--shadow-lift);
+  transform: translateY(-3px);
 }
 
 .tile:focus-within {
@@ -292,6 +296,7 @@
 .layer-nodes span {
   padding: 0.375rem 0.625rem;
   border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
   background: var(--surface);
   font-size: var(--text-xs);
   font-weight: 500;
@@ -353,7 +358,7 @@
   max-width: 18rem;
   aspect-ratio: 16 / 9;
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: var(--radius);
   background: var(--surface-sunken);
 }
 
@@ -397,6 +402,7 @@
   margin-top: var(--space-7);
   padding: var(--space-6) var(--space-6) 0;
   border: 1px solid var(--border);
+  border-radius: var(--radius-card);
   background:
     linear-gradient(color-mix(in srgb, var(--border) 45%, transparent) 1px, transparent 1px) -1px -1px / 2rem 2rem,
     linear-gradient(90deg, color-mix(in srgb, var(--border) 45%, transparent) 1px, transparent 1px) -1px -1px / 2rem 2rem,
@@ -480,15 +486,18 @@
   display: grid;
   gap: var(--space-3);
   align-content: start;
-  padding: var(--space-5);
+  padding: var(--space-5) var(--space-5) var(--space-6);
   border: 1px solid var(--border);
-  background: color-mix(in srgb, var(--surface) 88%, transparent);
-  transition: border-color 200ms ease, transform 200ms ease;
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+  transition: border-color 250ms ease, transform 300ms cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 300ms ease;
 }
 
 .area-card:hover {
-  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
-  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  box-shadow: var(--shadow-lift);
+  transform: translateY(-3px);
 }
 
 .area-card h3 {

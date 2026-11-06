@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Hanken_Grotesk } from "next/font/google"
 import Script from "next/script"
 import { ThemeProvider } from "next-themes"
 import { Footer } from "@/components/shared/Footer"
@@ -9,8 +9,8 @@ import { defaultTheme, legacyThemes, themeIds } from "@/lib/themes"
 import { viewModeScript } from "@/lib/view-mode"
 import "./globals.css"
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"], display: "swap" })
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"], display: "swap" })
+/* Hanken Grotesk: an open-licence corporate grotesk in the spirit of Graphik. */
+const hanken = Hanken_Grotesk({ variable: "--font-hanken", subsets: ["latin"], display: "swap" })
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -46,18 +46,21 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#0a1736",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b0c0e" },
+  ],
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html lang="en" className={hanken.variable} data-scroll-behavior="smooth" suppressHydrationWarning>
       <body>
         <Script id="view-mode" strategy="beforeInteractive">{viewModeScript}</Script>
         <ThemeProvider
           attribute="data-theme"
           themes={[...themeIds, ...Object.keys(legacyThemes)]}
-          value={{ navy: "navy", light: "light", ...legacyThemes }}
+          value={{ light: "light", dark: "dark", ...legacyThemes }}
           defaultTheme={defaultTheme}
           enableSystem={false}
           disableTransitionOnChange

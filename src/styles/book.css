@@ -132,12 +132,12 @@ html[data-view="book"] .book-page:focus {
 }
 
 /*
- * Front cover: navy cloth, a scarlet binding stripe beside the hinge, a scarlet ruled frame
+ * Front cover: blue cloth, a white binding stripe beside the hinge, a white ruled frame
  * and white type. Fixed colours, not theme tokens: a printed cover does not change with the room.
  */
 html[data-view="book"] .book-page-cover {
-  --cover-navy: #0a1736;
-  --cover-scarlet: #ff3b1f;
+  --cover-navy: #005da6;
+  --cover-scarlet: #ffffff;
   --cover-white: #ffffff;
   right: auto;
   left: calc((100% - var(--closed-w)) / 2);
