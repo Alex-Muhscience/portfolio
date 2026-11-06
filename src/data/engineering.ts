@@ -32,7 +32,7 @@ export const systemFlow: FlowStage[] = [
     role: "TLS, caching, security headers, rate limits",
     tools: ["Cloudflare", "nginx"],
     examples: [
-      { slug: "euroafrique", project: "EuroAfrique", detail: "Caching and delivery changes behind Cloudflare cut average latency by about 35%." },
+      { slug: "euroafrique", project: "EuroAfrique", detail: "Cloudflare in front for DNS, TLS and edge caching, with Redis caching behind it." },
       { slug: "businessos", project: "BusinessOS", detail: "nginx terminates TLS, sets security headers, rate-limits auth and stamps request IDs." },
     ],
   },

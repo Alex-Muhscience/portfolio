@@ -343,14 +343,12 @@ export const projects: Project[] = [
     ],
     outcomes: [
       "In production at euroafriquecorporateskills.com.",
-      "Serves an alumni network of 25,000+ professionals across 50+ countries.",
-      "Average latency reduced by approximately 35% through caching and delivery changes.",
-      "Manual operational work reduced by approximately 60% through payment, enrolment and document automation.",
+      "Payments, enrolment and document generation that used to be manual now run automatically.",
     ],
     highlights: [
-      { value: "25,000+", label: "professionals across 50+ countries" },
-      { value: "~35%", label: "lower average latency" },
-      { value: "~60%", label: "less manual operational work" },
+      { value: "Signed", label: "provider callbacks confirm every M-Pesa and card payment" },
+      { value: "Queued", label: "enrolment documents generated off the request path" },
+      { value: "Gated", label: "deploys run only after lint, audits and tests pass" },
     ],
     links: [{ label: "Live site", href: "https://www.euroafriquecorporateskills.com/", kind: "live" }],
     accessNote: "The source repository is private.",
@@ -458,11 +456,9 @@ export const projects: Project[] = [
     ],
     outcomes: [
       "In production at chaniapublishers.com.",
-      "Page speed improved by approximately 60% through caching and asset optimisation.",
       "Enrolment, payment verification and premium content access run without manual intervention.",
     ],
     highlights: [
-      { value: "~60%", label: "faster page loads" },
       { value: "0", label: "manual steps from payment to course access" },
       { value: "Per request", label: "subscription check on every video stream" },
     ],
