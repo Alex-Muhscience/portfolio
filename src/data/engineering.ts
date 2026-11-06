@@ -1,7 +1,15 @@
+export interface StageExample {
+  slug: string
+  project: string
+  detail: string
+}
+
 export interface FlowStage {
   name: string
   role: string
   tools: string[]
+  /** Where this stage is easiest to see in real projects, shown when the stage is selected. */
+  examples: StageExample[]
 }
 
 /**
@@ -9,11 +17,53 @@ export interface FlowStage {
  * Shown as the animated system strip under the hero.
  */
 export const systemFlow: FlowStage[] = [
-  { name: "Client", role: "Server-rendered pages, accessible forms", tools: ["Next.js", "React", "Livewire"] },
-  { name: "Edge", role: "TLS, caching, security headers, rate limits", tools: ["Cloudflare", "nginx"] },
-  { name: "Application", role: "Domain logic behind RBAC, MFA and audit", tools: ["Laravel", "Node.js", "REST"] },
-  { name: "Workers", role: "Queues, outbox, PDFs and signed webhooks", tools: ["Redis", "Cron", "M-Pesa", "Paystack"] },
-  { name: "Data", role: "Isolated, audited, backed up and restore-tested", tools: ["PostgreSQL", "MySQL"] },
+  {
+    name: "Client",
+    role: "Server-rendered pages, accessible forms",
+    tools: ["Next.js", "React", "Livewire"],
+    examples: [
+      { slug: "chania-finance-consultancy", project: "Chania Finance Consultancy", detail: "Three-step booking box with a twelve-month calendar drawn in the browser, so changing month costs no request." },
+      { slug: "muhscience-tech-labs", project: "Muhscience Tech Labs", detail: "Next.js App Router pages with enquiry forms handled on the server." },
+      { slug: "unified-threat-detection-response", project: "UTDRS", detail: "React dashboard where analysts triage alerts." },
+    ],
+  },
+  {
+    name: "Edge",
+    role: "TLS, caching, security headers, rate limits",
+    tools: ["Cloudflare", "nginx"],
+    examples: [
+      { slug: "euroafrique", project: "EuroAfrique", detail: "Cloudflare in front for DNS, TLS and edge caching, with Redis caching behind it." },
+      { slug: "businessos", project: "BusinessOS", detail: "nginx terminates TLS, sets security headers, rate-limits auth and stamps request IDs." },
+    ],
+  },
+  {
+    name: "Application",
+    role: "Domain logic behind RBAC, MFA and audit",
+    tools: ["Laravel", "Node.js", "REST"],
+    examples: [
+      { slug: "businessos", project: "BusinessOS", detail: "Writes go through explicit commands; the change, its audit record and its outbox event commit in one transaction." },
+      { slug: "afriasia-career-development-center", project: "AfriAsia", detail: "Spatie roles and permissions, TOTP MFA for administrators and one active session per user." },
+    ],
+  },
+  {
+    name: "Workers",
+    role: "Queues, outbox, PDFs and signed webhooks",
+    tools: ["Redis", "Cron", "M-Pesa", "Paystack"],
+    examples: [
+      { slug: "euroafrique", project: "EuroAfrique", detail: "Enrolment documents generated off the request path, so a slow PDF never blocks an application." },
+      { slug: "businessos", project: "BusinessOS", detail: "An outbox publisher sends integration events as signed webhooks; queue workers retry with backoff." },
+      { slug: "secure-file-sharing", project: "Secure File Sharing", detail: "Every upload waits in quarantine until ClamAV clears it, and fails closed." },
+    ],
+  },
+  {
+    name: "Data",
+    role: "Isolated, audited, backed up and restore-tested",
+    tools: ["PostgreSQL", "MySQL"],
+    examples: [
+      { slug: "businessos", project: "BusinessOS", detail: "PostgreSQL row-level security under a restricted runtime role; backups verified by restoring them." },
+      { slug: "chania-finance-consultancy", project: "Chania Finance Consultancy", detail: "Indexes for every admin filter, and a test that fails the build on N+1 queries." },
+    ],
+  },
 ]
 
 /** Guarantees that hold across every platform, stated as outcomes. */
@@ -42,7 +92,7 @@ export const engineeringAreas: EngineeringArea[] = [
     area: "Backend",
     practice:
       "APIs and business logic organised by domain. Explicit commands for writes, validation at the boundary, third-party integrations behind verified callbacks, and background processing for slow work.",
-    tools: ["Laravel", "PHP", "Node.js", "Python", "REST APIs"],
+    tools: ["Laravel", "PHP", "Node.js", "Python", "Django", "REST APIs"],
     evidence: { label: "EuroAfrique platform", slug: "euroafrique" },
   },
   {

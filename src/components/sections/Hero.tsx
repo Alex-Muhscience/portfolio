@@ -3,11 +3,12 @@ import Link from "next/link"
 import { ArrowRight, ArrowUpRight, Mail } from "lucide-react"
 import { GitHubIcon, LinkedInIcon } from "@/components/shared/BrandIcons"
 import { Headline } from "@/components/shared/Headline"
+import { BookPrompt } from "@/components/shared/BookPrompt"
 import { site } from "@/lib/site"
 
 export function Hero() {
   return (
-    <section id="intro" className="hero" aria-labelledby="hero-title">
+    <section id="intro" className="hero band-blue" aria-labelledby="hero-title">
       <div className="shell hero-grid">
         <div className="hero-copy">
           <p className="kicker">{site.name} · {site.role}</p>
@@ -40,11 +41,13 @@ export function Hero() {
             <span className="status-dot" aria-hidden="true" />
             {site.availability}, {site.timezone}
           </p>
+
+          <BookPrompt />
         </div>
 
         <div className="hero-portrait-card">
           <div className="hero-portrait">
-            <Image src="/images/profile.jpg" alt={`Portrait of ${site.name}`} fill sizes="(max-width: 960px) 90vw, 360px" preload />
+            <Image src="/images/profile.jpg" alt={`Portrait of ${site.name}`} fill sizes="(max-width: 960px) 7rem, 360px" preload />
           </div>
         </div>
       </div>

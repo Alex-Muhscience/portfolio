@@ -1,37 +1,54 @@
 /*
- * Design tokens. "Navy" is the default and lives on :root, so it also applies before
- * JavaScript runs. next-themes sets html[data-theme] for the others.
+ * Design tokens. The light palette is the default and lives on :root, so it also applies
+ * before JavaScript runs. next-themes sets html[data-theme] for the dark theme.
+ *
+ * Palette: Lebanese Blue #005DA6 (accent and links), white (surface), Storm Dust #616161
+ * (secondary text), Davy's Grey #595959 (strong borders and type), black (primary text).
+ * Scarlet #D7263D is the second accent: section markers, highlights and calls to action
+ * on blue. Hairlines are a tint of the greys; the sunken surface is a pale tint of the blue.
  * Every text/background pairing below meets WCAG AA.
  */
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  /* Navy: deep navy pages, scarlet accent. */
-  --bg: #0a1736;
-  --surface: #112148;
-  --surface-sunken: #060f26;
-  --text: #eef1f8;
-  --text-muted: #b6c1da;
-  --border: #25376a;
-  --border-strong: #eef1f8;
-  --accent: #ff3b1f;
-  --accent-contrast: #0a1736;
-  --focus: #ffd166;
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-sunken: #eef4fa;
+  --surface-warm: #fdf4f5;
+  --text: #000000;
+  --text-muted: #616161;
+  --border: #e2e4e7;
+  --border-strong: #595959;
+  --accent: #005da6;
+  --accent-contrast: #ffffff;
+  --scarlet: #d7263d;
+  --scarlet-hover: #b81d32;
+  /* Small markers: section numbers, step numbers. */
+  --mark: var(--scarlet);
+  --focus: #005da6;
 
-  /* Primary call to action: scarlet on navy, turning light on hover. */
+  /* Deep blue bands (hero, principles, contact). */
+  --band-from: #005da6;
+  --band-to: #003f73;
+
+  /* Primary call to action: blue, turning black on hover. */
   --cta-bg: var(--accent);
   --cta-text: var(--accent-contrast);
-  --cta-hover-bg: var(--text);
-  --cta-hover-text: var(--bg);
+  --cta-hover-bg: #000000;
+  --cta-hover-text: #ffffff;
 
-  --status-production: #5fd39a;
-  --status-in-development: #f0b860;
+  --status-production: #1a7f4b;
+  --status-in-development: #9a5b00;
 
-  --page-shade: rgb(0 0 0 / 0.5);
-  --curl-shadow: rgb(0 0 0 / 0.6);
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.04), 0 12px 32px -18px rgb(0 0 0 / 0.18);
+  --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.05), 0 22px 44px -22px rgb(0 0 0 / 0.28);
 
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --page-shade: rgb(0 0 0 / 0.14);
+  --curl-shadow: rgb(0 0 0 / 0.28);
+
+  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  /* Labels use the same family, set small, uppercase and tracked: one typeface throughout. */
+  --font-mono: var(--font-hanken), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 
   /* Type scale */
   --text-xs: 0.75rem;
@@ -56,33 +73,38 @@
   --shell: 72.5rem;
   --gutter: clamp(1rem, 0.5rem + 2.5vw, 2rem);
   --header-height: 4rem;
-  --radius: 2px;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --radius-card: 18px;
   --flip-ease: cubic-bezier(0.6, 0.04, 0.22, 1);
 }
 
-/* Every other theme: the primary button is ink-coloured and takes the accent on hover. */
-[data-theme]:not([data-theme="navy"]) {
-  --cta-bg: var(--text);
-  --cta-text: var(--bg);
-  --cta-hover-bg: var(--accent);
-  --cta-hover-text: var(--accent-contrast);
-}
-
-/* Light theme: warm paper, ink text, brick accent. */
-[data-theme="light"] {
-  color-scheme: light;
-  --bg: #fafaf8;
-  --surface: #ffffff;
-  --surface-sunken: #f2f2ee;
-  --text: #18181a;
-  --text-muted: #55554f;
-  --border: #e2e2dc;
-  --border-strong: #18181a;
-  --accent: #c2361c;
-  --accent-contrast: #ffffff;
-  --focus: #1d4ed8;
-  --status-production: #1a7f4b;
-  --status-in-development: #9a5b00;
-  --page-shade: rgb(0 0 0 / 0.14);
-  --curl-shadow: rgb(0 0 0 / 0.28);
+/* Dark theme: deep navy (never black), white type, lighter tints of the blue and scarlet. */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0b1d33;
+  --surface: #11284a;
+  --surface-sunken: #08172a;
+  --surface-warm: #1a2440;
+  --text: #ffffff;
+  --text-muted: #b7c6da;
+  --border: #23406a;
+  --border-strong: #d4dbe6;
+  --accent: #6cb2f0;
+  --accent-contrast: #04182c;
+  --scarlet: #ff5a6a;
+  --scarlet-hover: #ff7b88;
+  --focus: #6cb2f0;
+  --band-from: #0a4f8f;
+  --band-to: #06305a;
+  --cta-bg: var(--accent);
+  --cta-text: #04182c;
+  --cta-hover-bg: #ffffff;
+  --cta-hover-text: #04182c;
+  --status-production: #5fd39a;
+  --status-in-development: #f0b860;
+  --shadow-card: 0 1px 2px rgb(2 10 24 / 0.4), 0 16px 36px -20px rgb(2 10 24 / 0.8);
+  --shadow-lift: 0 2px 4px rgb(2 10 24 / 0.4), 0 24px 48px -22px rgb(2 10 24 / 0.9);
+  --page-shade: rgb(2 10 24 / 0.5);
+  --curl-shadow: rgb(2 10 24 / 0.6);
 }

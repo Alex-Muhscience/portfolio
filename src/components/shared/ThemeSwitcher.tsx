@@ -16,8 +16,8 @@ export function ThemeSwitcher() {
     return <span className="icon-button icon-button-placeholder" aria-hidden="true" />
   }
 
-  const active: ThemeId = theme === "light" || legacyThemes[theme ?? ""] === "light" ? "light" : "navy"
-  const next: ThemeId = active === "light" ? "navy" : "light"
+  const active: ThemeId = theme === "dark" || legacyThemes[theme ?? ""] === "dark" ? "dark" : "light"
+  const next: ThemeId = active === "light" ? "dark" : "light"
   const label = next === "light" ? "Switch to light theme" : "Switch to dark theme"
 
   // The new palette spreads out from the button, where the browser supports view transitions.

@@ -7,10 +7,23 @@ import { TechList } from "@/components/shared/TechList"
 import { ProjectLinks } from "@/components/work/ProjectLinks"
 import { StatusBadge } from "@/components/work/StatusBadge"
 import { SystemMap } from "@/components/work/SystemMap"
+import { BrowserFrame, PhoneFrame } from "@/components/work/DeviceFrames"
+import { CaseNav } from "@/components/work/CaseNav"
+import { ViewTransition } from "react"
+import { getScreenshot } from "@/data/screenshots"
 import { getAdjacentProjects, getProject, projects } from "@/data/projects"
 import { absoluteUrl, site } from "@/lib/site"
 
 type CaseStudyProps = { params: Promise<{ slug: string }> }
+
+const caseSections = [
+  { id: "problem", label: "Problem" },
+  { id: "built", label: "What I built" },
+  { id: "system", label: "System" },
+  { id: "engineering", label: "Engineering" },
+  { id: "decisions", label: "Decisions" },
+  { id: "outcome", label: "Outcome" },
+]
 
 export const dynamicParams = false
 
@@ -38,6 +51,7 @@ export default async function CaseStudyPage({ params }: CaseStudyProps) {
   if (!project) notFound()
 
   const { previous, next } = getAdjacentProjects(project.slug)
+  const shot = getScreenshot(project.slug)
   const url = absoluteUrl(`/work/${project.slug}`)
 
   const structuredData = {
@@ -76,7 +90,9 @@ export default async function CaseStudyPage({ params }: CaseStudyProps) {
             <li aria-current="page">{project.title}</li>
           </ol>
         </nav>
-        <h1>{project.title}</h1>
+        <ViewTransition name={`title-${project.slug}`} share="morph" default="none">
+          <h1>{project.title}</h1>
+        </ViewTransition>
         <p className="case-summary">{project.summary}</p>
 
         <dl className="case-meta">
@@ -100,15 +116,26 @@ export default async function CaseStudyPage({ params }: CaseStudyProps) {
             </dd>
           </div>
         </dl>
+
+        {shot && (
+          <div className="case-shot">
+            <ViewTransition name={`shot-${project.slug}`} share="morph" default="none">
+              <BrowserFrame shot={shot} sizes="(min-width: 60rem) 56rem, 92vw" priority />
+            </ViewTransition>
+            <PhoneFrame shot={shot} />
+          </div>
+        )}
       </header>
 
+      <CaseNav items={caseSections} />
+
       <div className="shell case-body">
-        <section className="case-section" aria-labelledby="problem-title">
+        <section id="problem" className="case-section" aria-labelledby="problem-title">
           <h2 id="problem-title">Problem</h2>
           <p className="case-lead">{project.problem}</p>
         </section>
 
-        <section className="case-section" aria-labelledby="built-title">
+        <section id="built" className="case-section" aria-labelledby="built-title">
           <h2 id="built-title">What I built</h2>
           <div>
             <p className="case-lead">{project.built}</p>
@@ -117,12 +144,12 @@ export default async function CaseStudyPage({ params }: CaseStudyProps) {
           </div>
         </section>
 
-        <section className="case-section" aria-labelledby="system-title">
+        <section id="system" className="case-section" aria-labelledby="system-title">
           <h2 id="system-title">System</h2>
           <SystemMap layers={project.system} title={project.title} />
         </section>
 
-        <section className="case-section" aria-labelledby="engineering-title">
+        <section id="engineering" className="case-section" aria-labelledby="engineering-title">
           <h2 id="engineering-title">Engineering</h2>
           <div className="case-notes">
             {project.engineering.map((note) => (
@@ -136,7 +163,7 @@ export default async function CaseStudyPage({ params }: CaseStudyProps) {
           </div>
         </section>
 
-        <section className="case-section" aria-labelledby="decisions-title">
+        <section id="decisions" className="case-section" aria-labelledby="decisions-title">
           <h2 id="decisions-title">Decisions</h2>
           <dl className="decision-list">
             {project.decisions.map((item) => (
@@ -148,7 +175,7 @@ export default async function CaseStudyPage({ params }: CaseStudyProps) {
           </dl>
         </section>
 
-        <section className="case-section" aria-labelledby="outcome-title">
+        <section id="outcome" className="case-section" aria-labelledby="outcome-title">
           <h2 id="outcome-title">Outcome</h2>
           <ul className="outcome-list">
             {project.outcomes.map((outcome) => <li key={outcome}>{outcome}</li>)}

@@ -14,6 +14,12 @@ export interface BookPage {
   cover?: boolean
   /** One or two sentences for the chapter opener on the left-hand page. */
   summary?: string
+  /** An illustration under the chapter opener, shown when the book is wide enough for spreads. */
+  figure?: ReactNode
+  /** Replaces the chapter opener on the left-hand page entirely (the endpaper before the back cover). */
+  verso?: ReactNode
+  /** The back cover: the right-hand page is cloth, with no running head or folio. */
+  back?: boolean
 }
 
 interface Flip {
@@ -98,6 +104,18 @@ export function Book({ pages, children }: { pages: BookPage[]; children: ReactNo
   const gesture = useRef<Gesture | null>(null)
   const wheel = useRef({ travel: 0, last: 0, lockedUntil: 0, needsPause: false })
   const sheets = Children.toArray(children)
+
+  // Type and spacing grow with the book, so a large screen gets a larger book rather than more empty paper.
+  useEffect(() => {
+    const volume = volumeRef.current
+    if (!volume || !isBook) return
+    const observer = new ResizeObserver(([entry]) => {
+      const scale = Math.min(1.55, Math.max(1, entry.contentRect.height / 840))
+      volume.style.setProperty("--book-scale", scale.toFixed(3))
+    })
+    observer.observe(volume)
+    return () => observer.disconnect()
+  }, [isBook])
 
   /** Draws the moving sheet at a fold position. Called every animation frame and on every touch move. */
   const draw = useCallback(
@@ -399,17 +417,21 @@ export function Book({ pages, children }: { pages: BookPage[]; children: ReactNo
                 ) : (
                   // A spread on wide screens: the chapter opener on the left, its content on the right.
                   // On phones the same markup stacks into a single page.
-                  <div className="book-spread">
+                  <div className={pages[index].back ? "book-spread book-spread-back" : "book-spread"}>
                     <BookVerso page={pages[index]} index={index} />
-                    <div className="book-recto">
-                      <p className="book-runhead book-runhead-recto" aria-hidden="true">{pages[index].label}</p>
-                      <div className="book-recto-body">{sheet}</div>
-                      <p className="book-folio book-folio-recto" aria-hidden="true">
-                        <span className="book-folio-label">{pages[index].label}</span>
-                        <span className="book-folio-single">{folio(index)} / {folio(pages.length - 1)}</span>
-                        <span className="book-folio-spread">{index * 2 + 1}</span>
-                      </p>
-                    </div>
+                    {pages[index].back ? (
+                      <div className="book-recto book-back">{sheet}</div>
+                    ) : (
+                      <div className="book-recto">
+                        <p className="book-runhead book-runhead-recto" aria-hidden="true">{pages[index].label}</p>
+                        <div className="book-recto-body">{sheet}</div>
+                        <p className="book-folio book-folio-recto" aria-hidden="true">
+                          <span className="book-folio-label">{pages[index].label}</span>
+                          <span className="book-folio-single">{folio(index)} / {folio(pages.length - 2)}</span>
+                          <span className="book-folio-spread">{index * 2 + 1}</span>
+                        </p>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
