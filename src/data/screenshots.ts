@@ -31,9 +31,9 @@ const shots: Record<string, Screenshot> = {
     alt: "AfriAsia Career Development Center homepage: professional training with a course search.",
   },
   "chania-finance-consultancy": {
-    address: "Development build",
-    desktop: "/work/chania-finance-consultancy/desktop.webp",
-    mobile: "/work/chania-finance-consultancy/mobile.webp",
+    address: "chaniafinanceconsultancy.com",
+    desktop: "/work/chania-finance-consultancy/desktop-live.webp",
+    mobile: "/work/chania-finance-consultancy/mobile-live.webp",
     alt: "Chania Finance Consultancy homepage: course search and the next sessions by venue.",
   },
   "unified-threat-detection-response": {
