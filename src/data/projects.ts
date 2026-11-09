@@ -746,8 +746,8 @@ export const projects: Project[] = [
     title: "Chania Finance Consultancy",
     summary:
       "Finance-training platform where clients search the catalogue, pick a venue and a start week on a calendar and register a team in minutes, with admin and trainer portals behind it.",
-    status: "in-development",
-    statusLabel: "In development · private repository",
+    status: "production",
+    statusLabel: "In production",
     period: "2026 – present",
     role: "Full-stack developer and sole technical owner",
     featured: false,
@@ -847,16 +847,16 @@ export const projects: Project[] = [
       },
     ],
     outcomes: [
-      "Feature-complete for booking, billing, documents, trainers and content, with 140+ feature tests passing.",
-      "Not yet deployed: production hosting and go-live are the next step.",
+      "In production at chaniafinanceconsultancy.com.",
+      "Booking, billing, documents, trainers and content shipped with 140+ feature tests passing.",
     ],
     highlights: [
       { value: "3 steps", label: "from course page to a booked start week" },
       { value: "1 query", label: "for every admin notification counter" },
       { value: "140+", label: "feature tests, including an N+1 query budget" },
     ],
-    links: [],
-    accessNote: "The repository is private. I am happy to walk through the architecture and code in a conversation.",
+    links: [{ label: "Live site", href: "https://chaniafinanceconsultancy.com/", kind: "live" }],
+    accessNote: "The source repository is private.",
   },
   {
     slug: "afriasia-career-development-center",

@@ -78,7 +78,8 @@ export const experience: ExperienceItem[] = [
       {
         business: "Chania Finance Consultancy",
         product: "Finance-training and booking platform",
-        since: "Since Jul 2026 · in development",
+        since: "Since Jul 2026",
+        website: "https://chaniafinanceconsultancy.com/",
         caseStudy: "chania-finance-consultancy",
         summary: "Catalogue search at scale, calendar booking by venue, organisation invoicing, and admin and trainer portals.",
       },
