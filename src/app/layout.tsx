@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next"
 import { Hanken_Grotesk } from "next/font/google"
 import Script from "next/script"
 import { ThemeProvider } from "next-themes"
+import { Analytics } from "@vercel/analytics/next"
 import { Footer } from "@/components/shared/Footer"
 import { Header } from "@/components/shared/Header"
 import { site } from "@/lib/site"
@@ -69,6 +70,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <main id="main">{children}</main>
           <Footer />
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   )
