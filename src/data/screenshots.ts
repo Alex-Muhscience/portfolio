@@ -25,10 +25,10 @@ const shots: Record<string, Screenshot> = {
     alt: "Chania Publishers homepage: online study for KASNEB, KNEC and career skills.",
   },
   "afriasia-career-development-center": {
-    address: "afriasiacareercenter.com",
-    desktop: "/work/afriasia-career-development-center/desktop.webp",
-    mobile: "/work/afriasia-career-development-center/mobile.webp",
-    alt: "AfriAsia Career Development Center homepage: professional training with a course search.",
+    address: "www.afriasiacareercenter.com",
+    desktop: "/work/afriasia-career-development-center/desktop-teal.webp",
+    mobile: "/work/afriasia-career-development-center/mobile-teal.webp",
+    alt: "AfriAsia Career Development Center homepage: course search and the next sessions by city.",
   },
   "chania-finance-consultancy": {
     address: "chaniafinanceconsultancy.com",

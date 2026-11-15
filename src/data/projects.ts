@@ -862,30 +862,36 @@ export const projects: Project[] = [
     slug: "afriasia-career-development-center",
     title: "AfriAsia Career Development Center",
     summary:
-      "Training, booking and document-management platform with a public course catalogue and an authenticated administration portal.",
+      "Training, booking and document-management platform: a public catalogue of 17,000+ courses across 16 cities, booking for individuals and teams, and an administration portal.",
     status: "production",
     statusLabel: "In production",
     period: "2026 – present",
     role: "Full-stack developer and sole technical owner",
     featured: false,
     problem:
-      "A sister company to EuroAfrique needed its own platform for executive training: public course discovery and applications for individuals and corporate groups, and an operations portal covering programmes, schedules, delegates, venues, payments, invoices and certificates.",
+      "A sister company to EuroAfrique needed its own platform for executive training: public course discovery and applications for individuals and corporate groups, and an operations portal covering programmes, schedules, delegates, venues, payments, invoices and certificates. It also needed its own identity, distinct from the sister brands, and releases that did not depend on manual uploads to a shared host.",
     built:
-      "A Laravel application with a Livewire administration portal, online payments, generated documents and a permission model, deployed to production.",
-    stack: ["Laravel 12", "PHP", "Livewire", "Alpine.js", "Tailwind CSS", "MySQL", "Redis", "Paystack", "Vite"],
+      "A Laravel 12 application with a Livewire administration portal, Paystack payments, generated documents and a permission model, released through GitHub Actions to a staging site and then to production.",
+    stack: ["Laravel 12", "PHP 8.4", "Livewire 4", "Alpine.js", "Tailwind CSS", "MySQL", "Redis", "Paystack", "Vite", "GitHub Actions", "Cloudflare"],
     system: [
       {
         layer: "Clients",
         nodes: [
-          { name: "Public site", detail: "Courses, venues, trainers, applications" },
+          { name: "Public site", detail: "Courses, training centres, booking, enquiries" },
           { name: "Admin portal", detail: "Livewire, role and permission gated" },
+        ],
+      },
+      {
+        layer: "Edge",
+        nodes: [
+          { name: "Cloudflare", detail: "WAF rules, static-asset caching" },
         ],
       },
       {
         layer: "Application",
         nodes: [
           { name: "Laravel", detail: "Controllers, services, Livewire components" },
-          { name: "Queued jobs", detail: "Application document processing" },
+          { name: "Queued jobs", detail: "Documents and SEO generation" },
         ],
       },
       {
@@ -902,13 +908,28 @@ export const projects: Project[] = [
           { name: "Redis", detail: "Sessions and cache" },
         ],
       },
+      {
+        layer: "Delivery",
+        nodes: [
+          { name: "GitHub Actions", detail: "Build, test, release archive over SSH" },
+          { name: "Staging", detail: "Own database, never indexed" },
+        ],
+      },
     ],
     engineering: [
       {
         area: "Application",
         points: [
-          "Public catalogue for courses, categories, sectors, venues and trainers, with individual and corporate applications that can carry multiple participants.",
-          "Administration portal for courses, schedules, venues, trainers, applications, users, roles and permissions, with reporting dashboards and audit logs.",
+          "Public catalogue for courses, categories, sectors, topics and training centres, with individual and team bookings that can carry multiple participants.",
+          "A dates picker where every course runs in every city on the same dates: centres ordered by region with country flags, fees per centre, and booking or WhatsApp enquiry per date.",
+          "Administration portal for courses, schedules, training centres, trainers, applications, users, roles and permissions, with reporting dashboards and audit logs.",
+        ],
+      },
+      {
+        area: "Design and documents",
+        points: [
+          "A design system built for the brand: shared buttons, cards and page heroes, one call-to-action colour, black-on-white text and no gradients, applied across every page through shared tokens.",
+          "Course brochures generated as PDFs with running headers and page numbers, an enrolment guide and a QR code to the course page; invoices, invitation letters and certificates share the same document style.",
         ],
       },
       {
@@ -921,18 +942,27 @@ export const projects: Project[] = [
         ],
       },
       {
-        area: "Payments and documents",
+        area: "Payments",
         points: [
           "Paystack checkout in USD or KES with callbacks, timing-safe webhook validation and idempotent payment recording.",
-          "PDF invoices, brochures, invitation letters, certificates and receipts, plus DOCX forms, generated by a queued job.",
+          "Invoices carry the card payment link; payment is due before the course starts, by card or bank transfer.",
+        ],
+      },
+      {
+        area: "Performance and search",
+        points: [
+          "Cloudflare caches static assets; menu, footer and homepage data are cached in Redis, taking a course page from 31 to 17 database queries.",
+          "Front-end JavaScript cut from 164 KB to about 1.5 KB by replacing an animation library with a small scroll reveal that never hides content on load.",
+          "Structured data, canonical URLs, generated meta descriptions, topic hubs and indexable training-centre pages.",
         ],
       },
       {
         area: "Security and delivery",
         points: [
-          "HSTS, content-type, frame, referrer and permissions headers on web responses. Secure, HTTP-only, SameSite session cookies in production.",
-          "SEO metadata, canonical URLs and hreflang support on public pages.",
-          "The production host does not provide Composer, so releases are built locally and uploaded with their dependencies, followed by migrations and config, route and view caching on the server.",
+          "Releases are built in GitHub Actions (Composer packages and Vite assets) and shipped to a cPanel host over SSH as one archive, so the server needs neither git nor Composer.",
+          "Every change lands on a staging site with its own database first, kept out of search with noindex headers, then fast-forwards to production.",
+          "Deploys pick the host's PHP 8.4 binary, keep cPanel's PHP handler across releases, rebuild Laravel's caches and reset OPcache through a one-time loopback script. Production migrations are run by hand.",
+          "Honeypot fields and per-visitor rate limits on public forms, Cloudflare WAF rules, HSTS and security headers, and dependency audits kept clean.",
         ],
       },
     ],
@@ -948,13 +978,21 @@ export const projects: Project[] = [
           "Payment providers retry webhooks and users refresh callback pages. Recording a payment has to be safe to run more than once.",
       },
       {
-        decision: "A deployment process that fits the host",
+        decision: "Build in CI, ship one archive",
         rationale:
-          "The hosting environment has no Composer and limited shell access, so the release procedure is designed around building locally and applying a short, repeatable set of commands on the server.",
+          "The host has no Composer and limited shell access. Building the release in GitHub Actions and unpacking a single archive keeps deploys repeatable; staging catches problems before production, and migrations against live data stay a deliberate manual step.",
+      },
+      {
+        decision: "Keep existing token names when changing the palette",
+        rationale:
+          "Thousands of class names used the old colour tokens. Remapping the tokens to the new palette restyled every page at once, and new shared components carried the rest.",
       },
     ],
-    outcomes: ["In production at afriasiacareercenter.com."],
-    links: [{ label: "Live site", href: "https://afriasiacareercenter.com", kind: "live" }],
+    outcomes: [
+      "In production at www.afriasiacareercenter.com, with a staging site for every change.",
+      "Deploys run automatically from GitHub Actions on every push to main.",
+    ],
+    links: [{ label: "Live site", href: "https://www.afriasiacareercenter.com", kind: "live" }],
     accessNote: "The source repository is private.",
   },
   {

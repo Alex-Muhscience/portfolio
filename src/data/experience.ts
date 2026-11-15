@@ -71,7 +71,7 @@ export const experience: ExperienceItem[] = [
         business: "AfriAsia Career Development Center",
         product: "Training and booking platform",
         since: "Since Aug 2026",
-        website: "https://afriasiacareercenter.com/",
+        website: "https://www.afriasiacareercenter.com/",
         caseStudy: "afriasia-career-development-center",
         summary: "Public course catalogue and an administration portal with permissions, MFA, payments and generated documents.",
       },
