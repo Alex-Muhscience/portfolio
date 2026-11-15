@@ -56,7 +56,7 @@ export const projects: Project[] = [
     slug: "businessos",
     title: "BusinessOS",
     summary:
-      "Multi-tenant business operating system that puts CRM, sales, procurement, inventory, finance, HR and projects on one governed data model.",
+      "Multi-tenant business operating system that puts selling, buying, stock, money, people and documents on one governed data model, with a touch-first point of sale that works offline. Load-tested at 10,000 tenants.",
     status: "in-development",
     statusLabel: "In development · private repository",
     period: "2026 – present",
@@ -65,7 +65,7 @@ export const projects: Project[] = [
     problem:
       "Small and mid-sized organisations tend to run sales, purchasing, stock, finance and people on separate tools. The records disagree with each other, permissions are bolted on per tool, and nobody can reconstruct who changed what. BusinessOS is an attempt to put those workflows on a single transactional model where tenancy, authorization and audit are properties of the platform rather than of each feature.",
     built:
-      "A Laravel API organised by business domain, a server-rendered Next.js web application, and a PostgreSQL database with row-level security, running as a containerised stack with queue workers, an outbox publisher, a scheduler and verified backups. It is an ongoing project and is not publicly deployed.",
+      "A Laravel API organised by business domain, a server-rendered Next.js web application, and a PostgreSQL database with row-level security, running as a containerised stack with queue workers, an outbox publisher, a scheduler and verified backups. Each tenant subscribes to the modules it needs, from CRM, sales, point of sale and finance to payroll, manufacturing, projects and a support desk; screens follow the job, so a cashier lands on a till and an accountant on the books. The first market is Kenya (KES, VAT, statutory payroll returns, M-Pesa). It is an ongoing project and is not publicly deployed.",
     stack: [
       "Laravel 13",
       "PHP 8.5",
@@ -74,6 +74,7 @@ export const projects: Project[] = [
       "TypeScript",
       "PostgreSQL 18",
       "Redis",
+      "M-Pesa",
       "Docker",
       "nginx",
       "GitHub Actions",
@@ -156,6 +157,36 @@ export const projects: Project[] = [
         ],
       },
       {
+        area: "Business modules",
+        points: [
+          "Invoices, till sales, payroll and stock movements post balanced journal entries; posted entries never change, and monthly account totals keep statements fast after years of trading. Reports include a general ledger with drill-down, a cash flow statement and a VAT return.",
+          "Payroll calculates payslips and statutory returns, issues P9 tax deduction cards, and needs a second person to approve and lock each run.",
+          "Approvals route by amount, never to the person asking, and escalate when left waiting; scheduled jobs expire quotations, raise preventive maintenance and flag missed support targets and low stock.",
+          "Each company gets public pages: careers with applications, support requests, sales enquiries, and documents opened by private link with quotations accepted online.",
+        ],
+      },
+      {
+        area: "Point of sale",
+        points: [
+          "A touch-first checkout lane that keeps selling offline and syncs later, sells weighed items from a scale's label, prints to receipt printers, opens the drawer on cash and requests M-Pesa payment.",
+          "Another cashier can take over an open till with their own PIN; receipts carry the company's own layout and logo.",
+        ],
+      },
+      {
+        area: "Documents and files",
+        points: [
+          "Quotations, invoices, credit notes, receipts and payslips are generated from templates built of blocks each company controls, or from its own Word file, and delivered as a page, a PDF or a Word file, emailed from the page they are read on.",
+          "Any record can carry files kept in an object store, read in place, with restricted files and an access log; executable files are refused and uploads are scanned where a scanner is configured.",
+        ],
+      },
+      {
+        area: "Scale",
+        points: [
+          "Load-tested with 10,000 tenants on one machine: 600 requests a second at a 54 ms p95 with no errors.",
+          "Permission answers are cached per member until the tenant changes, a cache budget keeps the cache from crowding out the queue, and dashboards and module pages run half the queries they did.",
+        ],
+      },
+      {
         area: "Infrastructure and operations",
         points: [
           "Docker Compose stack: nginx, the API, the web server, workers, scheduler, outbox publisher, PostgreSQL, Redis and a backup service. nginx is the only container with published ports.",
@@ -199,10 +230,11 @@ export const projects: Project[] = [
     outcomes: [
       "The backend modules are implemented with command and query coverage, authorization, audit and outbox traceability, and API tests.",
       "The web application covers a subset of those modules and is being extended module by module.",
+      "Nine domain-expert audits and a production-readiness plan guide the remaining work.",
       "Not yet publicly available.",
     ],
     highlights: [
-      { value: "7", label: "business domains on one governed data model" },
+      { value: "10k", label: "tenants load-tested: 600 req/s at a 54 ms p95" },
       { value: "RLS", label: "tenant isolation enforced inside PostgreSQL" },
       { value: "E2E", label: "Playwright and k6 against the full Docker stack" },
     ],
@@ -287,6 +319,7 @@ export const projects: Project[] = [
           "M-Pesa and card payments (Paystack) confirmed server-side through provider callbacks rather than by trusting the browser redirect.",
           "Webhook payloads are authenticated with an HMAC-SHA512 signature compared in constant time before any payment state changes.",
           "Fee calculation and payment verification gate enrolment confirmation and paid-invoice generation.",
+          "Invoices can be issued in KES with matching Paystack KES payment links.",
         ],
       },
       {
@@ -301,7 +334,14 @@ export const projects: Project[] = [
         area: "Performance and SEO",
         points: [
           "Redis for cache and sessions, compressed responses, and Cloudflare caching in front of the origin.",
-          "Country detection, hreflang alternates and per-country metadata for a multi-regional audience.",
+          "Course pages cut by about 60% in HTML size by shipping each session once, with the training-centre list rendered once and the rest sent as JSON.",
+          "Country detection, hreflang alternates and per-country metadata for a multi-regional audience; unified title and description generation, complete Course and ItemList structured data, and crawler rules that admit search and AI-search agents while keeping internal and brochure URLs out of the index.",
+        ],
+      },
+      {
+        area: "Design",
+        points: [
+          "Public site and admin panel redesigned around enterprise-style components: flat brand colours instead of gradients, consistent cards, buttons and forms with explicit labels, collapsible training hubs on mobile, and an admin brand theme with real icons and analytics charts.",
         ],
       },
       {
@@ -309,12 +349,15 @@ export const projects: Project[] = [
         points: [
           "Role-based access control in the admin area, with rate limiting and CSRF protection on forms.",
           "Certificates are served through obfuscated, verified URLs rather than guessable paths.",
+          "Dependency advisories are patched as they appear (Symfony, phpseclib and npm packages), and debug endpoints were removed.",
         ],
       },
       {
         area: "Delivery and operations",
         points: [
           "GitHub Actions pipeline: PHP lint, Composer and npm security audits, PHPUnit, an asset build, static analysis and admin security checks. Deployment to the production server over SSH runs only after those pass.",
+          "Pull-request branches deploy to a password-protected staging subdomain with its own settings, so staging never loads production configuration.",
+          "Deploys detect the server's PHP 8.4 binary, rebuild Laravel's package manifest, clear OPcache, and check for server errors after each production release; visitors' server errors are emailed to the team.",
           "I manage hosting, DNS, TLS, cron, deployments and production support for the platform.",
         ],
       },
@@ -555,6 +598,8 @@ export const projects: Project[] = [
           "A menu bar and control centre rebuilt in QML: GNOME's layout and pill toggles, a transparent macOS-style bar, glass panels blurred by the compositor, and Adwaita icons.",
           "The bar's text colour follows the brightness of the wallpaper under it, measured once per wallpaper change for each screen.",
           "Popups open through an in-process call instead of a shell script that started a second Quickshell process for every click, which took 0.12–0.29 s in the test VM.",
+          "A macOS-style glass material across the shell: a glass dock, a Spotlight-style launcher, notification banners with a notification centre, an on-screen indicator and a glass lock screen.",
+          "A sound window opened from the control centre's volume slider, with its own app entry, and macOS-style close buttons shared across windows.",
           "Design directions were compared as interactive mock-ups before any QML was written.",
         ],
       },
@@ -585,9 +630,10 @@ export const projects: Project[] = [
       },
     ],
     outcomes: [
-      "Public on GitHub, with two pre-releases; the second ships ready-to-install RPMs alongside the source RPMs.",
+      "Public on GitHub, with three pre-releases; the latest ships the glass design as ready-to-install RPMs alongside the source RPMs.",
       "A full GDM login session works in Fedora 44 virtual machines; real hardware is not yet validated.",
       "Measured in a VM: idle shell CPU fell from 0.62% to 0.07% of a core, and the first-run screen from 130% to 0.5%. Hyprland's memory grew by about 28 MiB, which is being investigated.",
+      "The glass design was benchmarked against the release before it with no measurable change in idle cost.",
     ],
     highlights: [
       { value: "~9×", label: "less idle shell CPU, measured in a VM" },
@@ -813,6 +859,16 @@ export const projects: Project[] = [
           "Bulk session builder with a live preview: venues, length, period and frequency, skipping weeks that already have a session.",
           "Optimistic locking on courses and content, so several admins can edit at once without silently overwriting each other.",
           "Branded A4 PDFs for brochures, invoices (organisation-sponsored by default, due on the first training day), invitation letters and certificates, generated by queued jobs.",
+          "Guarded bulk actions and CSV exports of selected records in the admin area.",
+        ],
+      },
+      {
+        area: "Running on shared hosting",
+        points: [
+          "Background jobs without a resident worker: a cron-driven queue runner with a database lock, a time budget and heartbeats, and a doctor command that checks PHP, configuration, mailbox logins, cron heartbeats and failed jobs.",
+          "The dashboard warns when cron or the queue stops, and failed-job alerts fall back to a monitored mailbox.",
+          "Registration emails reach admins first, in the same job, with every document attached; a retry only resends the emails that failed. Every email shares one branded, mobile-friendly theme.",
+          "Redis over a Unix socket through Predis, and .htaccess rules that block Laravel's private files when the app sits in public_html.",
         ],
       },
       {
@@ -999,63 +1055,58 @@ export const projects: Project[] = [
     slug: "muhscience-tech-labs",
     title: "Muhscience Tech Labs Website",
     summary:
-      "Company website built with Next.js, React and TypeScript, with server-handled forms, technical SEO and deployment on Vercel.",
+      "Company website rebuilt on Next.js 16: honest content, an enquiry form that delivers by email, technical SEO, and deployment on Vercel.",
     status: "production",
     statusLabel: "Deployed on Vercel · public repository",
     period: "2025 – 2026",
     role: "Front-end and full-stack developer",
     featured: false,
     problem:
-      "Muhscience Tech Labs needed a company site covering services, projects, a blog, careers and contact, that loads quickly, ranks for its services and can take enquiries without a separate back end to operate.",
+      "Muhscience Tech Labs needed a company site covering its services, work and contact that loads quickly, ranks for its services and takes enquiries without a back end to operate. The first version wrote enquiries to a database that did not exist on Vercel, so every submission failed, and it carried claims that could not be verified.",
     built:
-      "A Next.js App Router application with a typed component library, contact and service-enquiry forms handled on the server, and SEO and security configuration, deployed on Vercel.",
-    stack: ["Next.js 15", "React 19", "TypeScript", "Tailwind CSS", "shadcn/ui", "MongoDB", "Vercel"],
+      "A Next.js App Router site with Home, Services (with starting prices), Work, About, FAQ, Contact, Privacy, Terms and Security pages, a contact form validated on the server and delivered by SMTP, and canonical SEO configuration, deployed on Vercel. Removed pages redirect permanently.",
+    stack: ["Next.js 16", "React 19", "TypeScript", "Zod", "Nodemailer", "Vercel"],
     system: [
-      { layer: "Hosting", nodes: [{ name: "Vercel", detail: "Builds, CDN, analytics" }] },
+      { layer: "Hosting", nodes: [{ name: "Vercel", detail: "Builds, CDN, analytics, Speed Insights" }] },
       {
         layer: "Application",
         nodes: [
-          { name: "App Router pages", detail: "Services, projects, blog, careers, FAQ" },
-          { name: "Middleware", detail: "Security headers" },
-          { name: "Route handlers", detail: "Contact and enquiry forms" },
+          { name: "App Router pages", detail: "Services, work, about, FAQ, contact, policies" },
+          { name: "Route handler", detail: "Contact form, validated with Zod" },
         ],
       },
       {
         layer: "Services",
-        nodes: [
-          { name: "MongoDB", detail: "Mongoose models" },
-          { name: "SMTP", detail: "Form notifications" },
-        ],
+        nodes: [{ name: "SMTP", detail: "Enquiries delivered by email" }],
       },
     ],
     engineering: [
       {
-        area: "Front-end engineering",
+        area: "Content and design",
         points: [
-          "Next.js App Router with React and strict TypeScript.",
-          "Component architecture built on shadcn/ui primitives and Tailwind CSS, with shared layout, navigation and form components.",
-          "Responsive layouts across the service, project, blog, careers and FAQ pages.",
+          "Rewritten so every statement can be backed up: unverifiable client counts, certifications, team size and invented projects and people were removed.",
+          "Design shared with my portfolio, responsive across every page, with generated icons and Open Graph images.",
         ],
       },
       {
-        area: "Forms and data",
+        area: "Contact form",
         points: [
-          "Contact and service-enquiry forms validated on the server and delivered by SMTP.",
-          "MongoDB with Mongoose for stored content and submissions.",
+          "The form posts to a route handler that validates input with Zod and sends the enquiry by SMTP through Nodemailer.",
+          "If mail is not configured, the form offers to send the message by email or WhatsApp instead of losing it.",
         ],
       },
       {
         area: "SEO and performance",
         points: [
-          "Generated sitemap and robots rules, structured page metadata and Open Graph tags.",
-          "Optimised images and lazy loading, with Vercel Analytics and Speed Insights for measurement.",
+          "Generated sitemap and robots rules on the canonical address instead of per-deployment URLs, page metadata and Open Graph tags.",
+          "Vercel Analytics and Speed Insights for measurement.",
         ],
       },
       {
         area: "Security and deployment",
         points: [
-          "Security headers applied in middleware, with input validation on form endpoints.",
-          "Continuous deployment on Vercel from the repository, with ESLint, Prettier and a type-check step.",
+          "Upgraded from Next.js 15 to 16, clearing two critical remote-code-execution advisories and taking known vulnerabilities from 67 to 0; the environment file is no longer tracked.",
+          "Continuous deployment on Vercel from the repository, with lint, type-check and build passing before merge.",
         ],
       },
     ],
@@ -1063,12 +1114,12 @@ export const projects: Project[] = [
       {
         decision: "Next.js on Vercel rather than a separate front end and API",
         rationale:
-          "The site is mostly content with a few server-side form handlers. One deployable with route handlers was enough, and it left no server to patch.",
+          "The site is mostly content with one server-side form handler. One deployable with a route handler was enough, and it left no server to patch.",
       },
       {
-        decision: "Compose from accessible primitives",
+        decision: "Email instead of a database for enquiries",
         rationale:
-          "Building on shadcn/ui and Radix primitives gave keyboard and focus behaviour for menus and dialogs without writing it from scratch.",
+          "The site only needs enquiries to reach a person. Sending them by email removed a database that the hosting did not provide and that had been failing every submission.",
       },
     ],
     outcomes: ["Deployed on Vercel.", "Source is public on GitHub."],
@@ -1081,7 +1132,7 @@ export const projects: Project[] = [
     slug: "unified-threat-detection-response",
     title: "Unified Threat Detection & Response System",
     summary:
-      "Threat detection and response: every event runs through rule-based, anomaly and ML detectors, and analysts triage the resulting alerts in a web dashboard. Top 5 finalist in the Mozilla Responsible Computing Challenge.",
+      "Threat detection and response for organisations without a security team: events from devices, Microsoft 365 and Google Workspace run through rule-based, correlation, anomaly and ML detectors, and analysts work the results as cases. Top 5 finalist in the Mozilla Responsible Computing Challenge.",
     status: "production",
     statusLabel: "Live on Vercel and Render · private repository",
     period: "2025 – present",
@@ -1090,28 +1141,44 @@ export const projects: Project[] = [
     problem:
       "Smaller organisations rarely have a security operations team, yet they face the same threats as larger ones. UTDRS explores how far a single system can go in collecting security events, detecting threats with several complementary methods and presenting alerts an operator can act on, while keeping the AI components explainable and accountable.",
     built:
-      "One repository of services: a React and TypeScript dashboard where analysts triage alerts; a FastAPI gateway for authentication and alert, event, asset and rule management, which sends every event to a core detection engine; a data processor; and a device scanner in C. An event posted to the gateway comes back as an alert, linked to the event and mapped to MITRE ATT&CK, within seconds. The dashboard is deployed on Vercel, the gateway and detection engine run as Docker services on Render, and the data lives in MongoDB Atlas. The project was a Top 5 finalist in the Mozilla Responsible Computing Challenge.",
-    stack: ["Python", "FastAPI", "MongoDB", "React", "TypeScript", "C", "Docker", "Render", "Vercel"],
+      "One repository of services: a React and TypeScript dashboard where analysts triage alerts and work cases; a FastAPI gateway for authentication, tenancy and every API, which sends each event through a durable queue to a core detection engine; separate analysis workers fed by Redis Streams; an MCP server so AI assistants can investigate through the API; a data processor; and a device scanner in C over mutual TLS. Platform operators have their own console, apart from every organisation. The dashboard is deployed on Vercel, the services run as Docker containers on Render, and the data lives in MongoDB Atlas. It began as a capstone project, a Top 5 finalist in the Mozilla Responsible Computing Challenge, and is being built into a commercial product.",
+    stack: ["Python", "FastAPI", "MongoDB", "Redis Streams", "React", "TypeScript", "C", "OpenSSL", "MCP", "Docker", "Render", "Vercel", "Playwright"],
     system: [
-      { layer: "Interface", nodes: [{ name: "Dashboard", detail: "React, TypeScript; alert triage" }] },
-      { layer: "Collection", nodes: [{ name: "Device scanner", detail: "Agents report over TLS" }, { name: "Event intake" }] },
+      { layer: "Interface", nodes: [{ name: "Dashboard", detail: "React, TypeScript; alerts, cases, response" }, { name: "Operator console", detail: "Separate app for platform operators" }] },
+      {
+        layer: "Collection",
+        nodes: [
+          { name: "Device scanner", detail: "C agents over mutual TLS" },
+          { name: "Connectors", detail: "Microsoft 365, Google Workspace, Exchange" },
+          { name: "Ingestion API", detail: "Batches, idempotency keys, gzip" },
+        ],
+      },
       {
         layer: "API",
-        nodes: [{ name: "API gateway", detail: "JWT auth, security headers, request IDs" }],
+        nodes: [
+          { name: "API gateway", detail: "Sessions, MFA, passkeys, SSO, SCIM, API keys" },
+          { name: "MCP server", detail: "AI assistants act through the API" },
+        ],
       },
       {
         layer: "Detection",
         nodes: [
-          { name: "Rule engine", detail: "Signatures mapped to MITRE ATT&CK" },
-          { name: "Anomaly and ML detection" },
-          { name: "Threat-intelligence enrichment" },
+          { name: "Durable analysis queue", detail: "Retries and replay; workers on Redis Streams" },
+          { name: "Six detectors", detail: "Rules, correlation, anomaly, ML, threat intelligence" },
         ],
       },
       {
-        layer: "Processing and storage",
+        layer: "Response",
         nodes: [
-          { name: "Data processor", detail: "Batches, retries, dead-letter collection" },
-          { name: "MongoDB", detail: "Events, alerts, assets, rules" },
+          { name: "Cases and playbooks", detail: "Actions with approvals" },
+          { name: "Notifications", detail: "Email, Slack, Teams, signed webhooks" },
+        ],
+      },
+      {
+        layer: "Storage and operations",
+        nodes: [
+          { name: "MongoDB", detail: "One database per service, data kept apart per organisation" },
+          { name: "Backups", detail: "Daily, encrypted, off-site, restore-tested" },
         ],
       },
     ],
@@ -1120,22 +1187,42 @@ export const projects: Project[] = [
         area: "Detection",
         points: [
           "Layered detection: signature rules, correlation, anomaly detection, behavioural (ML) scoring and threat-intelligence lookups run concurrently, and the most specific verdict becomes the alert.",
-          "Detection rules are data, mapped to MITRE ATT&CK techniques, and can be enabled, disabled or run in a testing state.",
+          "Detection rules are data, mapped to MITRE ATT&CK techniques, versioned, with test cases checked on every save and counting conditions over time windows.",
+          "Sign-in correlation catches impossible travel, password spraying and MFA fatigue; analysts' verdicts and suppressions tune noisy detectors.",
+          "The capstone's phishing and network-flow models were retrained from public datasets and run inside the engine.",
         ],
       },
       {
-        area: "API and access control",
+        area: "Investigation and response",
         points: [
-          "API gateway with JWT authentication and bcrypt password hashing; new accounts are analysts and cannot raise their own role.",
+          "Related alerts are grouped into cases with notes and attachments; response actions and playbooks run with approvals.",
+          "Connectors for Microsoft 365 (sign-ins, audit logs, Defender alerts), Exchange mailbox audit, Google Workspace and phishing checks from the recipient's mailbox.",
+          "Alerts and decisions reach teams by email, Slack and Microsoft Teams, and other systems through signed, retried webhooks with a delivery log.",
+          "An MCP server lets AI assistants investigate and act through the same API, with a scoped API key.",
+          "A monthly executive report, on the web and as a PDF.",
+        ],
+      },
+      {
+        area: "Identity, tenancy and access",
+        points: [
+          "Each organisation's data is kept apart in the gateway and the engine; managed service providers work across their clients, and can limit staff to assigned clients.",
+          "Sessions with refresh tokens, revocation and idle and absolute limits; authenticator MFA enforceable per organisation, passkeys, and single sign-on through OpenID Connect and SAML 2.0.",
+          "SCIM provisioning lets identity providers manage accounts, with groups mapped to roles; organisations define their own roles from per-area permissions.",
+          "Platform operators sign in to a separate console with their own accounts, always with an authenticator, using tokens that only work on the platform API.",
+          "API keys with scopes and a tamper-evident audit log that can be exported and checked outside UTDRS.",
+          "API gateway with bcrypt password hashing; new accounts are analysts and cannot raise their own role.",
           "Request validation, host checks, size limits, security headers and request-ID tracing on every call.",
           "Every stored event is sent to the detection engine in the background, so ingestion never waits on, or fails because of, detection.",
         ],
       },
       {
-        area: "Data processing",
+        area: "Data processing and operations",
         points: [
-          "A processor works through events in configurable batches with retries. Documents that fail are written to a dead-letter collection with their error context instead of being dropped or blocking the batch.",
-          "Health endpoints expose processing counts and failure metrics.",
+          "Every event goes through a durable analysis queue with retries and replay; analysis scales out to dedicated workers fed by Redis Streams.",
+          "The ingestion API takes batches, external ids, idempotency keys and gzip bodies.",
+          "A processor delivers scanner data in batches with retries; documents that fail go to a dead-letter collection with their error context.",
+          "Metrics, readiness checks, heartbeats and health alerts; automatic backups, restore-tested, plus daily encrypted off-site copies to S3, R2 or B2.",
+          "Per-organisation data retention, and erasure of a person's personal data on request.",
         ],
       },
       {
@@ -1179,7 +1266,7 @@ export const projects: Project[] = [
     outcomes: [
       "Top 5 finalist, Mozilla Responsible Computing Challenge.",
       "Live: the dashboard on Vercel, the API gateway and detection engine on Render, backed by MongoDB Atlas.",
-      "Still being developed further as a proprietary product.",
+      "Being developed into a commercial product: tenancy, single sign-on, SCIM, managed-service-provider accounts and off-site backups are in place.",
     ],
     links: [{ label: "Live dashboard", href: "https://utdrs-capstone-project.vercel.app", kind: "live" }],
     accessNote: "The repository is private. I am happy to walk through the architecture and code in a conversation.",
