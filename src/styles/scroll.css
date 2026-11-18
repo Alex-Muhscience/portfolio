@@ -1,0 +1,187 @@
+/*
+ * Scroll-linked motion, in the spirit of apple.com: things arrive as you reach them,
+ * large statements light up as they are read, and the hero eases away as you leave it.
+ *
+ * Rules of the road:
+ * - CSS scroll-driven animations only (no JavaScript, no library).
+ * - Only where supported AND reduced motion is not requested; otherwise everything is
+ *   simply shown as before (all keyframes animate *from* a state, so the resting state
+ *   is the normal one).
+ * - Only opacity, translate and scale: compositor-friendly, no layout or blur.
+ * - `translate`/`scale` are separate properties from `transform`, so these never fight
+ *   the load-in and hover animations in motion.css.
+ */
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+
+    /* ── Hero: eases back and fades as it scrolls away ─────────────────── */
+    .hero {
+      view-timeline: --hero block;
+    }
+
+    .hero-grid {
+      animation: hero-leave linear both;
+      animation-timeline: --hero;
+      animation-range: exit 0% exit 90%;
+    }
+
+    @keyframes hero-leave {
+      to {
+        opacity: 0.25;
+        scale: 0.94;
+        translate: 0 -6%;
+      }
+    }
+
+    /* The portrait drifts a little slower than the page (parallax). */
+    .hero-portrait img {
+      animation: portrait-drift linear both;
+      animation-timeline: --hero;
+      animation-range: exit 0% exit 100%;
+    }
+
+    @keyframes portrait-drift {
+      to {
+        translate: 0 8%;
+        scale: 1.06;
+      }
+    }
+
+    /* ── Section headings: a longer, softer rise ───────────────────────── */
+    .section-heading.reveal,
+    .flow-head.reveal,
+    .case-section > h2 {
+      animation: heading-in linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 30%;
+    }
+
+    @keyframes heading-in {
+      from {
+        opacity: 0;
+        translate: 0 2.5rem;
+        scale: 0.97;
+      }
+    }
+
+    /* ── Project tiles: scale up into place, the screenshot settles inside ─ */
+    .tile {
+      view-timeline: --tile block;
+    }
+
+    .tile.reveal {
+      animation: tile-in linear both;
+      animation-timeline: --tile;
+      animation-range: entry 0% cover 35%;
+    }
+
+    @keyframes tile-in {
+      from {
+        opacity: 0;
+        translate: 0 3rem;
+        scale: 0.92;
+      }
+    }
+
+    .tile .browser-frame {
+      overflow: hidden;
+    }
+
+    .tile .browser-frame img {
+      animation: shot-settle linear both;
+      animation-timeline: --tile;
+      animation-range: entry 0% cover 60%;
+      transform-origin: 50% 0;
+    }
+
+    @keyframes shot-settle {
+      from {
+        scale: 1.12;
+      }
+    }
+
+    /* The phone beside the lead tile rises a beat later, like a second device. */
+    .tile .phone-frame {
+      animation: phone-rise linear both;
+      animation-timeline: --tile;
+      animation-range: entry 30% cover 55%;
+    }
+
+    @keyframes phone-rise {
+      from {
+        opacity: 0;
+        translate: 0 4rem;
+      }
+    }
+
+    /* ── Lists: each item arrives on its own as it is reached ──────────── */
+    .principle-list li.reveal,
+    .experience-item.reveal,
+    .project-row,
+    .case-note,
+    .decision-list > div,
+    .outcome-list li {
+      animation: item-in linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 25%;
+    }
+
+    @keyframes item-in {
+      from {
+        opacity: 0;
+        translate: 0 1.75rem;
+      }
+    }
+
+    /* ── Statements that light up as they are read ─────────────────────── */
+    .scroll-words .sw {
+      /* View timelines need a box: plain inline text has none to track. */
+      display: inline-block;
+      animation: word-light linear both;
+      animation-timeline: view();
+      animation-range: cover 25% cover 50%;
+    }
+
+    @keyframes word-light {
+      from {
+        opacity: 0.18;
+      }
+    }
+
+    /* ── Case studies: the screenshot rises and settles under the title ── */
+    .case-shot {
+      view-timeline: --case-shot block;
+    }
+
+    /* It sits at the fold, so it rises on page load (not on scroll) and is never left half-faded. */
+    .case-shot .browser-frame {
+      overflow: hidden;
+      animation: case-shot-in 1000ms 150ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    }
+
+    @keyframes case-shot-in {
+      from {
+        opacity: 0;
+        translate: 0 3rem;
+        scale: 0.94;
+      }
+    }
+
+    .case-shot .browser-frame img {
+      animation: shot-settle linear both;
+      animation-timeline: --case-shot;
+      animation-range: entry 0% cover 70%;
+      transform-origin: 50% 0;
+    }
+  }
+}
+
+/* The About lead reads as a statement: larger, full contrast. */
+.about-lead {
+  font-size: clamp(1.25rem, 1rem + 1vw, 1.6rem);
+  line-height: 1.5;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
