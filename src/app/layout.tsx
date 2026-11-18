@@ -7,6 +7,7 @@ import { Header } from "@/components/shared/Header"
 import { site } from "@/lib/site"
 import { defaultTheme, legacyThemes, themeIds } from "@/lib/themes"
 import { viewModeScript } from "@/lib/view-mode"
+import { filmScript } from "@/lib/film"
 import "./globals.css"
 
 /* Hanken Grotesk: an open-licence corporate grotesk in the spirit of Graphik. */
@@ -57,6 +58,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" className={hanken.variable} data-scroll-behavior="smooth" suppressHydrationWarning>
       <body>
         <Script id="view-mode" strategy="beforeInteractive">{viewModeScript}</Script>
+        <Script id="film" strategy="beforeInteractive">{filmScript}</Script>
         <ThemeProvider
           attribute="data-theme"
           themes={[...themeIds, ...Object.keys(legacyThemes)]}

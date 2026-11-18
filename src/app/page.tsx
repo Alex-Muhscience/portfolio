@@ -30,6 +30,7 @@ import { SelectedWork } from "@/components/sections/SelectedWork"
 import { SystemFlow } from "@/components/sections/SystemFlow"
 import { Ticker } from "@/components/sections/Ticker"
 import { JsonLd } from "@/components/shared/JsonLd"
+import { Film } from "@/components/film/Film"
 import { absoluteUrl, site } from "@/lib/site"
 
 const personId = absoluteUrl("/#person")
@@ -104,6 +105,7 @@ export default function HomePage() {
   return (
     <>
       <JsonLd data={structuredData} />
+      <Film />
       {/* The scrolling page (the default) and the book are separate renderings of the same material.
           CSS shows one or the other from <html data-view>, which is set before first paint. */}
       <div className="scroll-view">

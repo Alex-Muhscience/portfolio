@@ -4,6 +4,7 @@ import { ArrowRight, ArrowUpRight, Mail } from "lucide-react"
 import { GitHubIcon, LinkedInIcon } from "@/components/shared/BrandIcons"
 import { Headline } from "@/components/shared/Headline"
 import { BookPrompt } from "@/components/shared/BookPrompt"
+import { FilmButton } from "@/components/film/FilmButton"
 import { site } from "@/lib/site"
 
 export function Hero() {
@@ -36,6 +37,8 @@ export function Hero() {
               </a>
             </span>
           </div>
+
+          <FilmButton />
 
           <p className="hero-availability">
             <span className="status-dot" aria-hidden="true" />
