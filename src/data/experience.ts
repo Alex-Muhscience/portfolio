@@ -73,7 +73,7 @@ export const experience: ExperienceItem[] = [
         since: "Since Aug 2026",
         website: "https://www.afriasiacareercenter.com/",
         caseStudy: "afriasia-career-development-center",
-        summary: "Public course catalogue and an administration portal with permissions, MFA, payments and generated documents.",
+        summary: "Public course catalogue and an administration portal with permissions, MFA, payments, a certificate approval workflow and a system monitor, on Laravel 13.",
       },
       {
         business: "Chania Finance Consultancy",

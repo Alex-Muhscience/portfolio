@@ -42,7 +42,7 @@ export const systemFlow: FlowStage[] = [
     tools: ["Laravel", "Node.js", "REST"],
     examples: [
       { slug: "businessos", project: "BusinessOS", detail: "Writes go through explicit commands; the change, its audit record and its outbox event commit in one transaction." },
-      { slug: "afriasia-career-development-center", project: "AfriAsia", detail: "Spatie roles and permissions, TOTP MFA for administrators and one active session per user." },
+      { slug: "afriasia-career-development-center", project: "AfriAsia", detail: "Spatie roles and permissions, TOTP MFA with a wrong-code limit, one active session per user, and signed links for every client document." },
     ],
   },
   {

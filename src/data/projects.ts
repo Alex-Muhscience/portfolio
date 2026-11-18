@@ -927,14 +927,15 @@ export const projects: Project[] = [
     problem:
       "A sister company to EuroAfrique needed its own platform for executive training: public course discovery and applications for individuals and corporate groups, and an operations portal covering programmes, schedules, delegates, venues, payments, invoices and certificates. It also needed its own identity, distinct from the sister brands, and releases that did not depend on manual uploads to a shared host.",
     built:
-      "A Laravel 12 application with a Livewire administration portal, Paystack payments, generated documents and a permission model, released through GitHub Actions to a staging site and then to production.",
-    stack: ["Laravel 12", "PHP 8.4", "Livewire 4", "Alpine.js", "Tailwind CSS", "MySQL", "Redis", "Paystack", "Vite", "GitHub Actions", "Cloudflare"],
+      "A Laravel 13 application with a Livewire administration portal, Paystack payments, generated documents with an approval workflow for certificates, and a permission model, tested and released through GitHub Actions to a staging site and then to production.",
+    stack: ["Laravel 13", "PHP 8.4", "Livewire 4", "Alpine.js", "Tailwind CSS", "MySQL", "Redis", "Paystack", "Vite", "GitHub Actions", "Cloudflare"],
     system: [
       {
         layer: "Clients",
         nodes: [
           { name: "Public site", detail: "Courses, training centres, booking, enquiries" },
-          { name: "Admin portal", detail: "Livewire, role and permission gated" },
+          { name: "Admin portal", detail: "Livewire, role and permission gated, TOTP MFA" },
+          { name: "Certificate check", detail: "Public lookup by number or QR code" },
         ],
       },
       {
@@ -967,7 +968,7 @@ export const projects: Project[] = [
       {
         layer: "Delivery",
         nodes: [
-          { name: "GitHub Actions", detail: "Build, test, release archive over SSH" },
+          { name: "GitHub Actions", detail: "88 feature tests, build, release archive over SSH" },
           { name: "Staging", detail: "Own database, never indexed" },
         ],
       },
@@ -978,21 +979,23 @@ export const projects: Project[] = [
         points: [
           "Public catalogue for courses, categories, sectors, topics and training centres, with individual and team bookings that can carry multiple participants.",
           "A dates picker where every course runs in every city on the same dates: centres ordered by region with country flags, fees per centre, and booking or WhatsApp enquiry per date.",
-          "Administration portal for courses, schedules, training centres, trainers, applications, users, roles and permissions, with reporting dashboards and audit logs.",
+          "Administration portal for courses, schedules, training centres, trainers, applications, users, roles and permissions, with a dashboard of key figures and a work queue of items that need attention, reports and audit logs.",
+          "A certificate desk with an approval workflow: issue as pending, approve once both official signatures are uploaded, revoke with a reason shown to anyone who checks it. Each certificate carries a QR code to a public check page.",
+          "A system monitor with thirteen health checks (database, Redis, queue, scheduler heartbeat, pending migrations, disk, OPcache and more), recent log entries read from the end of the log, and a cache refresh that is safe on a Redis shared with another site.",
         ],
       },
       {
         area: "Design and documents",
         points: [
           "A design system built for the brand: shared buttons, cards and page heroes, one call-to-action colour, black-on-white text and no gradients, applied across every page through shared tokens.",
-          "Course brochures generated as PDFs with running headers and page numbers, an enrolment guide and a QR code to the course page; invoices, invitation letters and certificates share the same document style.",
+          "Course brochures generated as PDFs with running headers and page numbers, an enrolment guide and a QR code to the course page, with no dates or cities so a shared copy never goes out of date. Certificates are one landscape page with two uploaded signatures and a verification QR code; invoices and invitation letters share the same document style.",
         ],
       },
       {
         area: "Authentication and authorization",
         points: [
           "Roles and permissions through Spatie Laravel Permission, with admin routes requiring both authentication and role checks.",
-          "TOTP multi-factor authentication for administrators, with the secret stored encrypted.",
+          "TOTP multi-factor authentication for administrators, with the secret stored encrypted. The setup page never shows a secret once MFA is on, and five wrong codes sign the user out; both found and fixed during a review, with tests.",
           "One active session per user, enforced with a session version that also invalidates other sessions on password change.",
           "Rate-limited login and an activity log of successful sign-ins.",
         ],
@@ -1018,7 +1021,9 @@ export const projects: Project[] = [
           "Releases are built in GitHub Actions (Composer packages and Vite assets) and shipped to a cPanel host over SSH as one archive, so the server needs neither git nor Composer.",
           "Every change lands on a staging site with its own database first, kept out of search with noindex headers, then fast-forwards to production.",
           "Deploys pick the host's PHP 8.4 binary, keep cPanel's PHP handler across releases, rebuild Laravel's caches and reset OPcache through a one-time loopback script. Production migrations are run by hand.",
+          "Client documents are private: invoices, invitation letters and certificates are rendered on request and never stored where a URL could reach them, and booking, invoice and form links are signed, replacing guessable ids and timestamps.",
           "Honeypot fields and per-visitor rate limits on public forms, Cloudflare WAF rules, HSTS and security headers, and dependency audits kept clean.",
+          "Upgraded from Laravel 12 to 13 (Symfony 8, PHPUnit 12) on staging first, checked against the upgrade guide, with the full test suite passing before production.",
         ],
       },
     ],
@@ -1039,6 +1044,11 @@ export const projects: Project[] = [
           "The host has no Composer and limited shell access. Building the release in GitHub Actions and unpacking a single archive keeps deploys repeatable; staging catches problems before production, and migrations against live data stay a deliberate manual step.",
       },
       {
+        decision: "Signed links instead of secret-looking ids",
+        rationale:
+          "Booking numbers and invoice ids were easy to guess. Signing the links (over the path only, so they work on www, staging and behind Cloudflare) closed that without a database change, and old links show a helpful page instead of an error.",
+      },
+      {
         decision: "Keep existing token names when changing the palette",
         rationale:
           "Thousands of class names used the old colour tokens. Remapping the tokens to the new palette restyled every page at once, and new shared components carried the rest.",
@@ -1046,7 +1056,8 @@ export const projects: Project[] = [
     ],
     outcomes: [
       "In production at www.afriasiacareercenter.com, with a staging site for every change.",
-      "Deploys run automatically from GitHub Actions on every push to main.",
+      "Deploys run automatically from GitHub Actions after the test suite passes; production stays on the version proven on staging.",
+      "On Laravel 13, with certificates, client documents and administrator sign-in hardened in a security review.",
     ],
     links: [{ label: "Live site", href: "https://www.afriasiacareercenter.com", kind: "live" }],
     accessNote: "The source repository is private.",
