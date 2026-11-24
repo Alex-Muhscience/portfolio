@@ -51,7 +51,7 @@ const shots: Record<string, Screenshot> = {
   muhos: {
     address: "MuhOS on Fedora",
     desktop: "/work/muhos/desktop-light.webp",
-    alt: "The MuhOS desktop on Fedora: menu bar, dock and the control centre open.",
+    alt: "The MuhOS desktop on Fedora: the menu bar, Files and Text Editor windows with traffic-light buttons, and the glass dock.",
   },
 }
 

@@ -512,16 +512,16 @@ export const projects: Project[] = [
     slug: "muhos",
     title: "MuhOS",
     summary:
-      "Open-source desktop shell for Hyprland on Fedora: a packaged fork of Serpantinum with a GDM session, a redesigned interface and benchmarked performance.",
-    status: "in-development",
-    statusLabel: "Pre-release · open source (AGPL-3.0)",
+      "Open-source macOS-style desktop for Hyprland on Fedora: a packaged fork of Serpantinum with a GDM session, a one-command installer, managed updates and benchmarked performance.",
+    status: "production",
+    statusLabel: "Released · v0.1.0 · open source (AGPL-3.0)",
     period: "2026 – present",
     role: "Fork maintainer: packaging, interface design and QML development",
     featured: true,
     problem:
       "Serpantinum is a capable Quickshell desktop shell for Hyprland, but it installs through a curl-to-bash script that takes over the system's configuration, it bundled fonts that cannot be redistributed, and it depends on versions of Quickshell, Matugen and Hyprland that Fedora does not ship. There was no clean, reversible way to run it on Fedora, and no evidence for how much it cost to run.",
     built:
-      "Fedora packaging for the shell and its toolkit, a login session and systemd integration that leave the rest of the system alone, a licence inventory for every bundled asset, a virtual-machine test and benchmark harness, and a redesigned menu bar and control centre in QML. It is public on GitHub with ready-to-install pre-release RPMs.",
+      "Fedora packaging for the shell and its toolkit, a login session and systemd integration that leave the rest of the system alone, a licence inventory for every bundled asset, a virtual-machine test and benchmark harness, a redesigned macOS-style interface in QML, and an installer and updater that verify every package. Version 0.1.0 installs with one command on Fedora 44 and 45.",
     stack: [
       "QML",
       "Qt 6",
@@ -554,7 +554,7 @@ export const projects: Project[] = [
       {
         layer: "Shell",
         nodes: [
-          { name: "MuhOS interface", detail: "Menu bar, clock island, control centre (QML)" },
+          { name: "MuhOS interface", detail: "Menu bar, glass dock, app grid, control centre (QML)" },
           { name: "Serpantinum components", detail: "Launcher, dock, notifications, lock screen" },
         ],
       },
@@ -570,6 +570,7 @@ export const projects: Project[] = [
         layer: "Delivery",
         nodes: [
           { name: "GitHub Releases", detail: "Binary and source RPMs with checksums" },
+          { name: "Installer and muhos-update", detail: "Verified downloads; manual, notify or automatic updates" },
           { name: "CI", detail: "Build, install tests, asset licences, lint baseline" },
         ],
       },
@@ -578,8 +579,9 @@ export const projects: Project[] = [
       {
         area: "Packaging and system integration",
         points: [
-          "Installed as RPMs instead of a script: nothing is written to /usr/local, no services are enabled permanently, GDM stays the login manager, and removing the package leaves the system as it was.",
-          "Quickshell 0.3.2 and Matugen 4.2 are packaged by the project because Fedora 44 ships older versions; Matugen's Rust dependencies are vendored so it builds offline.",
+          "Installed as RPMs: a one-command installer finds the release built for the Fedora version, checks every package against the release's SHA256SUMS and hands them to dnf. Nothing is written to /usr/local, GDM stays the login manager, and removing the package leaves the system as it was.",
+          "Updates are the user's choice: muhos-update by hand, a daily notification from a systemd user timer, or automatic installs from a system timer. Nothing checks for updates in the background unless the user opts in.",
+          "Quickshell 0.3.2 and Matugen 4.2 are packaged by the project for Fedora 44 and 45 because Fedora ships older versions; Matugen's Rust dependencies are vendored so it builds offline.",
           "The user's Hyprland configuration is a small stub that loads the packaged defaults and then the user's own file, so package updates improve the defaults without overwriting anyone's changes.",
           "The shell runs as a systemd user service bound to the graphical session and is restarted if it crashes.",
         ],
@@ -604,11 +606,19 @@ export const projects: Project[] = [
         ],
       },
       {
+        area: "Testing on real hardware",
+        points: [
+          "Daily use on a 4K laptop with Intel and NVIDIA graphics found what the virtual machines could not: text a quarter of its size until screens were scaled automatically, and a logout that left a black screen because the logout script ran inside the shell's own systemd service and was stopped with it.",
+          "Windows that seemed frozen were traced through Hyprland's event log to its maximize, a kind of full screen that stays above every other window. Zoom is now handled in the compositor's Lua configuration as an ordinary window filling the screen, as on macOS.",
+          "Window management was rebuilt to match macOS: click to focus, Super+Tab switching, cascading new windows, and minimize through a hidden workspace because Hyprland ignores apps' own minimize requests.",
+        ],
+      },
+      {
         area: "Testing and measurement",
         points: [
-          "A harness builds Fedora 44 virtual machines with the package installed, logs in through GDM and checks the session: Hyprland running, the shell active under systemd, no restarts, no changes to existing configuration.",
+          "A harness builds Fedora 44 and 45 virtual machines with the package installed, logs in through GDM and checks the session: Hyprland running, the shell active under systemd, no restarts, no changes to existing configuration.",
           "Benchmarks run 5 times per scenario on a fresh disk overlay, with a warm-up and a measured window, and report medians with ranges.",
-          "GitHub Actions builds the RPM, runs 42 install tests, checks asset licences and fails if shellcheck or qmllint findings grow.",
+          "GitHub Actions builds the RPM for Fedora 44 and 45, runs 74 package checks on each, checks asset licences and fails if shellcheck or qmllint findings grow.",
         ],
       },
     ],
@@ -619,9 +629,9 @@ export const projects: Project[] = [
           "Serpantinum already does most of what a desktop needs. Keeping its components, rebuilding only the parts the design required, and labelling every change keeps the fork maintainable and lets fixes flow back upstream.",
       },
       {
-        decision: "A login session instead of an install script",
+        decision: "A login session and packages, not a script that takes over the system",
         rationale:
-          "Choosing \"MuhOS (Hyprland)\" at login, with the package owning only its own files, makes the desktop something you can try and remove without risk to the rest of the system.",
+          "Choosing \"MuhOS (Hyprland)\" at login, with the package owning only its own files, makes the desktop something you can try and remove without risk to the rest of the system. The one-command installer only downloads, verifies and hands packages to dnf.",
       },
       {
         decision: "No performance claim without a benchmark",
@@ -630,17 +640,18 @@ export const projects: Project[] = [
       },
     ],
     outcomes: [
-      "Public on GitHub, with three pre-releases; the latest ships the glass design as ready-to-install RPMs alongside the source RPMs.",
-      "A full GDM login session works in Fedora 44 virtual machines; real hardware is not yet validated.",
+      "Version 0.1.0 released after nine pre-releases, for Fedora 44 and 45, with binary and source RPMs and open issues inviting collaborators.",
+      "Full GDM login sessions work in Fedora 44 and 45 virtual machines, and it is in daily use on a 4K laptop with Intel and NVIDIA graphics.",
       "Measured in a VM: idle shell CPU fell from 0.62% to 0.07% of a core, and the first-run screen from 130% to 0.5%. Hyprland's memory grew by about 28 MiB, which is being investigated.",
       "The glass design was benchmarked against the release before it with no measurable change in idle cost.",
     ],
     highlights: [
       { value: "~9×", label: "less idle shell CPU, measured in a VM" },
-      { value: "42", label: "install tests run in CI on every push" },
-      { value: "RPM", label: "GDM session and systemd units, no install script" },
+      { value: "74", label: "package checks in CI on Fedora 44 and 45" },
+      { value: "1", label: "command to install; updates verified the same way" },
     ],
     links: [
+      { label: "Website", href: "https://alex-muhscience.github.io/MuhOS/", kind: "live" },
       { label: "Repository", href: "https://github.com/Alex-Muhscience/MuhOS", kind: "repository" },
       { label: "Releases", href: "https://github.com/Alex-Muhscience/MuhOS/releases", kind: "live" },
     ],
