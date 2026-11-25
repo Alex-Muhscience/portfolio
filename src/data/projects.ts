@@ -514,7 +514,7 @@ export const projects: Project[] = [
     summary:
       "Open-source macOS-style desktop for Hyprland on Fedora: a packaged fork of Serpantinum with a GDM session, a one-command installer, managed updates and benchmarked performance.",
     status: "production",
-    statusLabel: "Released · v0.1.0 · open source (AGPL-3.0)",
+    statusLabel: "Released · open source (AGPL-3.0)",
     period: "2026 – present",
     role: "Fork maintainer: packaging, interface design and QML development",
     featured: true,
